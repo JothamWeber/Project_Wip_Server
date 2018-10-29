@@ -1,4 +1,4 @@
-package de.fhdw.server.example.rest;
+package bertelsbank.rest;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

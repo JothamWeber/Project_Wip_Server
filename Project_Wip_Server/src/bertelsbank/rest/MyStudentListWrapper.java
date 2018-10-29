@@ -1,4 +1,4 @@
-package de.fhdw.server.example.rest;
+package bertelsbank.rest;
 
 import java.util.List;
 

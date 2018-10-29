@@ -1,4 +1,4 @@
-package de.fhdw.server.example.rest;
+package bertelsbank.rest;
 
 import java.io.File;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 
 import com.sun.jersey.spi.resource.Singleton;
 
-import de.fhdw.server.example.db.Database;
+import bertelsbank.db.Database;
 
 @Path("/")
 @Singleton
