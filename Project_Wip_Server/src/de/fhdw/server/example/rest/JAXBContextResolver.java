@@ -11,7 +11,11 @@ import com.sun.jersey.api.json.JSONJAXBContext;
 @Provider
 public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 
-	private static final Class<?>[] CLASSES = new Class[] { RestData.class, MyFileWrapper.class, Student.class/*
+	private static final Class<?>[] CLASSES = new Class[] { RestData.class,
+															ResultData.class,
+															MyFileWrapper.class,
+															MyStudentListWrapper.class,
+															Student.class/*
 																			 * Klassen
 																			 * des
 																			 * Datenmodells

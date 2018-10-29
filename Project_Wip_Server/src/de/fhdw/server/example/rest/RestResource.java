@@ -1,7 +1,7 @@
 package de.fhdw.server.example.rest;
 
 import java.io.File;
-import java.sql.SQLException;
+import java.util.List;
 import java.util.Random;
 
 import javax.ws.rs.Consumes;
@@ -14,37 +14,40 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
+
 import com.sun.jersey.spi.resource.Singleton;
+
+import de.fhdw.server.example.db.Database;
 
 @Path("/")
 @Singleton
 public class RestResource {
+	Database db = new Database();
+	Logger logger = Logger.getLogger(getClass());
 
 	@GET
-	@Path("/test")
+	@Path("/calc/{num1}/{num2}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response test(){
-		Database db = new Database();
-
-		try {
-			return Response.ok(db.provideContents()).build();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			return Response.ok("FAIL").build();
-		}
-
+	public Response calc(@PathParam("num1") double num1, @PathParam("num2") double num2) {
+		double result = num1 + num2;
+		logger.info(String.format("Calc: %s + %s = %s", num1, num2, result));
+		ResultData resultData = new ResultData();
+		resultData.setResult(result);
+		return Response.ok(resultData).build();
 	}
 
 	@GET
-	@Path("/addition/{zahl1}/{zahl2}")
+	@Path("/students")
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response addition(@PathParam("zahl1") double zahl1, @PathParam("zahl2") double zahl2) {
+	public Response students() {
+		List<Student> students = db.getStudents();
+		Student[] studentArray = students.toArray(new Student[0]);
+		return Response.ok(studentArray).build();
 
-		RestData rd = new RestData();
-		Double result = zahl1 + zahl2;
-		rd.setInfo(result.toString());
-		return Response.ok(rd).build();
+//		Alternative Lösung: Wrapper-Klasse für ArrayList:
+//		MyStudentListWrapper studentList = new MyStudentListWrapper(students);
+//		return Response.ok(studentList).build();
 	}
 
 	@GET

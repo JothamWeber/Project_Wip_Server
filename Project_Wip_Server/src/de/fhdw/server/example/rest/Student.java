@@ -2,7 +2,7 @@ package de.fhdw.server.example.rest;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement //Annotation nur bei List-Wrapper Lösung notwendig
 public class Student {
 	private int id;
 	private String name;

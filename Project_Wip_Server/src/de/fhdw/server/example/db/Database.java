@@ -1,4 +1,4 @@
-package de.fhdw.server.example.rest;
+package de.fhdw.server.example.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,25 +6,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-//Noch mehr try-catch n�tig!
+import de.fhdw.server.example.rest.Student;
 
 public class Database {
 
-	public Database(){
+	public static void main(String[] args) throws SQLException {
+		Database main = new Database();
+		main.createTable();
+		main.addStudent();
+		main.showContents();
+	}
+
+	//Ü
+	public Database () {
 		try {
 			createTable();
 			addStudent();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-	
-	
 
 	//Connection erstellen
 	private Connection getConnection() {
@@ -37,6 +42,33 @@ public class Database {
 			Connection connection = DriverManager.getConnection("jdbc:derby:database;create=true", properties);
 			return connection;
 		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	//Ü
+	public List<Student> getStudents() {
+		List<Student> students = new ArrayList<>();
+
+		try {
+			Connection connection = getConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT * FROM student";
+			ResultSet resultSet = statement.executeQuery(sql);
+			while (resultSet.next()) {
+				int id = resultSet.getInt(1);
+				String name = resultSet.getString(2);
+				Student student = new Student();
+				student.setId(id);
+				student.setName(name);
+				students.add(student);
+			}
+			resultSet.close();
+			statement.close();
+			connection.close();
+			return students;
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -95,32 +127,5 @@ public class Database {
 			statement.close();
 		}
 		connection.close();
-	}
-	
-	public Student[] provideContents() throws SQLException {
-		Student[] studentenArray = new Student[5];
-		int i = 0;
-		
-		Connection connection = getConnection();
-		Statement statement = connection.createStatement();
-		String sql = "SELECT * FROM student";
-		ResultSet resultSet = statement.executeQuery(sql);
-		System.out.println("Table student:");
-		
-		while (resultSet.next()) {
-			int id = resultSet.getInt(1);
-			String name = resultSet.getString(2);
-			Student stud = new Student();
-			stud.setId(id);
-			stud.setName(name);
-			
-			studentenArray[i] = stud;
-			i++;
-		}
-		resultSet.close();
-		statement.close();
-		connection.close();
-		
-		return studentenArray;
 	}
 }
