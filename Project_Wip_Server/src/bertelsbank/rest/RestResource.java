@@ -1,6 +1,7 @@
 package bertelsbank.rest;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
@@ -19,117 +20,46 @@ import org.apache.log4j.Logger;
 
 import com.sun.jersey.spi.resource.Singleton;
 
-import bertelsbank.db.Database;
+import bertelsbank.dataAccess.AccountDataAccess;
 
 @Path("/")
 @Singleton
 public class RestResource {
-	Database db = new Database();
+	AccountDataAccess daAccount = new AccountDataAccess();
 	Logger logger = Logger.getLogger(getClass());
 
 	@GET
-	@Path("/calc/{num1}/{num2}")
-	@Produces({MediaType.APPLICATION_JSON})
-	public Response calc(@PathParam("num1") double num1, @PathParam("num2") double num2) {
-		double result = num1 + num2;
-		logger.info(String.format("Calc: %s + %s = %s", num1, num2, result));
-		ResultData resultData = new ResultData();
-		resultData.setResult(result);
-		return Response.ok(resultData).build();
+	@Path("/addAccount/{owner}/{amount}")
+	@Produces({ MediaType.TEXT_PLAIN })
+	// Aufruf mit Parameter
+	public Response addAccount(@PathParam("owner") String owner, @PathParam("amount") BigDecimal amount)
+			throws SQLException {
+		if (owner.equals("BANK")) {
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		}
+		return Response.ok(daAccount.addAccount(owner)).build();
 	}
-
-
-	/*
-	@GET
-	@Path("/students")
-	@Produces({MediaType.APPLICATION_JSON})
-	public Response students() {
-		List<Student> students = db.getStudents();
-		Student[] studentArray = students.toArray(new Student[0]);
-		return Response.ok(studentArray).build();
-
-//		Alternative Lösung: Wrapper-Klasse für ArrayList:
-//		MyStudentListWrapper studentList = new MyStudentListWrapper(students);
-//		return Response.ok(studentList).build();
-	}
-	*/
 
 	@GET
-	@Path("/files")
-	@Produces({MediaType.APPLICATION_JSON})
-	public Response files() {
-		File folder = new File("D:/Ordner");
-		File[] filesInFolder = folder.listFiles();
-		MyFileWrapper myFileWrapper = new MyFileWrapper(filesInFolder);
-
-		return Response.ok(myFileWrapper).build();
+	@Path("/getFreeNumber")
+	@Produces({ MediaType.TEXT_PLAIN })
+	// Aufruf mit Parameter
+	public Response getFreeNumber() throws SQLException {
+		String freeNumber = daAccount.getFreeNumber();
+		if (freeNumber.equals("")) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		} else {
+			return Response.ok(freeNumber).build();
+		}
 	}
 
-    @GET
-    @Path("/hello")
-    @Produces({ MediaType.TEXT_PLAIN })
-    //Aufruf ohne Parameter
-    public Response hello() {
-        return Response.ok("Hello World").build();
+	@GET
+	@Path("/dereservateNumber/{number}")
+	@Produces({ MediaType.TEXT_PLAIN })
+	// Aufruf mit Parameter
+	public Response dereservateNumber(@PathParam("number") String number) throws SQLException {
+		daAccount.reservatedNumbers.remove(number);
+		return Response.ok().build();
+	}
 
-        // Beispiele für Fehler
-        // Fehler 5xx mit eigener Fehlermeldung
-        // return Response.serverError().entity("Fehler").build();
-        // Fehler 4xx
-        // return Response.status(Response.Status.BAD_REQUEST).build();
-    }
-
-    @GET
-    @Path("/hello/{name}")
-    @Produces({ MediaType.TEXT_PLAIN })
-    //Aufruf mit Parameter
-    public Response helloName(@PathParam("name") String name) {
-        return Response.ok("Hello " + name).build();
-    }
-
-    @GET
-    @Path("/addAccount/{owner}/{startingCapital}")
-    @Produces({ MediaType.TEXT_PLAIN })
-    //Aufruf mit Parameter
-    public Response helloName(@PathParam("owner") String owner, @PathParam("startingCapital") double startingCapital) throws SQLException {
-        Database db = new Database();
-    	return Response.ok(db.addAccount(owner)).build();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// =============================
-// Für spätere Android Beispiele
-// =============================
-
-    @GET
-    @Path("/data")
-    @Produces({ MediaType.APPLICATION_JSON })
-    //Aufruf mit Rückgabe eines JSON Objekts
-    public Response getData() {
-        RestData rd = new RestData();
-        rd.setInfo("Antwort: " + new Random().nextInt(42));
-        return Response.ok(rd).build();
-    }
-
-    @POST
-    @Path("/data")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    //Senden von Daten
-    public Response sendData(@FormParam("info") String info) {
-        System.out.println(info);
-        return Response.ok().build();
-    }
 }
