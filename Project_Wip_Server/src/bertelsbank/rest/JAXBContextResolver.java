@@ -14,8 +14,7 @@ public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 	private static final Class<?>[] CLASSES = new Class[] { RestData.class,
 															ResultData.class,
 															MyFileWrapper.class,
-															MyStudentListWrapper.class,
-															Student.class/*
+															Account.class/*
 																			 * Klassen
 																			 * des
 																			 * Datenmodells

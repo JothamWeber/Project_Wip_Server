@@ -86,15 +86,14 @@ public class RestResource {
     public Response helloName(@PathParam("name") String name) {
         return Response.ok("Hello " + name).build();
     }
-    
+
     @GET
-    @Path("/addAccount/{owner}/{number}")
+    @Path("/addAccount/{owner}/{startingCapital}")
     @Produces({ MediaType.TEXT_PLAIN })
     //Aufruf mit Parameter
-    public Response helloName(@PathParam("owner") String owner, @PathParam("number") String number) throws SQLException {
+    public Response helloName(@PathParam("owner") String owner, @PathParam("startingCapital") double startingCapital) throws SQLException {
         Database db = new Database();
-        db.addAccount(owner, number);
-    	return Response.ok("Account " + owner + ", " + number + " was successfully added.").build();
+    	return Response.ok(db.addAccount(owner)).build();
     }
 
 
