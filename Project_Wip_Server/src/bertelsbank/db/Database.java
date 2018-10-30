@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import bertelsbank.rest.Account;
 import bertelsbank.rest.Student;
 
 public class Database {
@@ -18,14 +19,19 @@ public class Database {
 		Database main = new Database();
 		//main.createAccountTable();
 		//main.addAccount();
-		main.showContents();
+		//main.showContents();
+		//main.deleteTable("account");
 	}
 
 	//Ü
 	public Database () {
 		try {
 			createAccountTable();
-			addAccount();
+			addAccount("BANK", "0000");
+
+			showContents();
+			//deleteTable("account");
+			//clearTable("account");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -48,26 +54,28 @@ public class Database {
 	}
 
 	//Ü
-	public List<Student> getStudents() {
-		List<Student> students = new ArrayList<>();
+	public List<Account> getAccounts() {
+		List<Account> accounts = new ArrayList<>();
 
 		try {
 			Connection connection = getConnection();
 			Statement statement = connection.createStatement();
-			String sql = "SELECT * FROM student";
+			String sql = "SELECT * FROM account";
 			ResultSet resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
 				int id = resultSet.getInt(1);
-				String name = resultSet.getString(2);
-				Student student = new Student();
-				student.setId(id);
-				student.setName(name);
-				students.add(student);
+				String owner = resultSet.getString(2);
+				String number = resultSet.getString(3);
+				Account account = new Account();
+				account.setId(id);
+				account.setOwner(owner);
+				account.setNumber(number);
+				accounts.add(account);
 			}
 			resultSet.close();
 			statement.close();
 			connection.close();
-			return students;
+			return accounts;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -84,29 +92,74 @@ public class Database {
 		while (resultSet.next()) {
 			int id = resultSet.getInt(1);
 			String owner = resultSet.getString(2);
+			String number = resultSet.getString(3);
 
-			System.out.println(id + " -- " + owner);
+			System.out.println(id + " | " + owner + " | " + number);
 		}
 		resultSet.close();
 		statement.close();
 		connection.close();
 	}
-	
+
+	//Ausgabe des Tabelleninhalts von student
+	private int getEntryCount() throws SQLException {
+		int entryCount = 0;
+		Connection connection = getConnection();
+		Statement statement = connection.createStatement();
+		String sql = "SELECT count(*) FROM account";
+		ResultSet resultSet = statement.executeQuery(sql);
+		while (resultSet.next()) {
+			entryCount = resultSet.getInt(1);
+
+			System.out.println("Table Entry Count: " + entryCount);
+		}
+		resultSet.close();
+		statement.close();
+		connection.close();
+		return entryCount;
+	}
+
+	//Pr�ft, ob Kontonummer existiert
+	private boolean numberExists(String number) throws SQLException {
+		int entryCount = 0;
+		Connection connection = getConnection();
+		Statement statement = connection.createStatement();
+		String sql = "SELECT count(*) FROM account where number = '" + number + "'";
+		ResultSet resultSet = statement.executeQuery(sql);
+		while (resultSet.next()) {
+			entryCount = resultSet.getInt(1);
+
+			System.out.println("Table Entry Count: " + entryCount);
+		}
+		resultSet.close();
+		statement.close();
+		connection.close();
+		if(entryCount == 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
 	//Konto der Tabelle hinzufügen
-		private void addAccount() {
+	public void addAccount(String owner, String number) throws SQLException {
+		if(!numberExists(number)){
 			System.out.println("Adding account...");
 			//Try - Catch mit Resourcen
 			try (Connection connection = getConnection();
-					PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO account VALUES (?,?)")) {
-				preparedStatement.setInt(1, 1000);
-				preparedStatement.setString(2, "BANK");
+					PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO account VALUES (?,?,?)")) {
+				preparedStatement.setInt(1, getEntryCount() + 1);
+				preparedStatement.setString(2, owner);
+				preparedStatement.setString(3, number);
 				preparedStatement.execute();
 			} catch (SQLException e) {
 				//Exception loggen, ggf. angemessen reagieren
 				e.printStackTrace();
 			}
+		}else{
+			System.out.println("Account not added.");
 		}
-		
+	}
 	//Kontentabelle erstellen
 	private void createAccountTable() throws SQLException {
 		Connection connection = getConnection();
@@ -123,10 +176,29 @@ public class Database {
 		if (shouldCreateTable) {
 			System.out.println("Creating table account...");
 			Statement statement = connection.createStatement();
-			statement.execute("create table account (id int not null, owner varchar(64))");
+			statement.execute("create table account (id int not null, owner varchar(64) not null, number varchar(64) not null)");
 			statement.close();
 		}
+
 		connection.close();
 	}
-				
+
+	private void deleteTable(String tableName) throws SQLException{
+		Connection connection = getConnection();
+		System.out.println("Deleting table " + tableName + "...");
+		Statement statement = connection.createStatement();
+		statement.execute("drop table " + tableName);
+		statement.close();
+		connection.close();
+	}
+
+	private void clearTable(String tableName) throws SQLException{
+		Connection connection = getConnection();
+		System.out.println("Clearing table " + tableName + "...");
+		Statement statement = connection.createStatement();
+		statement.execute("delete from " + tableName);
+		statement.close();
+		connection.close();
+	}
+
 }

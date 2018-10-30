@@ -28,7 +28,7 @@ public class JettyServer {
         logger.setLevel(Level.ALL);
 
 		// JERSEY
-		ResourceConfig resourceConfig = new PackagesResourceConfig("de.fhdw.server.example.rest");
+		ResourceConfig resourceConfig = new PackagesResourceConfig("bertelsbank.rest");
 		ServletContextHandler sh = new ServletContextHandler();
 		sh.setContextPath("/rest");
 		sh.addServlet(new ServletHolder(new ServletContainer(resourceConfig)), "/*");

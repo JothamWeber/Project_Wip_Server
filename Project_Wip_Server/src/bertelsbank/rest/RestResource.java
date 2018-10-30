@@ -1,6 +1,7 @@
 package bertelsbank.rest;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
@@ -37,6 +38,8 @@ public class RestResource {
 		return Response.ok(resultData).build();
 	}
 
+
+	/*
 	@GET
 	@Path("/students")
 	@Produces({MediaType.APPLICATION_JSON})
@@ -49,6 +52,7 @@ public class RestResource {
 //		MyStudentListWrapper studentList = new MyStudentListWrapper(students);
 //		return Response.ok(studentList).build();
 	}
+	*/
 
 	@GET
 	@Path("/files")
@@ -81,6 +85,16 @@ public class RestResource {
     //Aufruf mit Parameter
     public Response helloName(@PathParam("name") String name) {
         return Response.ok("Hello " + name).build();
+    }
+    
+    @GET
+    @Path("/addAccount/{owner}/{number}")
+    @Produces({ MediaType.TEXT_PLAIN })
+    //Aufruf mit Parameter
+    public Response helloName(@PathParam("owner") String owner, @PathParam("number") String number) throws SQLException {
+        Database db = new Database();
+        db.addAccount(owner, number);
+    	return Response.ok("Account " + owner + ", " + number + " was successfully added.").build();
     }
 
 
