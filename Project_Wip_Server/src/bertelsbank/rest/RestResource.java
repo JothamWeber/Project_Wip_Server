@@ -41,6 +41,15 @@ public class RestResource {
 	}
 
 	@GET
+	@Path("/account/{number}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	// Aufruf mit Parameter
+	public Response addAccount(@PathParam("number") String number) throws SQLException {
+
+		return Response.ok(daAccount.getAccountByNumber(number)).build();
+	}
+
+	@GET
 	@Path("/getFreeNumber")
 	@Produces({ MediaType.TEXT_PLAIN })
 	// Aufruf mit Parameter
@@ -59,6 +68,16 @@ public class RestResource {
 	// Aufruf mit Parameter
 	public Response dereservateNumber(@PathParam("number") String number) throws SQLException {
 		daAccount.reservatedNumbers.remove(number);
+		return Response.ok().build();
+	}
+
+	@GET
+	@Path("/addTransaction/{senderNumber}/{receiverNumber}/{amount}/{reference}")
+	@Produces({ MediaType.TEXT_PLAIN })
+	// Aufruf mit Parameter
+	public Response dereservateNumber(@PathParam("senderNumber") String senderNumber, @PathParam("receiverNumber")
+	String receiverNumber, @PathParam("amount") BigDecimal amount, @PathParam("reference") String reference) throws SQLException {
+		daAccount.addTransaction(senderNumber, receiverNumber, amount, reference);
 		return Response.ok().build();
 	}
 
