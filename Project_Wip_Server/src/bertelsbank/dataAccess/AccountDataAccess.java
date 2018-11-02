@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.derby.client.am.DateTime;
+import org.apache.derby.client.am.Decimal;
 import org.apache.derby.iapi.services.io.NewByteArrayInputStream;
 
 import bertelsbank.rest.Account;
@@ -30,7 +31,7 @@ public class AccountDataAccess {
 	public AccountDataAccess() {
 		try {
 			// deleteTable("account");
-			// deleteTable("transactiontable");
+			 deleteTable("transactiontable");
 			// clearTable("account");
 
 			createAccountTable();
@@ -293,14 +294,14 @@ public class AccountDataAccess {
 			System.out.println("Creating table transaction...");
 			Statement statement = connection.createStatement();
 			statement.execute("create table transactionTable (id int not null, senderNumber varchar(4) not null, "
-					+ "receiverNumber varchar(4) not null, amount decimal not null, reference varchar(64) not null, date varchar(64) not null)");
+					+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date varchar(64) not null)");
 			statement.close();
 		}
 
 		connection.close();
 	}
 
-	// Konto der Tabelle hinzufÃ¼gen
+	// Konto der Tabelle hinzufügen
 	public void addTransaction(String senderNumber, String receiverNumber, BigDecimal amount, String reference) throws SQLException {
 		System.out.println("Adding transaction...");
 		try (Connection connection = getConnection();
