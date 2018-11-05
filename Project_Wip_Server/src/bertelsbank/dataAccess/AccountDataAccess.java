@@ -14,14 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.ws.rs.GET;
+
 import org.apache.derby.client.am.DateTime;
 import org.apache.derby.client.am.Decimal;
 import org.apache.derby.iapi.services.io.NewByteArrayInputStream;
+import org.eclipse.jetty.server.session.JDBCSessionIdManager.DatabaseAdaptor;
 
 import bertelsbank.rest.Account;
 import bertelsbank.rest.Transaction;
 
 public class AccountDataAccess {
+	TransactionDataAccess daTransaction = new TransactionDataAccess();
 	public List<String> reservatedNumbers = new ArrayList<String>();
 	boolean bankAccountExists = true;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
@@ -31,14 +35,10 @@ public class AccountDataAccess {
 	public AccountDataAccess() {
 		try {
 			// deleteTable("account");
-			 deleteTable("transactiontable");
 			// clearTable("account");
 
 			createAccountTable();
 			showContentsAccountTable();
-
-			createTransactionTable();
-			showContentsTransactionTable();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -173,7 +173,7 @@ public class AccountDataAccess {
 				account.setId(id);
 				account.setOwner(owner);
 				account.setNumber(number);
-				// Transaktionsliste fehlt noch
+				account.setTransactions(daTransaction.getTransactionHistory(number));
 			}
 			resultSet.close();
 			statement.close();
@@ -184,6 +184,7 @@ public class AccountDataAccess {
 			return null;
 		}
 	}
+
 
 	// Rückgabe einer Liste aller Konten
 	public List<Account> getAccounts() {
@@ -267,76 +268,6 @@ public class AccountDataAccess {
 			String number = resultSet.getString(3);
 
 			System.out.println(id + " | " + owner + " | " + number);
-		}
-		resultSet.close();
-		statement.close();
-		connection.close();
-	}
-
-	// =============================
-	// DB-TABELLE TRANSACTION
-	// =============================
-
-	// Transaktionstabelle erstellen
-	public void createTransactionTable() throws SQLException {
-		Connection connection = getConnection();
-		// Optionale Prüfung, ob Tabelle bereits besteht
-		ResultSet resultSet = connection.getMetaData().getTables("%", "%", "%", new String[] { "TABLE" });
-		boolean shouldCreateTable = true;
-		while (resultSet.next() && shouldCreateTable) {
-			if (resultSet.getString("TABLE_NAME").equalsIgnoreCase("TRANSACTIONTABLE")) {
-				shouldCreateTable = false;
-			}
-		}
-		resultSet.close();
-
-		if (shouldCreateTable) {
-			System.out.println("Creating table transaction...");
-			Statement statement = connection.createStatement();
-			statement.execute("create table transactionTable (id int not null, senderNumber varchar(4) not null, "
-					+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date varchar(64) not null)");
-			statement.close();
-		}
-
-		connection.close();
-	}
-
-	// Konto der Tabelle hinzufügen
-	public void addTransaction(String senderNumber, String receiverNumber, BigDecimal amount, String reference) throws SQLException {
-		System.out.println("Adding transaction...");
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection
-						.prepareStatement("INSERT INTO transactionTable VALUES (?,?,?,?,?,?)")) {
-			preparedStatement.setInt(1, getEntryCount("transactionTable") + 1);
-			preparedStatement.setString(2, senderNumber);
-			preparedStatement.setString(3, receiverNumber);
-			preparedStatement.setBigDecimal(4, amount);
-			preparedStatement.setString(5, reference);
-			preparedStatement.setString(6, simpleDateFormat.format(new java.util.Date()));
-			preparedStatement.execute();
-			showContentsTransactionTable();
-		} catch (SQLException e) {
-			// Exception loggen, ggf. angemessen reagieren
-			e.printStackTrace();
-		}
-	}
-
-	// Ausgabe des Tabelleninhalts von transactiontable
-	private void showContentsTransactionTable() throws SQLException {
-		Connection connection = getConnection();
-		Statement statement = connection.createStatement();
-		String sql = "SELECT * FROM transactionTable";
-		ResultSet resultSet = statement.executeQuery(sql);
-		System.out.println("Table transaction:");
-		while (resultSet.next()) {
-			int id = resultSet.getInt(1);
-			String senderNumber = resultSet.getString(2);
-			String receiverNumber = resultSet.getString(3);
-			String amount = resultSet.getString(4);        // !!!!
-			String reference = resultSet.getString(5);
-			String date = resultSet.getString(6);
-
-			System.out.println(id + " | " + senderNumber + " | " + receiverNumber + " | " + amount + " | " + reference + " | " + date);
 		}
 		resultSet.close();
 		statement.close();
