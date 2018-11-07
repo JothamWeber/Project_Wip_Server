@@ -52,7 +52,7 @@ public class RestResource {
 	// Aufruf mit Parameter
 	public Response addAccount(@PathParam("number") String number) throws SQLException {
 
-		return Response.ok(daAccount.getAccountByNumber(number)).build();
+		return Response.ok(daAccount.getAccountByNumber(number, true)).build();
 	}
 
 	@GET

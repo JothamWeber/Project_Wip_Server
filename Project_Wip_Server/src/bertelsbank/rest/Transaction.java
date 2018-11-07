@@ -3,16 +3,26 @@ package bertelsbank.rest;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@XmlRootElement
+@XmlRootElement(name="transaction")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Transaction {
+	@XmlElement(name="id")
 	private int id;
+	
 	private Account sender;
 	private Account receiver;
 	private BigDecimal amount;
 	private String reference;
+
+	@XmlElement(name="transactionDate")
+	@XmlJavaTypeAdapter(DateTimeAdapter.class)
 	private Date transactionDate;
 
 	@XmlTransient

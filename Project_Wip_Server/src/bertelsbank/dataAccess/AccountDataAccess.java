@@ -160,7 +160,7 @@ public class AccountDataAccess {
 	}
 
 	// Rückgabe eines Kontos
-	public Account getAccountByNumber(String number) {
+	public Account getAccountByNumber(String number, boolean attachTransactions) {
 		Account account = new Account();
 		try {
 			Connection connection = getConnection();
@@ -173,7 +173,9 @@ public class AccountDataAccess {
 				account.setId(id);
 				account.setOwner(owner);
 				account.setNumber(number);
-				account.setTransactions(daTransaction.getTransactionHistory(number));
+				if (attachTransactions) {
+					account.setTransactions(daTransaction.getTransactionHistory(number));
+				}
 			}
 			resultSet.close();
 			statement.close();
@@ -184,7 +186,6 @@ public class AccountDataAccess {
 			return null;
 		}
 	}
-
 
 	// Rückgabe einer Liste aller Konten
 	public List<Account> getAccounts() {

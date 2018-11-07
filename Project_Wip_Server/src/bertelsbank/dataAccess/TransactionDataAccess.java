@@ -23,7 +23,6 @@ import bertelsbank.rest.Account;
 import bertelsbank.rest.Transaction;
 
 public class TransactionDataAccess {
-	AccountDataAccess daAccount = new AccountDataAccess();
 	public List<String> reservatedNumbers = new ArrayList<String>();
 	boolean bankAccountExists = true;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
@@ -119,7 +118,7 @@ public class TransactionDataAccess {
 			System.out.println("Creating table transaction...");
 			Statement statement = connection.createStatement();
 			statement.execute("create table transactionTable (id int not null, senderNumber varchar(4) not null, "
-					+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date date not null)");
+					+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date timestamp not null)");
 			statement.close();
 		}
 
@@ -138,7 +137,7 @@ public class TransactionDataAccess {
 			preparedStatement.setString(3, receiverNumber);
 			preparedStatement.setBigDecimal(4, amount);
 			preparedStatement.setString(5, reference);
-			preparedStatement.setDate(6, java.sql.Date.valueOf(java.time.LocalDate.now()));
+			preparedStatement.setTimestamp(6, java.sql.Timestamp.valueOf(LocalDateTime.now()));
 			preparedStatement.execute();
 			showContentsTransactionTable();
 		} catch (SQLException e) {
@@ -148,7 +147,8 @@ public class TransactionDataAccess {
 	}
 
 	public List<Transaction> getTransactionHistory(String accountNumber) throws SQLException {
-		List<Transaction> transactionHistoryList = null;
+		List<Transaction> transactionHistoryList = new ArrayList<Transaction>();
+		AccountDataAccess daAccount = new AccountDataAccess();
 
 		// Wenn keine Kontonummer übergeben wird, soll die gesamte
 		// Transaktionshistorie aller Konten zurückgegeben werden
@@ -160,11 +160,11 @@ public class TransactionDataAccess {
 			while (resultSet.next()) {
 				Transaction transaction = new Transaction();
 				transaction.setId(resultSet.getInt(1));
-				transaction.setSender(daAccount.getAccountByNumber(resultSet.getString(2)));
-				transaction.setReceiver(daAccount.getAccountByNumber(resultSet.getString(3)));
+				transaction.setSender(daAccount.getAccountByNumber(resultSet.getString(2), false));
+				transaction.setReceiver(daAccount.getAccountByNumber(resultSet.getString(3), false));
 				transaction.setAmount(resultSet.getBigDecimal(4));
 				transaction.setReference(resultSet.getString(5));
-				transaction.setTransactionDate(resultSet.getDate(6));
+				transaction.setTransactionDate(resultSet.getTimestamp(6));
 				transactionHistoryList.add(transaction);
 			}
 			resultSet.close();
@@ -178,11 +178,11 @@ public class TransactionDataAccess {
 			while (resultSet.next()) {
 				Transaction transaction = new Transaction();
 				transaction.setId(resultSet.getInt(1));
-				transaction.setSender(daAccount.getAccountByNumber(resultSet.getString(2)));
-				transaction.setReceiver(daAccount.getAccountByNumber(resultSet.getString(3)));
+				transaction.setSender(daAccount.getAccountByNumber(resultSet.getString(2), false));
+				transaction.setReceiver(daAccount.getAccountByNumber(resultSet.getString(3), false));
 				transaction.setAmount(resultSet.getBigDecimal(4));
 				transaction.setReference(resultSet.getString(5));
-				transaction.setTransactionDate(resultSet.getDate(6));
+				transaction.setTransactionDate(resultSet.getTimestamp(6));
 				transactionHistoryList.add(transaction);
 			}
 			resultSet.close();
