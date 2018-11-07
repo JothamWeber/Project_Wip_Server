@@ -13,7 +13,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlRootElement(name="transaction")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Transaction {
-	@XmlElement(name="id")
+	
+	//@XmlElement(name="id")
 	private int id;
 	
 	private Account sender;
