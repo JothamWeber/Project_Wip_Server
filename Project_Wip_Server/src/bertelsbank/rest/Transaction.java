@@ -10,26 +10,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@XmlRootElement(name="transaction")
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Transaction {
-	
-	//@XmlElement(name="id")
+
+	@XmlTransient
 	private int id;
-	
+
 	private Account sender;
+
 	private Account receiver;
+
 	private BigDecimal amount;
+
 	private String reference;
 
-	@XmlElement(name="transactionDate")
 	@XmlJavaTypeAdapter(DateTimeAdapter.class)
 	private Date transactionDate;
+
 
 	@XmlTransient
 	public int getId() {
 		return id;
 	}
+
 
 	public void setId(int id) {
 		this.id = id;

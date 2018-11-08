@@ -117,7 +117,7 @@ public class TransactionDataAccess {
 		if (shouldCreateTable) {
 			System.out.println("Creating table transaction...");
 			Statement statement = connection.createStatement();
-			statement.execute("create table transactionTable (id int not null, senderNumber varchar(4) not null, "
+			statement.execute("create table transactionTable (id int not null primary key, senderNumber varchar(4) not null, "
 					+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date timestamp not null)");
 			statement.close();
 		}
@@ -173,7 +173,7 @@ public class TransactionDataAccess {
 		} else {
 			Connection connection = getConnection();
 			Statement statement = connection.createStatement();
-			String sql = "SELECT * FROM transactionTable";
+			String sql = "SELECT * FROM transactionTable where sendernumber = '" + accountNumber + "' or receivernumber = '" + accountNumber + "'";
 			ResultSet resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
 				Transaction transaction = new Transaction();
@@ -190,6 +190,30 @@ public class TransactionDataAccess {
 			connection.close();
 		}
 		return transactionHistoryList;
+	}
+
+	public BigDecimal getAccountBalance(String accountNumber) throws SQLException{
+		BigDecimal balance = BigDecimal.ZERO;
+
+		Connection connection = getConnection();
+		Statement statement = connection.createStatement();
+		String sql = "SELECT amount FROM transactionTable where sendernumber = '" + accountNumber + "'";
+		ResultSet resultSet = statement.executeQuery(sql);
+		while (resultSet.next()) {
+			balance = balance.subtract(resultSet.getBigDecimal(1));
+		}
+
+		sql = "SELECT amount FROM transactionTable where receivernumber = '" + accountNumber + "'";
+		resultSet = statement.executeQuery(sql);
+		while (resultSet.next()) {
+			balance = balance.add(resultSet.getBigDecimal(1));
+		}
+
+		resultSet.close();
+		statement.close();
+		connection.close();
+
+		return balance;
 	}
 
 	// Ausgabe des Tabelleninhalts von transactiontable

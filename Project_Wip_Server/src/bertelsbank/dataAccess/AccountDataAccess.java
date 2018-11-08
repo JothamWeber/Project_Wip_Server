@@ -122,10 +122,10 @@ public class AccountDataAccess {
 			System.out.println("Creating table account...");
 			Statement statement = connection.createStatement();
 			statement.execute(
-					"create table account (id int not null, owner varchar(64) not null, number varchar(4) not null)");
+					"create table account (id int not null primary key, owner varchar(64) not null, number varchar(4) not null)");
 			statement.close();
 			bankAccountExists = false;
-			addAccount("BANK");
+			addAccount("BANK", BigDecimal.ZERO);
 			bankAccountExists = true;
 		}
 
@@ -133,7 +133,7 @@ public class AccountDataAccess {
 	}
 
 	// Konto der Tabelle hinzufÃ¼gen
-	public String addAccount(String owner) throws SQLException {
+	public String addAccount(String owner, BigDecimal amount) throws SQLException {
 		String status = "";
 		String accountNumber = getFreeNumber();
 		if (!accountNumber.equals("")) {
@@ -145,8 +145,11 @@ public class AccountDataAccess {
 				preparedStatement.setString(2, owner);
 				preparedStatement.setString(3, accountNumber);
 				preparedStatement.execute();
+				if(amount.compareTo(BigDecimal.ZERO) == 1){
+					daTransaction.addTransaction("0000", accountNumber, amount, "STARTGUTHABEN");
+				}
 				status = "Folgendes Konto wurde erfolgreich erstellt:" + "\nKontonummer: " + accountNumber
-						+ "\nInhaber: " + owner + "\nStartguthaben: ";
+						+ "\nInhaber: " + owner + "\nStartguthaben: " + amount;
 				reservatedNumbers.remove(accountNumber);
 				showContentsAccountTable();
 			} catch (SQLException e) {
@@ -170,6 +173,7 @@ public class AccountDataAccess {
 			if (resultSet.next()) {
 				int id = resultSet.getInt(1);
 				String owner = resultSet.getString(2);
+
 				account.setId(id);
 				account.setOwner(owner);
 				account.setNumber(number);
@@ -190,7 +194,6 @@ public class AccountDataAccess {
 	// Rückgabe einer Liste aller Konten
 	public List<Account> getAccounts() {
 		List<Account> accounts = new ArrayList<>();
-
 		try {
 			Connection connection = getConnection();
 			Statement statement = connection.createStatement();
@@ -236,7 +239,7 @@ public class AccountDataAccess {
 	}
 
 	// Prüft, ob Kontonummer existiert
-	private boolean numberExists(String number) throws SQLException {
+	public boolean numberExists(String number) throws SQLException {
 		int entryCount = 0;
 		Connection connection = getConnection();
 		Statement statement = connection.createStatement();
