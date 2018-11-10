@@ -133,7 +133,7 @@ public class AccountDataAccess {
 	}
 
 	// Konto der Tabelle hinzufÃ¼gen
-	public String addAccount(String owner, BigDecimal amount) throws SQLException {
+	public void addAccount(String owner, BigDecimal amount) throws SQLException {
 		String status = "";
 		String accountNumber = getFreeNumber();
 		if (!accountNumber.equals("")) {
@@ -148,18 +148,14 @@ public class AccountDataAccess {
 				if(amount.compareTo(BigDecimal.ZERO) == 1){
 					daTransaction.addTransaction("0000", accountNumber, amount, "STARTGUTHABEN");
 				}
-				status = "Folgendes Konto wurde erfolgreich erstellt:" + "\nKontonummer: " + accountNumber
-						+ "\nInhaber: " + owner + "\nStartguthaben: " + amount;
 				reservatedNumbers.remove(accountNumber);
 				showContentsAccountTable();
 			} catch (SQLException e) {
 				// Exception loggen, ggf. angemessen reagieren
 				e.printStackTrace();
-				status = "Es gab ein Problem beim Erstellen des Kontos. Bitte versuchen Sie es erneut.";
 				System.out.println(status);
 			}
 		}
-		return status;
 	}
 
 	// Rückgabe eines Kontos

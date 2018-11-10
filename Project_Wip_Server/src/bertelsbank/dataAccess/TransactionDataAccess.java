@@ -150,12 +150,12 @@ public class TransactionDataAccess {
 		List<Transaction> transactionHistoryList = new ArrayList<Transaction>();
 		AccountDataAccess daAccount = new AccountDataAccess();
 
-		// Wenn keine Kontonummer übergeben wird, soll die gesamte
+		// Wenn "all" als Kontonummer übergeben wird, soll die gesamte
 		// Transaktionshistorie aller Konten zurückgegeben werden
-		if (accountNumber == null || accountNumber.equals("")) {
+		if (accountNumber.equals("all")) {
 			Connection connection = getConnection();
 			Statement statement = connection.createStatement();
-			String sql = "SELECT * FROM transactionTable";
+			String sql = "SELECT * FROM transactionTable order by date desc";
 			ResultSet resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
 				Transaction transaction = new Transaction();
@@ -173,7 +173,7 @@ public class TransactionDataAccess {
 		} else {
 			Connection connection = getConnection();
 			Statement statement = connection.createStatement();
-			String sql = "SELECT * FROM transactionTable where sendernumber = '" + accountNumber + "' or receivernumber = '" + accountNumber + "'";
+			String sql = "SELECT * FROM transactionTable where sendernumber = '" + accountNumber + "' or receivernumber = '" + accountNumber + "' order by date desc";
 			ResultSet resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
 				Transaction transaction = new Transaction();

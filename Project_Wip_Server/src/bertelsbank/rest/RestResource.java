@@ -1,13 +1,9 @@
 package bertelsbank.rest;
 
-import java.io.Console;
-import java.io.File;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Random;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -17,13 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
-
-import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.http.HttpBuffers;
-
 import com.sun.jersey.spi.resource.Singleton;
 
 import bertelsbank.dataAccess.AccountDataAccess;
@@ -41,6 +31,10 @@ public class RestResource {
 	// ==========================
 
 	// Liefert ein Konto falls vorhanden.
+	/**
+	 * @param number
+	 * @return
+	 */
 	@GET
 	@Path("/account/{number}")
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -63,6 +57,13 @@ public class RestResource {
 		}
 	}
 
+	/**
+	 * @param senderNumber
+	 * @param receiverNumber
+	 * @param amount
+	 * @param reference
+	 * @return
+	 */
 	@POST
 	@Path("/transaction")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -70,47 +71,86 @@ public class RestResource {
 			@FormParam("receiverNumber") String receiverNumber, @FormParam("amount") BigDecimal amount,
 			@FormParam("reference") String reference) {
 
-		//Ist Eingabe eine Zahl?
+		// Sind alle Werte vorhanden?
 		if (senderNumber == null || receiverNumber == null || amount == null || reference == null) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Nicht alle Felder sind gefüllt.").build();
 		}
+		// Ist amount größer als 0?
 		if (!(amount.compareTo(BigDecimal.ZERO) == 1)) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Der Betrag muss größer als 0 sein.").build();
 		}
+		// Hat amount mehr als 2 Nachkommastellen?
+		if (amount.scale() > 2) {
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("Der Betrag darf maximal 2 Nachkommastellen haben.").build();
+		}
 
 		try {
+			// Existiert das Empfängerkonto?
 			if (!daAccount.numberExists(receiverNumber)) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Das Empfängerkonto existiert nicht.").build();
 			}
-			if(daTransation.getAccountBalance(senderNumber).compareTo(amount) == -1 && !senderNumber.equals("0000")){
-				return Response.status(Response.Status.PRECONDITION_FAILED).entity("Ihr Kontoguthaben reicht für diese Transaktion nicht aus.").build();
+			// Hat das Empfängerkonto ausreichend Guthaben?
+			if (daTransation.getAccountBalance(senderNumber).compareTo(amount) == -1 && !senderNumber.equals("0000")) {
+				return Response.status(Response.Status.PRECONDITION_FAILED)
+						.entity("Ihr Kontoguthaben reicht für diese Transaktion nicht aus.").build();
 			}
-
+			// Transaktion in Datenbank schreiben
 			daTransation.addTransaction(senderNumber, receiverNumber, amount, reference);
-			return Response.ok().build(); // 204??
+			return Response.status(Response.Status.NO_CONTENT).build(); // ok
 
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
 					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
 		}
 	}
-	
-	
 
 	// ============
 	// VERWALTUNG
 	// ============
 
 	// Neues Konto erstellen
+	/**
+	 * @param owner
+	 * @param amount
+	 * @return
+	 */
 	@POST
 	@Path("/addAccount")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response addAccount(@FormParam("owner") String owner, @FormParam("amount") BigDecimal amount)
-			throws SQLException {
+	public Response addAccount(@FormParam("owner") String owner, @FormParam("amount") BigDecimal amount) {
+		if (owner.equals("") || amount == null) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Nicht alle Felder sind gefüllt.").build();
+		}
 		if (owner.toLowerCase().equals("bank")) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Das Konto \"Bank\" ist reserviert.").build();
 		}
-		return Response.ok(daAccount.addAccount(owner, amount)).build();
+		if (amount.compareTo(BigDecimal.ZERO) != 1) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Das Startguthaben muss größer als 0 sein.")
+					.build();
+		}
+		try {
+			daAccount.addAccount(owner, amount);
+			return Response.ok().build();
+		} catch (SQLException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+		}
+
+	}
+
+	@GET
+	@Path("/allTransactions")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getAllTransactions() {
+		try {
+			List<Transaction> transactions = daTransation.getTransactionHistory("all");
+			Transaction[] transactionArray = transactions.toArray(new Transaction[0]);
+			return Response.ok(transactionArray).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+		}
 	}
 
 	// Wird aufgerufen, wenn ein neues Konto angelegt werden soll und liefert
@@ -119,22 +159,33 @@ public class RestResource {
 	@Path("/getFreeNumber")
 	@Produces({ MediaType.TEXT_PLAIN })
 	// Aufruf mit Parameter
-	public Response getFreeNumber() throws SQLException {
-		String freeNumber = daAccount.getFreeNumber();
-		if (freeNumber.equals("")) {
-			return Response.status(Response.Status.NOT_FOUND).build();
-		} else {
-			return Response.ok(freeNumber).build();
+	public Response getFreeNumber() {
+		String freeNumber;
+		try {
+			freeNumber = daAccount.getFreeNumber();
+			if (freeNumber.equals("")) {
+				return Response.status(Response.Status.NOT_FOUND).entity("Es gibt keine freien Nummern mehr.").build();
+			} else {
+				return Response.ok(freeNumber).build();
+			}
+		} catch (SQLException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
 		}
 	}
 
 	// Wird aufgerufen, wenn im Dialog "Konto erstellen" der Abbrechen-Button
 	// gedrückt wird
-	@GET
-	@Path("/dereservateNumber/{number}")
-	@Produces({ MediaType.TEXT_PLAIN })
+	/**
+	 * @param number
+	 * @return
+	 * @throws SQLException
+	 */
+	@POST
+	@Path("/dereservateNumber")
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	// Aufruf mit Parameter
-	public Response dereservateNumber(@PathParam("number") String number) throws SQLException {
+	public Response dereservateNumber(@FormParam("number") String number) {
 		daAccount.reservatedNumbers.remove(number);
 		return Response.ok().build();
 	}
