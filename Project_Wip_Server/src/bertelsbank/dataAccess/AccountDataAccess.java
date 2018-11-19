@@ -38,7 +38,7 @@ public class AccountDataAccess {
 			// clearTable("account");
 
 			createAccountTable();
-			showContentsAccountTable();
+			//showContentsAccountTable();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -149,7 +149,7 @@ public class AccountDataAccess {
 					daTransaction.addTransaction("0000", accountNumber, amount, "STARTGUTHABEN");
 				}
 				reservatedNumbers.remove(accountNumber);
-				showContentsAccountTable();
+				//showContentsAccountTable();
 			} catch (SQLException e) {
 				// Exception loggen, ggf. angemessen reagieren
 				e.printStackTrace();

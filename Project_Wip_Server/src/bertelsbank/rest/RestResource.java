@@ -3,6 +3,9 @@ package bertelsbank.rest;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -67,7 +70,7 @@ public class RestResource {
 	@POST
 	@Path("/transaction")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response executeTransaction(@FormParam("senderNumber") String senderNumber,
+	public synchronized Response executeTransaction(@FormParam("senderNumber") String senderNumber,
 			@FormParam("receiverNumber") String receiverNumber, @FormParam("amount") BigDecimal amount,
 			@FormParam("reference") String reference) {
 
@@ -75,21 +78,52 @@ public class RestResource {
 		if (senderNumber == null || receiverNumber == null || amount == null || reference == null) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Nicht alle Felder sind gefüllt.").build();
 		}
-		// Ist amount größer als 0?
-		if (!(amount.compareTo(BigDecimal.ZERO) == 1)) {
-			return Response.status(Response.Status.BAD_REQUEST).entity("Der Betrag muss größer als 0 sein.").build();
+
+		// Haben "senderNumber" und "receiverNumber" das richtige Format?
+		if (senderNumber.length() != 4 || !isInteger(senderNumber) || receiverNumber.length() != 4
+				|| !isInteger(receiverNumber)) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Die Kontonummer muss aus 4 Zahlen bestehen.")
+					.build();
 		}
-		// Hat amount mehr als 2 Nachkommastellen?
+
+		// Unterscheiden sich "senderNumber" und "receiverNumber"?
+		if (senderNumber.equals(receiverNumber)) {
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("Das Senderkonto darf nicht das Empfängerkonto sein.").build();
+		}
+
+		// Ist "amount" größer als 0?
+		if (!(amount.compareTo(BigDecimal.ZERO) == 1)) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Der Betrag muss größer als 0 sein.")
+					.build();
+		}
+
+		// Hat "amount" mehr als 2 Nachkommastellen?
 		if (amount.scale() > 2) {
 			return Response.status(Response.Status.BAD_REQUEST)
 					.entity("Der Betrag darf maximal 2 Nachkommastellen haben.").build();
 		}
 
+		// Besteht "reference" aus den erlaubten Zeichen?
+		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(reference);
+		if (m.find()) {
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("Die Referenz darf nur folgende Zeichen beinhalten: A-Z, a-z, 0-9, Leerzeichen.").build();
+		}
+
 		try {
+
+			// Existiert das Senderkonto?
+			if (!daAccount.numberExists(senderNumber)) {
+				return Response.status(Response.Status.NOT_FOUND).entity("Das Senderkonto existiert nicht.").build();
+			}
+
 			// Existiert das Empfängerkonto?
 			if (!daAccount.numberExists(receiverNumber)) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Das Empfängerkonto existiert nicht.").build();
 			}
+
 			// Hat das Empfängerkonto ausreichend Guthaben?
 			if (daTransation.getAccountBalance(senderNumber).compareTo(amount) == -1 && !senderNumber.equals("0000")) {
 				return Response.status(Response.Status.PRECONDITION_FAILED)
@@ -97,7 +131,7 @@ public class RestResource {
 			}
 			// Transaktion in Datenbank schreiben
 			daTransation.addTransaction(senderNumber, receiverNumber, amount, reference);
-			return Response.status(Response.Status.NO_CONTENT).build(); // ok
+			return Response.status(Response.Status.NO_CONTENT).build();
 
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -112,32 +146,33 @@ public class RestResource {
 	// Neues Konto erstellen
 	/**
 	 * @param owner
-	 * @param amount
+	 * @param startBalancae
 	 * @return
 	 */
 	@POST
 	@Path("/addAccount")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response addAccount(@FormParam("owner") String owner, @FormParam("amount") BigDecimal amount) {
-		if (owner.equals("") || amount == null) {
+	public Response addAccount(@FormParam("owner") String owner, @FormParam("startBalance") BigDecimal startBalancae) {
+		if (owner.equals("") || startBalancae == null) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Nicht alle Felder sind gefüllt.").build();
 		}
 		if (owner.toLowerCase().equals("bank")) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Das Konto \"Bank\" ist reserviert.").build();
 		}
-		if (amount.compareTo(BigDecimal.ZERO) != 1) {
+		if (startBalancae.compareTo(BigDecimal.ZERO) != 1) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Das Startguthaben muss größer als 0 sein.")
 					.build();
 		}
 		try {
-			daAccount.addAccount(owner, amount);
+			daAccount.addAccount(owner, startBalancae);
 			return Response.ok().build();
 		} catch (SQLException e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
 					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
 		}
-
 	}
+
+	// allAccounts
 
 	@GET
 	@Path("/allTransactions")
@@ -159,7 +194,7 @@ public class RestResource {
 	@Path("/getFreeNumber")
 	@Produces({ MediaType.TEXT_PLAIN })
 	// Aufruf mit Parameter
-	public Response getFreeNumber() {
+	public synchronized Response getFreeNumber() {
 		String freeNumber;
 		try {
 			freeNumber = daAccount.getFreeNumber();
@@ -188,6 +223,19 @@ public class RestResource {
 	public Response dereservateNumber(@FormParam("number") String number) {
 		daAccount.reservatedNumbers.remove(number);
 		return Response.ok().build();
+	}
+
+	@GET
+	@Path("/getAccountBalance/{number}")
+	@Produces({ MediaType.TEXT_PLAIN })
+	// Aufruf mit Parameter
+	public Response getAccountBalance(@PathParam("number") String number) {
+		try {
+			return Response.ok(daTransation.getAccountBalance(number).toString()).build();
+		} catch (SQLException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+		}
 	}
 
 	// =======================

@@ -32,6 +32,7 @@ public class TransactionDataAccess {
 	public TransactionDataAccess() {
 		try {
 			// deleteTable("transactiontable");
+			// clearTable("transactiontable");
 
 			createTransactionTable();
 			showContentsTransactionTable();
@@ -61,7 +62,7 @@ public class TransactionDataAccess {
 		}
 	}
 
-	// Ausgabe des Tabelleninhalts von student
+	//
 	private int getEntryCount(String tableName) throws SQLException {
 		int entryCount = 0;
 		Connection connection = getConnection();
@@ -128,7 +129,7 @@ public class TransactionDataAccess {
 	// Konto der Tabelle hinzufügen
 	public void addTransaction(String senderNumber, String receiverNumber, BigDecimal amount, String reference)
 			throws SQLException {
-		System.out.println("Adding transaction...");
+		//System.out.println("Adding transaction...");
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement("INSERT INTO transactionTable VALUES (?,?,?,?,?,?)")) {
@@ -139,7 +140,7 @@ public class TransactionDataAccess {
 			preparedStatement.setString(5, reference);
 			preparedStatement.setTimestamp(6, java.sql.Timestamp.valueOf(LocalDateTime.now()));
 			preparedStatement.execute();
-			showContentsTransactionTable();
+			//showContentsTransactionTable();
 		} catch (SQLException e) {
 			// Exception loggen, ggf. angemessen reagieren
 			e.printStackTrace();
