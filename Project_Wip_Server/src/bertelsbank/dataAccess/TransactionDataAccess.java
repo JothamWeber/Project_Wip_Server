@@ -23,6 +23,8 @@ import bertelsbank.rest.Account;
 import bertelsbank.rest.Transaction;
 
 public class TransactionDataAccess {
+	DatabaseAdministration dbAdministration = new DatabaseAdministration();
+
 	public List<String> reservatedNumbers = new ArrayList<String>();
 	boolean bankAccountExists = true;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
@@ -30,73 +32,20 @@ public class TransactionDataAccess {
 	// Konstruktor - ruft Methoden auf, die die Datenbank inkl. Tabellen
 	// initialisiert
 	public TransactionDataAccess() {
+		/*
 		try {
 			// deleteTable("transactiontable");
 			// clearTable("transactiontable");
 
-			createTransactionTable();
-			showContentsTransactionTable();
+			// createTransactionTable();
+			//showContentsTransactionTable();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 
-	// =============================
-	// ALLGEMEINE DATENBANK-METHODEN
-	// =============================
-
-	// Connection erstellen
-	private Connection getConnection() {
-		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-
-			Properties properties = new Properties();
-			properties.put("user", "user");
-
-			Connection connection = DriverManager.getConnection("jdbc:derby:database;create=true", properties);
-			return connection;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	//
-	private int getEntryCount(String tableName) throws SQLException {
-		int entryCount = 0;
-		Connection connection = getConnection();
-		Statement statement = connection.createStatement();
-		String sql = "SELECT count(*) FROM " + tableName;
-		ResultSet resultSet = statement.executeQuery(sql);
-		if (resultSet.next()) {
-			entryCount = resultSet.getInt(1);
-		}
-		resultSet.close();
-		statement.close();
-		connection.close();
-		return entryCount;
-	}
-
-	// Löscht eine Tabelle der Datenbank
-	private void deleteTable(String tableName) throws SQLException {
-		Connection connection = getConnection();
-		System.out.println("Deleting table " + tableName + "...");
-		Statement statement = connection.createStatement();
-		statement.execute("drop table " + tableName);
-		statement.close();
-		connection.close();
-	}
-
-	// Entfernt alle Einträge einer Datenbanktabelle
-	private void clearTable(String tableName) throws SQLException {
-		Connection connection = getConnection();
-		System.out.println("Clearing table " + tableName + "...");
-		Statement statement = connection.createStatement();
-		statement.execute("delete from " + tableName);
-		statement.close();
-		connection.close();
-	}
 
 	// =============================
 	// DB-TABELLE TRANSACTION
@@ -104,7 +53,7 @@ public class TransactionDataAccess {
 
 	// Transaktionstabelle erstellen
 	public void createTransactionTable() throws SQLException {
-		Connection connection = getConnection();
+		Connection connection = dbAdministration.getConnection();
 		// Optionale Prüfung, ob Tabelle bereits besteht
 		ResultSet resultSet = connection.getMetaData().getTables("%", "%", "%", new String[] { "TABLE" });
 		boolean shouldCreateTable = true;
@@ -130,10 +79,10 @@ public class TransactionDataAccess {
 	public void addTransaction(String senderNumber, String receiverNumber, BigDecimal amount, String reference)
 			throws SQLException {
 		//System.out.println("Adding transaction...");
-		try (Connection connection = getConnection();
+		try (Connection connection = dbAdministration.getConnection();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement("INSERT INTO transactionTable VALUES (?,?,?,?,?,?)")) {
-			preparedStatement.setInt(1, getEntryCount("transactionTable") + 1);
+			preparedStatement.setInt(1, dbAdministration.getEntryCount("transactionTable") + 1);
 			preparedStatement.setString(2, senderNumber);
 			preparedStatement.setString(3, receiverNumber);
 			preparedStatement.setBigDecimal(4, amount);
@@ -154,7 +103,7 @@ public class TransactionDataAccess {
 		// Wenn "all" als Kontonummer übergeben wird, soll die gesamte
 		// Transaktionshistorie aller Konten zurückgegeben werden
 		if (accountNumber.equals("all")) {
-			Connection connection = getConnection();
+			Connection connection = dbAdministration.getConnection();
 			Statement statement = connection.createStatement();
 			String sql = "SELECT * FROM transactionTable order by date desc";
 			ResultSet resultSet = statement.executeQuery(sql);
@@ -172,7 +121,7 @@ public class TransactionDataAccess {
 			statement.close();
 			connection.close();
 		} else {
-			Connection connection = getConnection();
+			Connection connection = dbAdministration.getConnection();
 			Statement statement = connection.createStatement();
 			String sql = "SELECT * FROM transactionTable where sendernumber = '" + accountNumber + "' or receivernumber = '" + accountNumber + "' order by date desc";
 			ResultSet resultSet = statement.executeQuery(sql);
@@ -196,7 +145,7 @@ public class TransactionDataAccess {
 	public BigDecimal getAccountBalance(String accountNumber) throws SQLException{
 		BigDecimal balance = BigDecimal.ZERO;
 
-		Connection connection = getConnection();
+		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
 		String sql = "SELECT amount FROM transactionTable where sendernumber = '" + accountNumber + "'";
 		ResultSet resultSet = statement.executeQuery(sql);
@@ -219,7 +168,7 @@ public class TransactionDataAccess {
 
 	// Ausgabe des Tabelleninhalts von transactiontable
 	private void showContentsTransactionTable() throws SQLException {
-		Connection connection = getConnection();
+		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
 		String sql = "SELECT * FROM transactionTable";
 		ResultSet resultSet = statement.executeQuery(sql);

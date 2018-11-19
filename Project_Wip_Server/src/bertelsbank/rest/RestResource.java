@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import com.sun.jersey.spi.resource.Singleton;
 
 import bertelsbank.dataAccess.AccountDataAccess;
+import bertelsbank.dataAccess.DatabaseAdministration;
 import bertelsbank.dataAccess.TransactionDataAccess;
 
 @Path("/")
@@ -27,6 +28,8 @@ import bertelsbank.dataAccess.TransactionDataAccess;
 public class RestResource {
 	AccountDataAccess daAccount = new AccountDataAccess();
 	TransactionDataAccess daTransation = new TransactionDataAccess();
+	DatabaseAdministration dbAdministration = new DatabaseAdministration();
+
 	Logger logger = Logger.getLogger(getClass());
 
 	// ==========================
@@ -43,15 +46,18 @@ public class RestResource {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getAccount(@PathParam("number") String number) {
 
-		if (number.length() != 4 || !isInteger(number)) {
+		// Besteht die Kontonummer aus 4 Zahlen?
+		if (number.length() != 4 || !dbAdministration.isInteger(number)) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Die Kontonummer muss aus 4 Zahlen bestehen.")
 					.build();
 		}
 
 		try {
+			// Existiert der Account?
 			if (!daAccount.numberExists(number)) {
 				return Response.status(Response.Status.NOT_FOUND).entity("Diese Kontonummer existiert nicht.").build();
 			} else {
+				// Gibt den Account zurück
 				return Response.ok(daAccount.getAccountByNumber(number, true)).build();
 			}
 		} catch (Exception e) {
@@ -80,8 +86,8 @@ public class RestResource {
 		}
 
 		// Haben "senderNumber" und "receiverNumber" das richtige Format?
-		if (senderNumber.length() != 4 || !isInteger(senderNumber) || receiverNumber.length() != 4
-				|| !isInteger(receiverNumber)) {
+		if (senderNumber.length() != 4 || !dbAdministration.isInteger(senderNumber) || receiverNumber.length() != 4
+				|| !dbAdministration.isInteger(receiverNumber)) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Die Kontonummer muss aus 4 Zahlen bestehen.")
 					.build();
 		}
@@ -94,8 +100,7 @@ public class RestResource {
 
 		// Ist "amount" größer als 0?
 		if (!(amount.compareTo(BigDecimal.ZERO) == 1)) {
-			return Response.status(Response.Status.BAD_REQUEST).entity("Der Betrag muss größer als 0 sein.")
-					.build();
+			return Response.status(Response.Status.BAD_REQUEST).entity("Der Betrag muss größer als 0 sein.").build();
 		}
 
 		// Hat "amount" mehr als 2 Nachkommastellen?
@@ -153,17 +158,31 @@ public class RestResource {
 	@Path("/addAccount")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addAccount(@FormParam("owner") String owner, @FormParam("startBalance") BigDecimal startBalancae) {
+
+		// Sind alle Werte vorhanden?
 		if (owner.equals("") || startBalancae == null) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Nicht alle Felder sind gefüllt.").build();
 		}
+
+		// Ist "owner" = bank?
 		if (owner.toLowerCase().equals("bank")) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Das Konto \"Bank\" ist reserviert.").build();
 		}
+
+		// Ist "startBalance" > 0?
 		if (startBalancae.compareTo(BigDecimal.ZERO) != 1) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Das Startguthaben muss größer als 0 sein.")
 					.build();
 		}
+
+		// Hat "startBalance" mehr als 2 Nachkommastellen?
+		if (startBalancae.scale() > 2) {
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("Der Betrag darf maximal 2 Nachkommastellen haben.").build();
+		}
+
 		try {
+			// Konto erstellen
 			daAccount.addAccount(owner, startBalancae);
 			return Response.ok().build();
 		} catch (SQLException e) {
@@ -172,12 +191,34 @@ public class RestResource {
 		}
 	}
 
-	// allAccounts
+	// Liefert alle Konten
+	/**
+	 * @return
+	 */
+	@GET
+	@Path("/allAccounts")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getAllAccounts() {
 
+		try {
+			List<Account> accounts = daAccount.getAccounts();
+			Account[] accountArray = accounts.toArray(new Account[0]);
+			return Response.ok(accountArray).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+		}
+	}
+
+	// Liefert alle Transaktionen
+	/**
+	 * @return
+	 */
 	@GET
 	@Path("/allTransactions")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getAllTransactions() {
+
 		try {
 			List<Transaction> transactions = daTransation.getTransactionHistory("all");
 			Transaction[] transactionArray = transactions.toArray(new Transaction[0]);
@@ -190,8 +231,11 @@ public class RestResource {
 
 	// Wird aufgerufen, wenn ein neues Konto angelegt werden soll und liefert
 	// eine freie Nummer
+	/**
+	 * @return
+	 */
 	@GET
-	@Path("/getFreeNumber")
+	@Path("/freeNumber")
 	@Produces({ MediaType.TEXT_PLAIN })
 	// Aufruf mit Parameter
 	public synchronized Response getFreeNumber() {
@@ -219,17 +263,22 @@ public class RestResource {
 	@POST
 	@Path("/dereservateNumber")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
-	// Aufruf mit Parameter
 	public Response dereservateNumber(@FormParam("number") String number) {
+
 		daAccount.reservatedNumbers.remove(number);
 		return Response.ok().build();
 	}
 
+	// Gibt den Kontostand eines Kontos zurück
+	/**
+	 * @param number
+	 * @return
+	 */
 	@GET
-	@Path("/getAccountBalance/{number}")
+	@Path("/accountBalance/{number}")
 	@Produces({ MediaType.TEXT_PLAIN })
-	// Aufruf mit Parameter
 	public Response getAccountBalance(@PathParam("number") String number) {
+
 		try {
 			return Response.ok(daTransation.getAccountBalance(number).toString()).build();
 		} catch (SQLException e) {
@@ -238,18 +287,21 @@ public class RestResource {
 		}
 	}
 
-	// =======================
-	// SONSTIGE HILFSMETHODEN
-	// =======================
+	// Setzt die Datenbanktabellen auf ein Standardszenario mit Bankkonto und 4
+	// Kundenkonten zurück
+	/**
+	 * @return
+	 */
+	@POST
+	@Path("/resetDatabaseTables")
+	public Response resetDatabaseTables() {
 
-	public static boolean isInteger(String s) {
 		try {
-			Integer.parseInt(s);
-		} catch (NumberFormatException e) {
-			return false;
-		} catch (NullPointerException e) {
-			return false;
+			dbAdministration.resetDatabaseTables();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return true;
+		return Response.ok().build();
 	}
+
 }

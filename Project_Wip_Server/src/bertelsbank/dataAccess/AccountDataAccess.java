@@ -26,6 +26,9 @@ import bertelsbank.rest.Transaction;
 
 public class AccountDataAccess {
 	TransactionDataAccess daTransaction = new TransactionDataAccess();
+	DatabaseAdministration dbAdministration = new DatabaseAdministration();
+
+	Connection connection = dbAdministration.getConnection();
 	public List<String> reservatedNumbers = new ArrayList<String>();
 	boolean bankAccountExists = true;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
@@ -33,72 +36,11 @@ public class AccountDataAccess {
 	// Konstruktor - ruft Methoden auf, die die Datenbank inkl. Tabellen
 	// initialisiert
 	public AccountDataAccess() {
-		try {
-			// deleteTable("account");
-			// clearTable("account");
-
-			createAccountTable();
-			//showContentsAccountTable();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	// =============================
-	// ALLGEMEINE DATENBANK-METHODEN
-	// =============================
-
-	// Connection erstellen
-	private Connection getConnection() {
-		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-
-			Properties properties = new Properties();
-			properties.put("user", "user");
-
-			Connection connection = DriverManager.getConnection("jdbc:derby:database;create=true", properties);
-			return connection;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	// Ausgabe des Tabelleninhalts von student
-	private int getEntryCount(String tableName) throws SQLException {
-		int entryCount = 0;
-		Connection connection = getConnection();
-		Statement statement = connection.createStatement();
-		String sql = "SELECT count(*) FROM " + tableName;
-		ResultSet resultSet = statement.executeQuery(sql);
-		if (resultSet.next()) {
-			entryCount = resultSet.getInt(1);
-		}
-		resultSet.close();
-		statement.close();
-		connection.close();
-		return entryCount;
-	}
-
-	// Löscht eine Tabelle der Datenbank
-	private void deleteTable(String tableName) throws SQLException {
-		Connection connection = getConnection();
-		System.out.println("Deleting table " + tableName + "...");
-		Statement statement = connection.createStatement();
-		statement.execute("drop table " + tableName);
-		statement.close();
-		connection.close();
-	}
-
-	// Entfernt alle Einträge einer Datenbanktabelle
-	private void clearTable(String tableName) throws SQLException {
-		Connection connection = getConnection();
-		System.out.println("Clearing table " + tableName + "...");
-		Statement statement = connection.createStatement();
-		statement.execute("delete from " + tableName);
-		statement.close();
-		connection.close();
+		/*
+		 * try { // createAccountTable(); // showContentsAccountTable();
+		 *
+		 * } catch (SQLException e) { e.printStackTrace(); }
+		 */
 	}
 
 	// =============================
@@ -107,7 +49,7 @@ public class AccountDataAccess {
 
 	// Kontentabelle erstellen
 	public void createAccountTable() throws SQLException {
-		Connection connection = getConnection();
+		Connection connection = dbAdministration.getConnection();
 		// Optionale PrÃ¼fung, ob Tabelle bereits besteht
 		ResultSet resultSet = connection.getMetaData().getTables("%", "%", "%", new String[] { "TABLE" });
 		boolean shouldCreateTable = true;
@@ -138,18 +80,18 @@ public class AccountDataAccess {
 		String accountNumber = getFreeNumber();
 		if (!accountNumber.equals("")) {
 			System.out.println("Adding account...");
-			try (Connection connection = getConnection();
+			try (Connection connection = dbAdministration.getConnection();
 					PreparedStatement preparedStatement = connection
 							.prepareStatement("INSERT INTO account VALUES (?,?,?)")) {
-				preparedStatement.setInt(1, getEntryCount("account") + 1);
+				preparedStatement.setInt(1, dbAdministration.getEntryCount("account") + 1);
 				preparedStatement.setString(2, owner);
 				preparedStatement.setString(3, accountNumber);
 				preparedStatement.execute();
-				if(amount.compareTo(BigDecimal.ZERO) == 1){
+				if (amount.compareTo(BigDecimal.ZERO) == 1) {
 					daTransaction.addTransaction("0000", accountNumber, amount, "STARTGUTHABEN");
 				}
 				reservatedNumbers.remove(accountNumber);
-				//showContentsAccountTable();
+				// showContentsAccountTable();
 			} catch (SQLException e) {
 				// Exception loggen, ggf. angemessen reagieren
 				e.printStackTrace();
@@ -162,7 +104,7 @@ public class AccountDataAccess {
 	public Account getAccountByNumber(String number, boolean attachTransactions) {
 		Account account = new Account();
 		try {
-			Connection connection = getConnection();
+			Connection connection = dbAdministration.getConnection();
 			Statement statement = connection.createStatement();
 			String sql = "SELECT * FROM account where number = '" + number + "'";
 			ResultSet resultSet = statement.executeQuery(sql);
@@ -191,7 +133,7 @@ public class AccountDataAccess {
 	public List<Account> getAccounts() {
 		List<Account> accounts = new ArrayList<>();
 		try {
-			Connection connection = getConnection();
+			Connection connection = dbAdministration.getConnection();
 			Statement statement = connection.createStatement();
 			String sql = "SELECT * FROM account";
 			ResultSet resultSet = statement.executeQuery(sql);
@@ -203,6 +145,7 @@ public class AccountDataAccess {
 				account.setId(id);
 				account.setOwner(owner);
 				account.setNumber(number);
+				account.setTransactions(daTransaction.getTransactionHistory(number));
 				accounts.add(account);
 			}
 			resultSet.close();
@@ -237,13 +180,12 @@ public class AccountDataAccess {
 	// Prüft, ob Kontonummer existiert
 	public boolean numberExists(String number) throws SQLException {
 		int entryCount = 0;
-		Connection connection = getConnection();
+		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
 		String sql = "SELECT count(*) FROM account where number = '" + number + "'";
 		ResultSet resultSet = statement.executeQuery(sql);
 		if (resultSet.next()) {
 			entryCount = resultSet.getInt(1);
-			// System.out.println("Table Entry Count: " + entryCount);
 		}
 		resultSet.close();
 		statement.close();
@@ -257,7 +199,7 @@ public class AccountDataAccess {
 
 	// Ausgabe des Tabelleninhalts von account
 	private void showContentsAccountTable() throws SQLException {
-		Connection connection = getConnection();
+		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
 		String sql = "SELECT * FROM account";
 		ResultSet resultSet = statement.executeQuery(sql);
