@@ -32,6 +32,7 @@ public class RestResource {
 
 	Logger logger = Logger.getLogger(getClass());
 
+
 	// ==========================
 	// ÖFFENTLICHE SCHNITTSTELLEN
 	// ==========================
