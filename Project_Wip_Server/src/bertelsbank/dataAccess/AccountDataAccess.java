@@ -1,5 +1,6 @@
 package bertelsbank.dataAccess;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
@@ -19,9 +20,11 @@ import javax.ws.rs.GET;
 import org.apache.derby.client.am.DateTime;
 import org.apache.derby.client.am.Decimal;
 import org.apache.derby.iapi.services.io.NewByteArrayInputStream;
+import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.session.JDBCSessionIdManager.DatabaseAdaptor;
 
 import bertelsbank.rest.Account;
+import bertelsbank.rest.LoggerHelper;
 import bertelsbank.rest.Transaction;
 
 public class AccountDataAccess {
@@ -32,15 +35,12 @@ public class AccountDataAccess {
 	public List<String> reservatedNumbers = new ArrayList<String>();
 	boolean bankAccountExists = true;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+	//Logger logger;
 
 	// Konstruktor - ruft Methoden auf, die die Datenbank inkl. Tabellen
 	// initialisiert
 	public AccountDataAccess() {
-		/*
-		 * try { // createAccountTable(); // showContentsAccountTable();
-		 *
-		 * } catch (SQLException e) { e.printStackTrace(); }
-		 */
+
 	}
 
 	// =============================
@@ -50,7 +50,7 @@ public class AccountDataAccess {
 	// Kontentabelle erstellen
 	public void createAccountTable() throws SQLException {
 		Connection connection = dbAdministration.getConnection();
-		// Optionale Prüfung, ob Tabelle bereits besteht
+		// Optionale Pr�fung, ob Tabelle bereits besteht
 		ResultSet resultSet = connection.getMetaData().getTables("%", "%", "%", new String[] { "TABLE" });
 		boolean shouldCreateTable = true;
 		while (resultSet.next() && shouldCreateTable) {
@@ -61,11 +61,11 @@ public class AccountDataAccess {
 		resultSet.close();
 
 		if (shouldCreateTable) {
-			System.out.println("Creating table account...");
 			Statement statement = connection.createStatement();
 			statement.execute(
 					"create table account (id int not null primary key, owner varchar(64) not null, number varchar(4) not null)");
 			statement.close();
+			//logger.info("Tabelle \"Account\" wurde erstellt.");
 			bankAccountExists = false;
 			addAccount("BANK", BigDecimal.ZERO);
 			bankAccountExists = true;
@@ -75,11 +75,9 @@ public class AccountDataAccess {
 	}
 
 	// Konto der Tabelle hinzufügen
-	public void addAccount(String owner, BigDecimal amount) throws SQLException {
-		String status = "";
+	public void addAccount(String owner, BigDecimal startBalance) throws SQLException {
 		String accountNumber = getFreeNumber();
 		if (!accountNumber.equals("")) {
-			System.out.println("Adding account...");
 			try (Connection connection = dbAdministration.getConnection();
 					PreparedStatement preparedStatement = connection
 							.prepareStatement("INSERT INTO account VALUES (?,?,?)")) {
@@ -87,15 +85,14 @@ public class AccountDataAccess {
 				preparedStatement.setString(2, owner);
 				preparedStatement.setString(3, accountNumber);
 				preparedStatement.execute();
-				if (amount.compareTo(BigDecimal.ZERO) == 1) {
-					daTransaction.addTransaction("0000", accountNumber, amount, "STARTGUTHABEN");
+				if (startBalance.compareTo(BigDecimal.ZERO) == 1) {
+					daTransaction.addTransaction("0000", accountNumber, startBalance, "STARTGUTHABEN");
 				}
+				//logger.info("Neues Konto angelegt. Besitzer: " + owner + ", Kontonr.: " + accountNumber + ", Startkapital: " + startBalance);
 				reservatedNumbers.remove(accountNumber);
-				// showContentsAccountTable();
 			} catch (SQLException e) {
 				// Exception loggen, ggf. angemessen reagieren
 				e.printStackTrace();
-				System.out.println(status);
 			}
 		}
 	}

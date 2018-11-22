@@ -1,9 +1,9 @@
 package bertelsbank.rest;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +16,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.log4j.SimpleLayout;
+
 import com.sun.jersey.spi.resource.Singleton;
 
 import bertelsbank.dataAccess.AccountDataAccess;
@@ -29,9 +35,19 @@ public class RestResource {
 	AccountDataAccess daAccount = new AccountDataAccess();
 	TransactionDataAccess daTransation = new TransactionDataAccess();
 	DatabaseAdministration dbAdministration = new DatabaseAdministration();
+	Logger logger;
 
-	Logger logger = Logger.getLogger(getClass());
-
+	public RestResource() {
+		try {
+			if (logger == null) {
+				LoggerHelper serverLogger = new LoggerHelper();
+				logger = serverLogger.getLogger();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		logger.info("Server gestartet.");
+	}
 
 	// ==========================
 	// ÖFFENTLICHE SCHNITTSTELLEN
@@ -152,16 +168,16 @@ public class RestResource {
 	// Neues Konto erstellen
 	/**
 	 * @param owner
-	 * @param startBalancae
+	 * @param startBalance
 	 * @return
 	 */
 	@POST
 	@Path("/addAccount")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response addAccount(@FormParam("owner") String owner, @FormParam("startBalance") BigDecimal startBalancae) {
+	public Response addAccount(@FormParam("owner") String owner, @FormParam("startBalance") BigDecimal startBalance) {
 
 		// Sind alle Werte vorhanden?
-		if (owner.equals("") || startBalancae == null) {
+		if (owner.equals("") || startBalance == null) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Nicht alle Felder sind gefüllt.").build();
 		}
 
@@ -171,20 +187,20 @@ public class RestResource {
 		}
 
 		// Ist "startBalance" > 0?
-		if (startBalancae.compareTo(BigDecimal.ZERO) != 1) {
+		if (startBalance.compareTo(BigDecimal.ZERO) != 1) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Das Startguthaben muss größer als 0 sein.")
 					.build();
 		}
 
 		// Hat "startBalance" mehr als 2 Nachkommastellen?
-		if (startBalancae.scale() > 2) {
+		if (startBalance.scale() > 2) {
 			return Response.status(Response.Status.BAD_REQUEST)
 					.entity("Der Betrag darf maximal 2 Nachkommastellen haben.").build();
 		}
 
 		try {
 			// Konto erstellen
-			daAccount.addAccount(owner, startBalancae);
+			daAccount.addAccount(owner, startBalance);
 			return Response.ok().build();
 		} catch (SQLException e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -299,6 +315,7 @@ public class RestResource {
 
 		try {
 			dbAdministration.resetDatabaseTables();
+			logger.info("Die Servertabellen wurden zurückgesetzt.");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

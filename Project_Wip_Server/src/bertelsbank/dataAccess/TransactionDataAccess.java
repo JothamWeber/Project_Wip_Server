@@ -1,5 +1,6 @@
 package bertelsbank.dataAccess;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
@@ -17,9 +18,11 @@ import java.util.Properties;
 import org.apache.derby.client.am.DateTime;
 import org.apache.derby.client.am.Decimal;
 import org.apache.derby.iapi.services.io.NewByteArrayInputStream;
+import org.apache.log4j.Logger;
 import org.eclipse.jetty.jndi.java.javaNameParser;
 
 import bertelsbank.rest.Account;
+import bertelsbank.rest.LoggerHelper;
 import bertelsbank.rest.Transaction;
 
 public class TransactionDataAccess {
@@ -28,23 +31,7 @@ public class TransactionDataAccess {
 	public List<String> reservatedNumbers = new ArrayList<String>();
 	boolean bankAccountExists = true;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-
-	// Konstruktor - ruft Methoden auf, die die Datenbank inkl. Tabellen
-	// initialisiert
-	public TransactionDataAccess() {
-		/*
-		try {
-			// deleteTable("transactiontable");
-			// clearTable("transactiontable");
-
-			// createTransactionTable();
-			//showContentsTransactionTable();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
-	}
+	LoggerHelper loggerHelper = new LoggerHelper();
 
 
 	// =============================
@@ -65,11 +52,12 @@ public class TransactionDataAccess {
 		resultSet.close();
 
 		if (shouldCreateTable) {
-			System.out.println("Creating table transaction...");
 			Statement statement = connection.createStatement();
-			statement.execute("create table transactionTable (id int not null primary key, senderNumber varchar(4) not null, "
-					+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date timestamp not null)");
+			statement.execute(
+					"create table transactionTable (id int not null primary key, senderNumber varchar(4) not null, "
+							+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date timestamp not null)");
 			statement.close();
+			loggerHelper.makeInfoLog("Tabelle \"TransactionTable\" wurde erstellt.");
 		}
 
 		connection.close();
@@ -78,7 +66,6 @@ public class TransactionDataAccess {
 	// Konto der Tabelle hinzufügen
 	public void addTransaction(String senderNumber, String receiverNumber, BigDecimal amount, String reference)
 			throws SQLException {
-		//System.out.println("Adding transaction...");
 		try (Connection connection = dbAdministration.getConnection();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement("INSERT INTO transactionTable VALUES (?,?,?,?,?,?)")) {
@@ -89,7 +76,8 @@ public class TransactionDataAccess {
 			preparedStatement.setString(5, reference);
 			preparedStatement.setTimestamp(6, java.sql.Timestamp.valueOf(LocalDateTime.now()));
 			preparedStatement.execute();
-			//showContentsTransactionTable();
+			loggerHelper.makeInfoLog("Transaktion ausgeführt. Sendernr.: " + senderNumber + ", Empfängernr.: " + receiverNumber
+					+ ", Betrag: " + amount + ", Referenz: " + reference);
 		} catch (SQLException e) {
 			// Exception loggen, ggf. angemessen reagieren
 			e.printStackTrace();
@@ -123,7 +111,8 @@ public class TransactionDataAccess {
 		} else {
 			Connection connection = dbAdministration.getConnection();
 			Statement statement = connection.createStatement();
-			String sql = "SELECT * FROM transactionTable where sendernumber = '" + accountNumber + "' or receivernumber = '" + accountNumber + "' order by date desc";
+			String sql = "SELECT * FROM transactionTable where sendernumber = '" + accountNumber
+					+ "' or receivernumber = '" + accountNumber + "' order by date desc";
 			ResultSet resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
 				Transaction transaction = new Transaction();
@@ -142,7 +131,7 @@ public class TransactionDataAccess {
 		return transactionHistoryList;
 	}
 
-	public BigDecimal getAccountBalance(String accountNumber) throws SQLException{
+	public BigDecimal getAccountBalance(String accountNumber) throws SQLException {
 		BigDecimal balance = BigDecimal.ZERO;
 
 		Connection connection = dbAdministration.getConnection();

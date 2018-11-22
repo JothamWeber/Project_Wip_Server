@@ -38,7 +38,7 @@ public class DatabaseAdministration {
 		deleteTable("account");
 		daAccount.createAccountTable();
 		daTransaction.createTransactionTable();
-		
+
 		daAccount.addAccount("Nadin", new BigDecimal(10000));
 		daAccount.addAccount("Alina", new BigDecimal(10000));
 		daAccount.addAccount("Sebastian", new BigDecimal(10000));
@@ -64,7 +64,6 @@ public class DatabaseAdministration {
 	// Löscht eine Tabelle der Datenbank
 	public void deleteTable(String tableName) throws SQLException {
 		Connection connection = getConnection();
-		System.out.println("Deleting table " + tableName + "...");
 		Statement statement = connection.createStatement();
 		statement.execute("drop table " + tableName);
 		statement.close();
@@ -74,7 +73,6 @@ public class DatabaseAdministration {
 	// Entfernt alle Einträge einer Datenbanktabelle
 	public void clearTable(String tableName) throws SQLException {
 		Connection connection = getConnection();
-		System.out.println("Clearing table " + tableName + "...");
 		Statement statement = connection.createStatement();
 		statement.execute("delete from " + tableName);
 		statement.close();
