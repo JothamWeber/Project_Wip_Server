@@ -22,7 +22,6 @@ import org.apache.log4j.Logger;
 import org.eclipse.jetty.jndi.java.javaNameParser;
 
 import bertelsbank.rest.Account;
-import bertelsbank.rest.LoggerHelper;
 import bertelsbank.rest.Transaction;
 
 public class TransactionDataAccess {
@@ -31,17 +30,12 @@ public class TransactionDataAccess {
 	public List<String> reservatedNumbers = new ArrayList<String>();
 	boolean bankAccountExists = true;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-	LoggerHelper loggerHelper = new LoggerHelper();
 
-
-	// =============================
-	// DB-TABELLE TRANSACTION
-	// =============================
 
 	// Transaktionstabelle erstellen
 	public void createTransactionTable() throws SQLException {
 		Connection connection = dbAdministration.getConnection();
-		// Optionale Prüfung, ob Tabelle bereits besteht
+		// Prüfung, ob Tabelle bereits besteht
 		ResultSet resultSet = connection.getMetaData().getTables("%", "%", "%", new String[] { "TABLE" });
 		boolean shouldCreateTable = true;
 		while (resultSet.next() && shouldCreateTable) {
@@ -57,7 +51,8 @@ public class TransactionDataAccess {
 					"create table transactionTable (id int not null primary key, senderNumber varchar(4) not null, "
 							+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date timestamp not null)");
 			statement.close();
-			loggerHelper.makeInfoLog("Tabelle \"TransactionTable\" wurde erstellt.");
+
+			//loggerHelper.makeInfoLog("Tabelle \"TransactionTable\" wurde erstellt.");
 		}
 
 		connection.close();
@@ -76,7 +71,8 @@ public class TransactionDataAccess {
 			preparedStatement.setString(5, reference);
 			preparedStatement.setTimestamp(6, java.sql.Timestamp.valueOf(LocalDateTime.now()));
 			preparedStatement.execute();
-			loggerHelper.makeInfoLog("Transaktion ausgeführt. Sendernr.: " + senderNumber + ", Empfängernr.: " + receiverNumber
+			Logger logger = Logger.getLogger(getClass());
+			logger.info("Transaktion ausgeführt. Sendernr.: " + senderNumber + ", Empfängernr.: " + receiverNumber
 					+ ", Betrag: " + amount + ", Referenz: " + reference);
 		} catch (SQLException e) {
 			// Exception loggen, ggf. angemessen reagieren

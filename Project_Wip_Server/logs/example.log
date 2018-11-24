@@ -1,7 +1,0 @@
-INFO - Server gestartet.
-INFO - Tabelle "TransactionTable" wurde erstellt.
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1000, Betrag: 10000, Referenz: STARTGUTHABEN
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1001, Betrag: 10000, Referenz: STARTGUTHABEN
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1002, Betrag: 10000, Referenz: STARTGUTHABEN
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1003, Betrag: 10000, Referenz: STARTGUTHABEN
-INFO - Die Servertabellen wurden zurückgesetzt.

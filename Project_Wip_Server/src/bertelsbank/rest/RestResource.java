@@ -21,6 +21,7 @@ import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.apache.log4j.SimpleLayout;
 
 import com.sun.jersey.spi.resource.Singleton;
@@ -39,13 +40,17 @@ public class RestResource {
 
 	public RestResource() {
 		try {
-			if (logger == null) {
-				LoggerHelper serverLogger = new LoggerHelper();
-				logger = serverLogger.getLogger();
-			}
+			logger = Logger.getRootLogger();
+			SimpleLayout layout = new SimpleLayout();
+			FileAppender fileAppender;
+			fileAppender = new FileAppender(layout, "logs/ServerLogFile.log", true);
+			logger.addAppender(fileAppender);
+			logger.setLevel(Level.ALL);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		logger = Logger.getLogger(getClass());
 		logger.info("Server gestartet.");
 	}
 

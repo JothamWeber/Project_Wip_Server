@@ -24,7 +24,6 @@ import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.session.JDBCSessionIdManager.DatabaseAdaptor;
 
 import bertelsbank.rest.Account;
-import bertelsbank.rest.LoggerHelper;
 import bertelsbank.rest.Transaction;
 
 public class AccountDataAccess {
@@ -37,20 +36,11 @@ public class AccountDataAccess {
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 	//Logger logger;
 
-	// Konstruktor - ruft Methoden auf, die die Datenbank inkl. Tabellen
-	// initialisiert
-	public AccountDataAccess() {
-
-	}
-
-	// =============================
-	// DB-TABELLE ACCOUNT
-	// =============================
 
 	// Kontentabelle erstellen
 	public void createAccountTable() throws SQLException {
 		Connection connection = dbAdministration.getConnection();
-		// Optionale Prüfung, ob Tabelle bereits besteht
+		// Prüfung, ob Tabelle bereits besteht
 		ResultSet resultSet = connection.getMetaData().getTables("%", "%", "%", new String[] { "TABLE" });
 		boolean shouldCreateTable = true;
 		while (resultSet.next() && shouldCreateTable) {
