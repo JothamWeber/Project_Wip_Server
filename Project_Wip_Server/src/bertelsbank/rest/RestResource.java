@@ -114,7 +114,8 @@ public class RestResource {
 			@FormParam("reference") String reference) {
 
 		String errorMessage = "";
-		logger.info("Anforderung einer Transaktionsdurchführung. (" + senderNumber + " an " + receiverNumber + "| " + "amount" + "| " + reference);
+		logger.info("Anforderung einer Transaktionsdurchführung. (" + senderNumber + " an " + receiverNumber + " | "
+				+ amount + " | " + reference + ")");
 
 		// Sind alle Werte vorhanden?
 		if (senderNumber == null || receiverNumber == null || amount == null || reference == null) {
@@ -158,36 +159,38 @@ public class RestResource {
 		if (m.find()) {
 			errorMessage = "Die Referenz darf nur folgende Zeichen beinhalten: A-Z, a-z, 0-9, Leerzeichen.";
 			logger.error(errorMessage);
-			return Response.status(Response.Status.BAD_REQUEST)
-					.entity(errorMessage).build();
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-
-		//errormessages weitermachen
-
 		try {
-
 			// Existiert das Senderkonto?
 			if (!daAccount.numberExists(senderNumber)) {
-				return Response.status(Response.Status.NOT_FOUND).entity("Das Senderkonto existiert nicht.").build();
+				errorMessage = "Das Senderkonto existiert nicht.";
+				logger.error(errorMessage);
+				return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
 			}
 
 			// Existiert das Empfängerkonto?
 			if (!daAccount.numberExists(receiverNumber)) {
-				return Response.status(Response.Status.NOT_FOUND).entity("Das Empfängerkonto existiert nicht.").build();
+				errorMessage = "Das Empfängerkonto existiert nicht.";
+				logger.error(errorMessage);
+				return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
 			}
 
 			// Hat das Empfängerkonto ausreichend Guthaben?
 			if (daTransation.getAccountBalance(senderNumber).compareTo(amount) == -1 && !senderNumber.equals("0000")) {
-				return Response.status(Response.Status.PRECONDITION_FAILED)
-						.entity("Ihr Kontoguthaben reicht für diese Transaktion nicht aus.").build();
+				errorMessage = "Ihr Kontoguthaben reicht für diese Transaktion nicht aus.";
+				logger.error(errorMessage);
+				return Response.status(Response.Status.PRECONDITION_FAILED).entity(errorMessage).build();
 			}
 			// Transaktion in Datenbank schreiben
 			daTransation.addTransaction(senderNumber, receiverNumber, amount, reference);
 			return Response.status(Response.Status.NO_CONTENT).build();
 
 		} catch (Exception e) {
+			logger.error(e);
+			errorMessage = "Interner Serverfehler. Bitte versuchen Sie es erneut.";
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+					.entity(errorMessage).build();
 		}
 	}
 
