@@ -251,6 +251,28 @@ public class RestResource {
 		}
 	}
 
+	// Ownernamen aktualisieren
+	@POST
+	@Path("/updateOwner")
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+	public Response dereservateNumber(@FormParam("number") String number, @FormParam("owner") String owner) {
+
+		try {
+			// Existiert das Konto?
+			if (!daAccount.numberExists(number)) {
+				return Response.status(Response.Status.NOT_FOUND).entity("Das Konto existiert nicht.").build();
+			}
+
+			// Änderung durchführen
+			daAccount.updateOwner(number, owner);
+			return Response.ok().build();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+		}
+	}
+
 	// Wird aufgerufen, wenn ein neues Konto angelegt werden soll und liefert
 	// eine freie Nummer
 	/**

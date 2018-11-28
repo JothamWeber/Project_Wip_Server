@@ -102,7 +102,7 @@ public class AccountDataAccess {
 			if (resultSet.next()) {
 				int id = resultSet.getInt(1);
 				String owner = resultSet.getString(2);
-				
+
 				account.setId(id);
 				account.setOwner(owner);
 				account.setNumber(number);
@@ -149,6 +149,16 @@ public class AccountDataAccess {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	// Aktualisiert den Namen des Owners
+	public void updateOwner(String number, String owner) throws SQLException {
+		Connection connection = dbAdministration.getConnection();
+		Statement statement = connection.createStatement();
+		String sql = "UPDATE account SET owner = '" + owner + "' WHERE number = '" + number + "'";
+		statement.executeUpdate(sql);
+		statement.close();
+		connection.close();
 	}
 
 	// Ermittelt die nächste freie Kontonummer
