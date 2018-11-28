@@ -46,7 +46,7 @@ public class RestResource {
 			fileAppender = new FileAppender(layout, "logs/ServerLogFile.log", true);
 			logger.addAppender(fileAppender);
 			logger.setLevel(Level.ALL);
-		} catch (IOException e) { //
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 

@@ -25,6 +25,7 @@ import org.eclipse.jetty.server.session.JDBCSessionIdManager.DatabaseAdaptor;
 
 import bertelsbank.rest.Account;
 import bertelsbank.rest.Transaction;
+import javafx.beans.value.WeakChangeListener;
 
 public class AccountDataAccess {
 	TransactionDataAccess daTransaction = new TransactionDataAccess();
@@ -34,8 +35,11 @@ public class AccountDataAccess {
 	public List<String> reservatedNumbers = new ArrayList<String>();
 	boolean bankAccountExists = true;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-	//Logger logger;
+	Logger logger;
 
+	public AccountDataAccess(){
+		logger = Logger.getLogger(getClass());
+	}
 
 	// Kontentabelle erstellen
 	public void createAccountTable() throws SQLException {
@@ -55,7 +59,7 @@ public class AccountDataAccess {
 			statement.execute(
 					"create table account (id int not null primary key, owner varchar(64) not null, number varchar(4) not null)");
 			statement.close();
-			//logger.info("Tabelle \"Account\" wurde erstellt.");
+			logger.info("Tabelle \"Account\" wurde erstellt.");
 			bankAccountExists = false;
 			addAccount("BANK", BigDecimal.ZERO);
 			bankAccountExists = true;
@@ -75,13 +79,13 @@ public class AccountDataAccess {
 				preparedStatement.setString(2, owner);
 				preparedStatement.setString(3, accountNumber);
 				preparedStatement.execute();
+				logger.info("Neues Konto angelegt. Besitzer: " + owner + ", Kontonr.: " + accountNumber + ", Startkapital: " + startBalance);
 				if (startBalance.compareTo(BigDecimal.ZERO) == 1) {
 					daTransaction.addTransaction("0000", accountNumber, startBalance, "STARTGUTHABEN");
 				}
-				//logger.info("Neues Konto angelegt. Besitzer: " + owner + ", Kontonr.: " + accountNumber + ", Startkapital: " + startBalance);
 				reservatedNumbers.remove(accountNumber);
 			} catch (SQLException e) {
-				// Exception loggen, ggf. angemessen reagieren
+				logger.error(e);
 				e.printStackTrace();
 			}
 		}
@@ -98,7 +102,7 @@ public class AccountDataAccess {
 			if (resultSet.next()) {
 				int id = resultSet.getInt(1);
 				String owner = resultSet.getString(2);
-
+				
 				account.setId(id);
 				account.setOwner(owner);
 				account.setNumber(number);
@@ -111,6 +115,7 @@ public class AccountDataAccess {
 			connection.close();
 			return account;
 		} catch (SQLException e) {
+			logger.error(e);
 			e.printStackTrace();
 			return null;
 		}
@@ -140,6 +145,7 @@ public class AccountDataAccess {
 			connection.close();
 			return accounts;
 		} catch (SQLException e) {
+			logger.error(e);
 			e.printStackTrace();
 			return null;
 		}

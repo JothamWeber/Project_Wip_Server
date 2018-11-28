@@ -27,10 +27,14 @@ import bertelsbank.rest.Transaction;
 public class TransactionDataAccess {
 	DatabaseAdministration dbAdministration = new DatabaseAdministration();
 
+	Logger logger;
 	public List<String> reservatedNumbers = new ArrayList<String>();
 	boolean bankAccountExists = true;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
+	public TransactionDataAccess() {
+		logger = Logger.getLogger(getClass());
+	}
 
 	// Transaktionstabelle erstellen
 	public void createTransactionTable() throws SQLException {
@@ -52,7 +56,7 @@ public class TransactionDataAccess {
 							+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date timestamp not null)");
 			statement.close();
 
-			//loggerHelper.makeInfoLog("Tabelle \"TransactionTable\" wurde erstellt.");
+			logger.info("Tabelle \"TransactionTable\" wurde erstellt.");
 		}
 
 		connection.close();
@@ -71,11 +75,10 @@ public class TransactionDataAccess {
 			preparedStatement.setString(5, reference);
 			preparedStatement.setTimestamp(6, java.sql.Timestamp.valueOf(LocalDateTime.now()));
 			preparedStatement.execute();
-			Logger logger = Logger.getLogger(getClass());
 			logger.info("Transaktion ausgeführt. Sendernr.: " + senderNumber + ", Empfängernr.: " + receiverNumber
 					+ ", Betrag: " + amount + ", Referenz: " + reference);
 		} catch (SQLException e) {
-			// Exception loggen, ggf. angemessen reagieren
+			logger.error(e);
 			e.printStackTrace();
 		}
 	}
