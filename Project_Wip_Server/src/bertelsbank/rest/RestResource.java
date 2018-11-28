@@ -41,15 +41,15 @@ public class RestResource {
 	public RestResource() {
 		try {
 			logger = Logger.getRootLogger();
+			logger.setAdditivity(false);
 			SimpleLayout layout = new SimpleLayout();
 			FileAppender fileAppender;
-			fileAppender = new FileAppender(layout, "logs/ServerLogFile.log", true);
+			fileAppender = new FileAppender(layout, "logs/ServerLogFile.log", false);
 			logger.addAppender(fileAppender);
 			logger.setLevel(Level.ALL);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		logger = Logger.getLogger(getClass());
 		logger.info("Server gestartet.");
 	}
@@ -68,23 +68,34 @@ public class RestResource {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getAccount(@PathParam("number") String number) {
 
+		String errorMessage = "";
+
+		logger.info("Anforderung eines Kontoobjektes mit der Nummer: " + number);
 		// Besteht die Kontonummer aus 4 Zahlen?
 		if (number.length() != 4 || !dbAdministration.isInteger(number)) {
-			return Response.status(Response.Status.BAD_REQUEST).entity("Die Kontonummer muss aus 4 Zahlen bestehen.")
-					.build();
+			errorMessage = "Die Kontonummer muss aus 4 Zahlen bestehen.";
+			logger.error(errorMessage + " (" + number + ")");
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 
 		try {
 			// Existiert der Account?
 			if (!daAccount.numberExists(number)) {
-				return Response.status(Response.Status.NOT_FOUND).entity("Diese Kontonummer existiert nicht.").build();
+				errorMessage = "Diese Kontonummer existiert nicht.";
+				logger.error(errorMessage + " (" + number + ")");
+				return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
 			} else {
 				// Gibt den Account zurück
 				return Response.ok(daAccount.getAccountByNumber(number, true)).build();
 			}
 		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+			logger.error(e);
+			errorMessage = "Interner Serverfehler. Bitte versuchen Sie es erneut.";
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
+		} finally {
+			if (errorMessage.equals("")) {
+				logger.info("Kontoobjekt wurde übermittelt. (" + number + ")");
+			}
 		}
 	}
 
@@ -102,42 +113,56 @@ public class RestResource {
 			@FormParam("receiverNumber") String receiverNumber, @FormParam("amount") BigDecimal amount,
 			@FormParam("reference") String reference) {
 
+		String errorMessage = "";
+		logger.info("Anforderung einer Transaktionsdurchführung. (" + senderNumber + " an " + receiverNumber + "| " + "amount" + "| " + reference);
+
 		// Sind alle Werte vorhanden?
 		if (senderNumber == null || receiverNumber == null || amount == null || reference == null) {
-			return Response.status(Response.Status.BAD_REQUEST).entity("Nicht alle Felder sind gefüllt.").build();
+			errorMessage = "Nicht alle Felder sind gefüllt.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 
 		// Haben "senderNumber" und "receiverNumber" das richtige Format?
 		if (senderNumber.length() != 4 || !dbAdministration.isInteger(senderNumber) || receiverNumber.length() != 4
 				|| !dbAdministration.isInteger(receiverNumber)) {
-			return Response.status(Response.Status.BAD_REQUEST).entity("Die Kontonummer muss aus 4 Zahlen bestehen.")
-					.build();
+			errorMessage = "Die Kontonummer muss aus 4 Zahlen bestehen.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 
 		// Unterscheiden sich "senderNumber" und "receiverNumber"?
 		if (senderNumber.equals(receiverNumber)) {
-			return Response.status(Response.Status.BAD_REQUEST)
-					.entity("Das Senderkonto darf nicht das Empfängerkonto sein.").build();
+			errorMessage = "Das Senderkonto darf nicht das Empfängerkonto sein.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 
 		// Ist "amount" größer als 0?
 		if (!(amount.compareTo(BigDecimal.ZERO) == 1)) {
-			return Response.status(Response.Status.BAD_REQUEST).entity("Der Betrag muss größer als 0 sein.").build();
+			errorMessage = "Der Betrag muss größer als 0 sein.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 
 		// Hat "amount" mehr als 2 Nachkommastellen?
 		if (amount.scale() > 2) {
-			return Response.status(Response.Status.BAD_REQUEST)
-					.entity("Der Betrag darf maximal 2 Nachkommastellen haben.").build();
+			errorMessage = "Der Betrag darf maximal 2 Nachkommastellen haben.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 
 		// Besteht "reference" aus den erlaubten Zeichen?
 		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(reference);
 		if (m.find()) {
+			errorMessage = "Die Referenz darf nur folgende Zeichen beinhalten: A-Z, a-z, 0-9, Leerzeichen.";
+			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST)
-					.entity("Die Referenz darf nur folgende Zeichen beinhalten: A-Z, a-z, 0-9, Leerzeichen.").build();
+					.entity(errorMessage).build();
 		}
+
+		//errormessages weitermachen
 
 		try {
 

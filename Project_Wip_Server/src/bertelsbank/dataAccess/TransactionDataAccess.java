@@ -108,6 +108,7 @@ public class TransactionDataAccess {
 			statement.close();
 			connection.close();
 		} else {
+			Account baseAccount = daAccount.getAccountByNumber(accountNumber, false);
 			Connection connection = dbAdministration.getConnection();
 			Statement statement = connection.createStatement();
 			String sql = "SELECT * FROM transactionTable where sendernumber = '" + accountNumber
@@ -116,8 +117,16 @@ public class TransactionDataAccess {
 			while (resultSet.next()) {
 				Transaction transaction = new Transaction();
 				transaction.setId(resultSet.getInt(1));
-				transaction.setSender(daAccount.getAccountByNumber(resultSet.getString(2), false));
-				transaction.setReceiver(daAccount.getAccountByNumber(resultSet.getString(3), false));
+				if (resultSet.getString(2).equals(accountNumber)) {
+					transaction.setSender(baseAccount);
+				} else {
+					transaction.setSender(daAccount.getAccountByNumber(resultSet.getString(2), false));
+				}
+				if (resultSet.getString(3).equals(accountNumber)) {
+					transaction.setReceiver(baseAccount);
+				} else {
+					transaction.setReceiver(daAccount.getAccountByNumber(resultSet.getString(3), false));
+				}
 				transaction.setAmount(resultSet.getBigDecimal(4));
 				transaction.setReference(resultSet.getString(5));
 				transaction.setTransactionDate(resultSet.getTimestamp(6));

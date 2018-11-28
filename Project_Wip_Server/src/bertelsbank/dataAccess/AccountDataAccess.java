@@ -37,7 +37,7 @@ public class AccountDataAccess {
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 	Logger logger;
 
-	public AccountDataAccess(){
+	public AccountDataAccess() {
 		logger = Logger.getLogger(getClass());
 	}
 
@@ -79,7 +79,8 @@ public class AccountDataAccess {
 				preparedStatement.setString(2, owner);
 				preparedStatement.setString(3, accountNumber);
 				preparedStatement.execute();
-				logger.info("Neues Konto angelegt. Besitzer: " + owner + ", Kontonr.: " + accountNumber + ", Startkapital: " + startBalance);
+				logger.info("Neues Konto angelegt. Besitzer: " + owner + ", Kontonr.: " + accountNumber
+						+ ", Startkapital: " + startBalance);
 				if (startBalance.compareTo(BigDecimal.ZERO) == 1) {
 					daTransaction.addTransaction("0000", accountNumber, startBalance, "STARTGUTHABEN");
 				}
@@ -92,33 +93,27 @@ public class AccountDataAccess {
 	}
 
 	// Rückgabe eines Kontos
-	public Account getAccountByNumber(String number, boolean attachTransactions) {
+	public Account getAccountByNumber(String number, boolean attachTransactions) throws SQLException {
 		Account account = new Account();
-		try {
-			Connection connection = dbAdministration.getConnection();
-			Statement statement = connection.createStatement();
-			String sql = "SELECT * FROM account where number = '" + number + "'";
-			ResultSet resultSet = statement.executeQuery(sql);
-			if (resultSet.next()) {
-				int id = resultSet.getInt(1);
-				String owner = resultSet.getString(2);
-
-				account.setId(id);
-				account.setOwner(owner);
-				account.setNumber(number);
-				if (attachTransactions) {
-					account.setTransactions(daTransaction.getTransactionHistory(number));
-				}
+		Connection connection = dbAdministration.getConnection();
+		Statement statement = connection.createStatement();
+		String sql = "SELECT * FROM account WHERE  number = '" + number + "'";
+		ResultSet resultSet = statement.executeQuery(sql);
+		logger.info("SQL-Statement ausgeführt: " + sql);
+		if (resultSet.next()) {
+			int id = resultSet.getInt(1);
+			String owner = resultSet.getString(2);
+			account.setId(id);
+			account.setOwner(owner);
+			account.setNumber(number);
+			if (attachTransactions) {
+				account.setTransactions(daTransaction.getTransactionHistory(number));
 			}
-			resultSet.close();
-			statement.close();
-			connection.close();
-			return account;
-		} catch (SQLException e) {
-			logger.error(e);
-			e.printStackTrace();
-			return null;
 		}
+		resultSet.close();
+		statement.close();
+		connection.close();
+		return account;
 	}
 
 	// Rückgabe einer Liste aller Konten
