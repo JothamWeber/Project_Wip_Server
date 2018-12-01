@@ -39,6 +39,11 @@ public class RestResource {
 	Logger logger;
 	String serverErrorMessage = "Interner Serverfehler. Bitte versuchen Sie es erneut.";
 
+	/**
+	 * The constructor which initializes the Root-Logger and the Class-Logger.
+	 *
+	 * @author Jotham Weber
+	 */
 	public RestResource() {
 		try {
 			logger = Logger.getRootLogger();
@@ -59,10 +64,16 @@ public class RestResource {
 	// ÖFFENTLICHE SCHNITTSTELLEN
 	// ==========================
 
-	// Liefert ein Konto falls vorhanden.
 	/**
+	 * Returns an account object with all its transactions if the number
+	 * provided by the client belongs to an existing account. Otherwise an error
+	 * message will be returned.
+	 *
 	 * @param number
-	 * @return
+	 *            the account number of the account which should be returned
+	 * @return the response of the http-get. In best case it will be the desired
+	 *         account object or a http status with error information.
+	 * @author Jotham Weber
 	 */
 	@GET
 	@Path("/account/{number}")
@@ -70,15 +81,14 @@ public class RestResource {
 	public Response getAccount(@PathParam("number") String number) {
 
 		String errorMessage = "";
-
 		logger.info("Anforderung eines Kontoobjektes mit der Nummer: " + number);
+
 		// Besteht die Kontonummer aus 4 Zahlen?
 		if (number.length() != 4 || !dbAdministration.isInteger(number)) {
 			errorMessage = "Die Kontonummer muss aus 4 Zahlen bestehen.";
 			logger.error(errorMessage + " (" + number + ")");
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-
 		try {
 			// Existiert der Account?
 			if (!daAccount.numberExists(number)) {
@@ -406,10 +416,9 @@ public class RestResource {
 		} catch (SQLException e) {
 			logger.error(e);
 			errorMessage = serverErrorMessage;
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity(errorMessage).build();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
 		} finally {
-			if(errorMessage.equals("")){
+			if (errorMessage.equals("")) {
 				logger.info("Der Kontostand des Kontos " + number + " wurde übermittelt.");
 			}
 		}
@@ -432,8 +441,7 @@ public class RestResource {
 			return Response.ok().build();
 		} catch (SQLException e) {
 			logger.error(e);
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity(serverErrorMessage).build();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(serverErrorMessage).build();
 		}
 
 	}
