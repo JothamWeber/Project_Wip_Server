@@ -56,9 +56,10 @@ public class AccountDataAccess {
 
 		if (shouldCreateTable) {
 			Statement statement = connection.createStatement();
-			statement.execute(
-					"create table account (id int not null primary key, owner varchar(64) not null, number varchar(4) not null)");
+			String sql = "CREATE table account (id int not null primary key, owner varchar(64) not null, number varchar(4) not null)";
+			statement.execute(sql);
 			statement.close();
+			logger.info("SQL-Statement ausgeführt: " + sql);
 			logger.info("Tabelle \"Account\" wurde erstellt.");
 			bankAccountExists = false;
 			addAccount("BANK", BigDecimal.ZERO);
@@ -70,15 +71,19 @@ public class AccountDataAccess {
 
 	// Konto der Tabelle hinzufÃ¼gen
 	public void addAccount(String owner, BigDecimal startBalance) throws SQLException {
+
 		String accountNumber = getFreeNumber();
 		if (!accountNumber.equals("")) {
 			try (Connection connection = dbAdministration.getConnection();
 					PreparedStatement preparedStatement = connection
 							.prepareStatement("INSERT INTO account VALUES (?,?,?)")) {
-				preparedStatement.setInt(1, dbAdministration.getEntryCount("account") + 1);
+				int id = dbAdministration.getEntryCount("account") + 1;
+				preparedStatement.setInt(1, id);
 				preparedStatement.setString(2, owner);
 				preparedStatement.setString(3, accountNumber);
 				preparedStatement.execute();
+				logger.info("SQL-Statement ausgeführt: " + "INSERT INTO account VALUES (" + id + ", " + owner + ", "
+						+ accountNumber + ")");
 				logger.info("Neues Konto angelegt. Besitzer: " + owner + ", Kontonr.: " + accountNumber
 						+ ", Startkapital: " + startBalance);
 				if (startBalance.compareTo(BigDecimal.ZERO) == 1) {
@@ -124,6 +129,7 @@ public class AccountDataAccess {
 			Statement statement = connection.createStatement();
 			String sql = "SELECT * FROM account";
 			ResultSet resultSet = statement.executeQuery(sql);
+			logger.info("SQL-Statement ausgeführt: " + sql);
 			while (resultSet.next()) {
 				int id = resultSet.getInt(1);
 				String owner = resultSet.getString(2);
@@ -152,6 +158,8 @@ public class AccountDataAccess {
 		Statement statement = connection.createStatement();
 		String sql = "UPDATE account SET owner = '" + owner + "' WHERE number = '" + number + "'";
 		statement.executeUpdate(sql);
+		logger.info("SQL-Statement ausgeführt :" + sql);
+		logger.info("Der Besitzer des Kontos " + number + " wurde durch \"" + owner + "\" ersetzt.");
 		statement.close();
 		connection.close();
 	}
@@ -171,7 +179,6 @@ public class AccountDataAccess {
 			freeNumber = "0000";
 		}
 		reservatedNumbers.add(freeNumber);
-
 		return freeNumber;
 	}
 
@@ -180,8 +187,9 @@ public class AccountDataAccess {
 		int entryCount = 0;
 		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
-		String sql = "SELECT count(*) FROM account where number = '" + number + "'";
+		String sql = "SELECT count(*) FROM account WHERE number = '" + number + "'";
 		ResultSet resultSet = statement.executeQuery(sql);
+		logger.info("SQL-Statement ausgeführt: " + sql);
 		if (resultSet.next()) {
 			entryCount = resultSet.getInt(1);
 		}
@@ -195,12 +203,14 @@ public class AccountDataAccess {
 		}
 	}
 
-	// Ausgabe des Tabelleninhalts von account
+	// Ausgabe des Tabelleninhalts von account. Nur zu Testzwecken. Wird nicht
+	// vom Client aufgerufen.
 	private void showContentsAccountTable() throws SQLException {
 		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
 		String sql = "SELECT * FROM account";
 		ResultSet resultSet = statement.executeQuery(sql);
+		logger.info("SQL-Statement ausgeführt: " + sql);
 		System.out.println("Table account:");
 		while (resultSet.next()) {
 			int id = resultSet.getInt(1);

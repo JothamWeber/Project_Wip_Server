@@ -37,6 +37,7 @@ public class RestResource {
 	TransactionDataAccess daTransation = new TransactionDataAccess();
 	DatabaseAdministration dbAdministration = new DatabaseAdministration();
 	Logger logger;
+	String serverErrorMessage = "Interner Serverfehler. Bitte versuchen Sie es erneut.";
 
 	public RestResource() {
 		try {
@@ -90,7 +91,7 @@ public class RestResource {
 			}
 		} catch (Exception e) {
 			logger.error(e);
-			errorMessage = "Interner Serverfehler. Bitte versuchen Sie es erneut.";
+			errorMessage = serverErrorMessage;
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
 		} finally {
 			if (errorMessage.equals("")) {
@@ -188,9 +189,8 @@ public class RestResource {
 
 		} catch (Exception e) {
 			logger.error(e);
-			errorMessage = "Interner Serverfehler. Bitte versuchen Sie es erneut.";
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity(errorMessage).build();
+			errorMessage = serverErrorMessage;
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
 		}
 	}
 
@@ -209,35 +209,45 @@ public class RestResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response addAccount(@FormParam("owner") String owner, @FormParam("startBalance") BigDecimal startBalance) {
 
+		String errorMessage = "";
+		logger.info("Anforderung des Anlegens eines neuen Kontos.");
+
 		// Sind alle Werte vorhanden?
 		if (owner.equals("") || startBalance == null) {
-			return Response.status(Response.Status.BAD_REQUEST).entity("Nicht alle Felder sind gefüllt.").build();
+			errorMessage = "Nicht alle Felder sind gefüllt.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 
 		// Ist "owner" = bank?
 		if (owner.toLowerCase().equals("bank")) {
-			return Response.status(Response.Status.BAD_REQUEST).entity("Das Konto \"Bank\" ist reserviert.").build();
+			errorMessage = "Das Konto \"Bank\" ist reserviert.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 
 		// Ist "startBalance" > 0?
 		if (startBalance.compareTo(BigDecimal.ZERO) != 1) {
-			return Response.status(Response.Status.BAD_REQUEST).entity("Das Startguthaben muss größer als 0 sein.")
-					.build();
+			errorMessage = "Das Startguthaben muss größer als 0 sein.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 
 		// Hat "startBalance" mehr als 2 Nachkommastellen?
 		if (startBalance.scale() > 2) {
-			return Response.status(Response.Status.BAD_REQUEST)
-					.entity("Der Betrag darf maximal 2 Nachkommastellen haben.").build();
+			errorMessage = "Der Betrag darf maximal 2 Nachkommastellen haben.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-
 		try {
 			// Konto erstellen
-			daAccount.addAccount(owner, startBalance);
+			daAccount.addAccount(owner, startBalance); // Logging findet in
+														// addAccount statt
 			return Response.ok().build();
 		} catch (SQLException e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+			logger.error(e);
+			errorMessage = serverErrorMessage;
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
 		}
 	}
 
@@ -250,13 +260,21 @@ public class RestResource {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getAllAccounts() {
 
+		logger.info("Anforderung einer Auflistung aller Konten.");
+		String errorMessage = "";
+
 		try {
 			List<Account> accounts = daAccount.getAccounts();
 			Account[] accountArray = accounts.toArray(new Account[0]);
 			return Response.ok(accountArray).build();
 		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+			logger.error(e);
+			errorMessage = serverErrorMessage;
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
+		} finally {
+			if (errorMessage.equals("")) {
+				logger.info("Eine Auflistung aller Konten wurde übermittelt.");
+			}
 		}
 	}
 
@@ -269,13 +287,21 @@ public class RestResource {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getAllTransactions() {
 
+		logger.info("Anforderung einer Auflistung aller Transaktionen.");
+		String errorMessage = "";
+
 		try {
 			List<Transaction> transactions = daTransation.getTransactionHistory("all");
 			Transaction[] transactionArray = transactions.toArray(new Transaction[0]);
 			return Response.ok(transactionArray).build();
 		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+			logger.error(e);
+			errorMessage = serverErrorMessage;
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
+		} finally {
+			if (errorMessage.equals("")) {
+				logger.info("Eine Auflistung aller Transaktionen wurde übermittelt.");
+			}
 		}
 	}
 
@@ -285,24 +311,30 @@ public class RestResource {
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	public Response dereservateNumber(@FormParam("number") String number, @FormParam("owner") String owner) {
 
+		logger.info("Anforderung einer Aktualisierung des Besitzernamens von Konto " + number + ".");
+		String errorMessage = "";
+
 		try {
 			// Existiert das Konto?
 			if (!daAccount.numberExists(number)) {
-				return Response.status(Response.Status.NOT_FOUND).entity("Das Konto existiert nicht.").build();
+				errorMessage = "Das Konto existiert nicht.";
+				logger.error(errorMessage);
+				return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
 			}
 
 			// Änderung durchführen
-			daAccount.updateOwner(number, owner);
+			daAccount.updateOwner(number, owner); // Logging findet in
+													// updateOwner statt
 			return Response.ok().build();
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+			logger.error(e);
+			errorMessage = serverErrorMessage;
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
 		}
 	}
 
 	// Wird aufgerufen, wenn ein neues Konto angelegt werden soll und liefert
-	// eine freie Nummer
+	// eine freie Kontonummer
 	/**
 	 * @return
 	 */
@@ -311,17 +343,27 @@ public class RestResource {
 	@Produces({ MediaType.TEXT_PLAIN })
 	// Aufruf mit Parameter
 	public synchronized Response getFreeNumber() {
-		String freeNumber;
+
+		String errorMessage = "";
+		logger.info("Anforderung einer freien Kontonummer.");
+		String freeNumber = "";
+
 		try {
 			freeNumber = daAccount.getFreeNumber();
 			if (freeNumber.equals("")) {
-				return Response.status(Response.Status.NOT_FOUND).entity("Es gibt keine freien Nummern mehr.").build();
+				errorMessage = "Es gibt keine freien Nummern mehr.";
+				return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
 			} else {
 				return Response.ok(freeNumber).build();
 			}
 		} catch (SQLException e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+			logger.error(e);
+			errorMessage = serverErrorMessage;
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
+		} finally {
+			if (errorMessage.equals("")) {
+				logger.info("Eine freie Kontonummer wurde übermittelt. (" + freeNumber + ")");
+			}
 		}
 	}
 
@@ -337,11 +379,16 @@ public class RestResource {
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	public Response dereservateNumber(@FormParam("number") String number) {
 
+		logger.info("Anforderung der Freigabe der reservierten Nummer " + number + ".");
+
 		daAccount.reservatedNumbers.remove(number);
+		logger.info("Die zuvor angeforderte Kontonummer " + number
+				+ " wurde wieder freigegeben, da das Anlegen des Kontos abgebrochen wurde.");
 		return Response.ok().build();
 	}
 
-	// Gibt den Kontostand eines Kontos zurück
+	// Gibt den Kontostand eines Kontos zurück. Nur für Testzwecke, wird von
+	// den Clients nicht aufgerufen. Daher auch kein Logging.
 	/**
 	 * @param number
 	 * @return
@@ -351,16 +398,26 @@ public class RestResource {
 	@Produces({ MediaType.TEXT_PLAIN })
 	public Response getAccountBalance(@PathParam("number") String number) {
 
+		logger.info("Anforderung des Guthabens des Kontos " + number + ".");
+		String errorMessage = "";
+
 		try {
 			return Response.ok(daTransation.getAccountBalance(number).toString()).build();
 		} catch (SQLException e) {
+			logger.error(e);
+			errorMessage = serverErrorMessage;
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity("Interner Serverfehler. Bitte versuchen Sie es erneut.").build();
+					.entity(errorMessage).build();
+		} finally {
+			if(errorMessage.equals("")){
+				logger.info("Der Kontostand des Kontos " + number + " wurde übermittelt.");
+			}
 		}
 	}
 
 	// Setzt die Datenbanktabellen auf ein Standardszenario mit Bankkonto und 4
-	// Kundenkonten zurück
+	// Kundenkonten zurück. Ebenfalls nur zu Test- und Administrationszwecken.
+	// Kein Aufruf durch Clients.
 	/**
 	 * @return
 	 */
@@ -368,13 +425,17 @@ public class RestResource {
 	@Path("/resetDatabaseTables")
 	public Response resetDatabaseTables() {
 
+		logger.info("Anforderung einer Zurücksetzung aller Datenbanktabellen.");
 		try {
 			dbAdministration.resetDatabaseTables();
-			logger.info("Die Servertabellen wurden zurückgesetzt.");
+			logger.info("Die Datenbanktabellen wurden zurückgesetzt.");
+			return Response.ok().build();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e);
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(serverErrorMessage).build();
 		}
-		return Response.ok().build();
+
 	}
 
 }

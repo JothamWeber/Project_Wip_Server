@@ -1,29 +1,3 @@
 INFO - Server gestartet.
-INFO - Anforderung einer Transaktionsdurchführung. (1000 an 1001 | 1207.89 | Test wieder zurueck)
-INFO - Transaktion ausgeführt. Sendernr.: 1000, Empfängernr.: 1001, Betrag: 1207.89, Referenz: Test wieder zurueck
-INFO - Anforderung einer Transaktionsdurchführung. (1000 an 100 | 1207.89 | Test wieder zurueck)
-ERROR - Die Kontonummer muss aus 4 Zahlen bestehen.
-INFO - Anforderung einer Transaktionsdurchführung. (1000 an 1001 | 1207.897 | Test wieder zurueck)
-ERROR - Der Betrag darf maximal 2 Nachkommastellen haben.
-INFO - Anforderung einer Transaktionsdurchführung. (100 an 1001 | 1207.89 | Test)
-ERROR - Die Kontonummer muss aus 4 Zahlen bestehen.
-INFO - Anforderung einer Transaktionsdurchführung. (1005 an 1001 | 1207.89 | Testö)
-ERROR - Die Referenz darf nur folgende Zeichen beinhalten: A-Z, a-z, 0-9, Leerzeichen.
-INFO - Anforderung einer Transaktionsdurchführung. (1005 an 1001 | 1207.89 | Test)
-INFO - Transaktion ausgeführt. Sendernr.: 1005, Empfängernr.: 1001, Betrag: 1207.89, Referenz: Test
-INFO - Anforderung einer Transaktionsdurchführung. (1005 an 1001 | 1207.89 | )
-INFO - Transaktion ausgeführt. Sendernr.: 1005, Empfängernr.: 1001, Betrag: 1207.89, Referenz: 
-INFO - Anforderung einer Transaktionsdurchführung. (1005 an 1001 | 1207.89 |  )
-INFO - Transaktion ausgeführt. Sendernr.: 1005, Empfängernr.: 1001, Betrag: 1207.89, Referenz:  
-INFO - Anforderung einer Transaktionsdurchführung. (1005 an 1001 | 1207.89 |  T)
-INFO - Transaktion ausgeführt. Sendernr.: 1005, Empfängernr.: 1001, Betrag: 1207.89, Referenz:  T
-INFO - Anforderung einer Transaktionsdurchführung. (1005 an 1030 | 1207.89 |  T)
-ERROR - Das Empfängerkonto existiert nicht.
-INFO - Anforderung einer Transaktionsdurchführung. (1030 an 1000 | 1207.89 |  T)
-ERROR - Das Senderkonto existiert nicht.
-INFO - Anforderung einer Transaktionsdurchführung. (1000 an 1000 | 1207.89 |  T)
-ERROR - Das Senderkonto darf nicht das Empfängerkonto sein.
-INFO - Anforderung einer Transaktionsdurchführung. (1001 an 1000 | -1207.89 |  T)
-ERROR - Der Betrag muss größer als 0 sein.
-INFO - Anforderung einer Transaktionsdurchführung. (1001 an 1000 | 1111111207.89 |  T)
-ERROR - Ihr Kontoguthaben reicht für diese Transaktion nicht aus.
+INFO - Anforderung einer Aktualisierung des Besitzernamens von Konto 1000
+INFO - Der Besitzer des Kontos 1000 wurde durch "Tralala" ersetzt.

@@ -2,6 +2,7 @@ package bertelsbank.dataAccess;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.security.Timestamp;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -51,11 +52,11 @@ public class TransactionDataAccess {
 
 		if (shouldCreateTable) {
 			Statement statement = connection.createStatement();
-			statement.execute(
-					"create table transactionTable (id int not null primary key, senderNumber varchar(4) not null, "
-							+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date timestamp not null)");
+			String sql = "CREATE table transactionTable (id int not null primary key, senderNumber varchar(4) not null, "
+					+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date timestamp not null)";
+			statement.execute(sql);
+			logger.info("SQL-statement ausgeführt: " + sql);
 			statement.close();
-
 			logger.info("Tabelle \"TransactionTable\" wurde erstellt.");
 		}
 
@@ -68,13 +69,17 @@ public class TransactionDataAccess {
 		try (Connection connection = dbAdministration.getConnection();
 				PreparedStatement preparedStatement = connection
 						.prepareStatement("INSERT INTO transactionTable VALUES (?,?,?,?,?,?)")) {
-			preparedStatement.setInt(1, dbAdministration.getEntryCount("transactionTable") + 1);
+			int id = dbAdministration.getEntryCount("transactionTable") + 1;
+			preparedStatement.setInt(1, id);
 			preparedStatement.setString(2, senderNumber);
 			preparedStatement.setString(3, receiverNumber);
 			preparedStatement.setBigDecimal(4, amount);
 			preparedStatement.setString(5, reference);
-			preparedStatement.setTimestamp(6, java.sql.Timestamp.valueOf(LocalDateTime.now()));
+			java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(LocalDateTime.now());
+			preparedStatement.setTimestamp(6, timestamp);
 			preparedStatement.execute();
+			logger.info("SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES " + id + ", " + senderNumber
+					+ ", " + receiverNumber + ", " + amount + ", " + reference + ", " + timestamp);
 			logger.info("Transaktion ausgeführt. Sendernr.: " + senderNumber + ", Empfängernr.: " + receiverNumber
 					+ ", Betrag: " + amount + ", Referenz: " + reference);
 		} catch (SQLException e) {
@@ -92,8 +97,9 @@ public class TransactionDataAccess {
 		if (accountNumber.equals("all")) {
 			Connection connection = dbAdministration.getConnection();
 			Statement statement = connection.createStatement();
-			String sql = "SELECT * FROM transactionTable order by date desc";
+			String sql = "SELECT * FROM transactionTable ORDER BY date desc";
 			ResultSet resultSet = statement.executeQuery(sql);
+			logger.info("SQL-Statement ausgeführt: " + sql);
 			while (resultSet.next()) {
 				Transaction transaction = new Transaction();
 				transaction.setId(resultSet.getInt(1));
@@ -111,9 +117,10 @@ public class TransactionDataAccess {
 			Account baseAccount = daAccount.getAccountByNumber(accountNumber, false);
 			Connection connection = dbAdministration.getConnection();
 			Statement statement = connection.createStatement();
-			String sql = "SELECT * FROM transactionTable where sendernumber = '" + accountNumber
-					+ "' or receivernumber = '" + accountNumber + "' order by date desc";
+			String sql = "SELECT * FROM transactionTable WHERE sendernumber = '" + accountNumber
+					+ "' or receivernumber = '" + accountNumber + "' ORDER BY date desc";
 			ResultSet resultSet = statement.executeQuery(sql);
+			logger.info("SQL-Statement ausgeführt: " + sql);
 			while (resultSet.next()) {
 				Transaction transaction = new Transaction();
 				transaction.setId(resultSet.getInt(1));
@@ -141,34 +148,35 @@ public class TransactionDataAccess {
 
 	public BigDecimal getAccountBalance(String accountNumber) throws SQLException {
 		BigDecimal balance = BigDecimal.ZERO;
-
 		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
-		String sql = "SELECT amount FROM transactionTable where sendernumber = '" + accountNumber + "'";
+		String sql = "SELECT amount FROM transactionTable WHERE sendernumber = '" + accountNumber + "'";
 		ResultSet resultSet = statement.executeQuery(sql);
+		logger.info("SQL-Statement ausgeführt: " + sql);
 		while (resultSet.next()) {
 			balance = balance.subtract(resultSet.getBigDecimal(1));
 		}
 
-		sql = "SELECT amount FROM transactionTable where receivernumber = '" + accountNumber + "'";
+		sql = "SELECT amount FROM transactionTable WHERE receivernumber = '" + accountNumber + "'";
 		resultSet = statement.executeQuery(sql);
+		logger.info("SQL-Statement ausgeführt: " + sql);
 		while (resultSet.next()) {
 			balance = balance.add(resultSet.getBigDecimal(1));
 		}
-
 		resultSet.close();
 		statement.close();
 		connection.close();
-
 		return balance;
 	}
 
-	// Ausgabe des Tabelleninhalts von transactiontable
+	// Ausgabe des Tabelleninhalts von transactiontable. Nur zu Testzwecken.
+	// Wird nicht vom Client aufgerufen.
 	private void showContentsTransactionTable() throws SQLException {
 		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
 		String sql = "SELECT * FROM transactionTable";
 		ResultSet resultSet = statement.executeQuery(sql);
+		logger.info("SQL-Statement ausgeführt: " + sql);
 		System.out.println("Table transaction:");
 		while (resultSet.next()) {
 			int id = resultSet.getInt(1);
