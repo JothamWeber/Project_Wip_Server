@@ -71,7 +71,7 @@ public class RestResource {
 	 *
 	 * @param number
 	 *            the account number of the account which should be returned
-	 * @return the response of the http-get. In best case it will be the desired
+	 * @return the response to the http-get. In best case it will be the desired
 	 *         account object or a http status with error information.
 	 * @author Jotham Weber
 	 */
@@ -111,11 +111,22 @@ public class RestResource {
 	}
 
 	/**
+	 * Receives the information for a transaction and checks if the transaction
+	 * is viable. If not, an error response will be returned. Otherwise the
+	 * transaction will be triggered.
+	 *
 	 * @param senderNumber
+	 *            the account number of the sender.
 	 * @param receiverNumber
+	 *            the account number of the receiver.
 	 * @param amount
+	 *            the value which is to send from the sender account to the
+	 *            receiver account.
 	 * @param reference
-	 * @return
+	 *            a short text which explains the reason of the transaction.
+	 * @return a http response which shows if the transaction was done or not.
+	 *         If the transaction was not possible, an error message explains
+	 *         the cause.
 	 */
 	@POST
 	@Path("/transaction")
@@ -208,11 +219,16 @@ public class RestResource {
 	// VERWALTUNG
 	// ============
 
-	// Neues Konto erstellen
 	/**
+	 * Checks if a new account can be created and triggers the execution.
+	 *
 	 * @param owner
+	 *            the name of the person the account will belong to.
 	 * @param startBalance
-	 * @return
+	 *            the amount of money which will be on the account after
+	 *            creation.
+	 * @return a http response will declare if the creation of the account was
+	 *         successful or not.
 	 */
 	@POST
 	@Path("/addAccount")
@@ -261,8 +277,9 @@ public class RestResource {
 		}
 	}
 
-	// Liefert alle Konten
 	/**
+	 * Provides an array containing every single account which belongs to the Bertelsbank.
+	 *
 	 * @return
 	 */
 	@GET
