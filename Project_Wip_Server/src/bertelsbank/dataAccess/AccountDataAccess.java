@@ -200,7 +200,7 @@ public class AccountDataAccess {
 		String sql = "UPDATE account SET owner = '" + owner + "' WHERE number = '" + number + "'";
 		// Der Datensatz wird auf der Datenbank aktualisiert
 		statement.executeUpdate(sql);
-		logger.info("SQL-Statement ausgeführt :" + sql);
+		logger.info("SQL-Statement ausgeführt: " + sql);
 		logger.info("Der Besitzer des Kontos " + number + " wurde durch \"" + owner + "\" ersetzt.");
 		statement.close();
 		connection.close();
