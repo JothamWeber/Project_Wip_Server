@@ -35,6 +35,7 @@ public class AccountDataAccess {
 
 	/**
 	 * Creates the account table on the database if it does not exist.
+	 * The bank account will be added after creation of the table.
 	 *
 	 * @throws SQLException
 	 * @author Jotham Weber
@@ -272,6 +273,7 @@ public class AccountDataAccess {
 	 * Writes every entry of the account table on the console.
 	 *
 	 * @throws SQLException
+	 * @author Jotham Weber
 	 */
 	private void showContentAccountTable() throws SQLException {
 		Connection connection = dbAdministration.getConnection();

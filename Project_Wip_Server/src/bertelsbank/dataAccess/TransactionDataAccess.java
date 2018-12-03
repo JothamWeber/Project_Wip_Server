@@ -1,11 +1,7 @@
 package bertelsbank.dataAccess;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.security.Timestamp;
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,14 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-
-import org.apache.derby.client.am.DateTime;
-import org.apache.derby.client.am.Decimal;
-import org.apache.derby.iapi.services.io.NewByteArrayInputStream;
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.jndi.java.javaNameParser;
-
 import bertelsbank.rest.Account;
 import bertelsbank.rest.Transaction;
 
@@ -29,16 +18,25 @@ public class TransactionDataAccess {
 	DatabaseAdministration dbAdministration = new DatabaseAdministration();
 
 	Logger logger;
-	public List<String> reservatedNumbers = new ArrayList<String>();
-	boolean bankAccountExists = true;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
+	/**
+	 * Constructor which initializes the Class-Logger.
+	 *
+	 * @author Jotham Weber
+	 */
 	public TransactionDataAccess() {
 		logger = Logger.getLogger(getClass());
 	}
 
-	// Transaktionstabelle erstellen
+	/**
+	 * Creates the Transactiontable on the database if it does not exist.
+	 *
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public void createTransactionTable() throws SQLException {
+
 		Connection connection = dbAdministration.getConnection();
 		// Prüfung, ob Tabelle bereits besteht
 		ResultSet resultSet = connection.getMetaData().getTables("%", "%", "%", new String[] { "TABLE" });
@@ -49,21 +47,33 @@ public class TransactionDataAccess {
 			}
 		}
 		resultSet.close();
-
 		if (shouldCreateTable) {
 			Statement statement = connection.createStatement();
 			String sql = "CREATE table transactionTable (id int not null primary key, senderNumber varchar(4) not null, "
 					+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date timestamp not null)";
+			// Tabelle wird erstellt
 			statement.execute(sql);
 			logger.info("SQL-statement ausgeführt: " + sql);
 			statement.close();
 			logger.info("Tabelle \"TransactionTable\" wurde erstellt.");
 		}
-
 		connection.close();
 	}
 
-	// Konto der Tabelle hinzufügen
+	/**
+	 * Writes a transaction to the database table.
+	 *
+	 * @param senderNumber
+	 *            specifies the sender account.
+	 * @param receiverNumber
+	 *            specifies the receiver account.
+	 * @param amount
+	 *            money which will be transferred
+	 * @param reference
+	 *            text which will be displayed in relation to the transaction
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public void addTransaction(String senderNumber, String receiverNumber, BigDecimal amount, String reference)
 			throws SQLException {
 		try (Connection connection = dbAdministration.getConnection();
@@ -77,6 +87,7 @@ public class TransactionDataAccess {
 			preparedStatement.setString(5, reference);
 			java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(LocalDateTime.now());
 			preparedStatement.setTimestamp(6, timestamp);
+			// Write transaction to database
 			preparedStatement.execute();
 			logger.info("SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES " + id + ", " + senderNumber
 					+ ", " + receiverNumber + ", " + amount + ", " + reference + ", " + timestamp);
@@ -84,10 +95,19 @@ public class TransactionDataAccess {
 					+ ", Betrag: " + amount + ", Referenz: " + reference);
 		} catch (SQLException e) {
 			logger.error(e);
-			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Provides the transaction history for a specific account.
+	 *
+	 * @param accountNumber
+	 *            specifies the account.
+	 * @return a list with all transactions where the account is either sender
+	 *         or receiver.
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public List<Transaction> getTransactionHistory(String accountNumber) throws SQLException {
 		List<Transaction> transactionHistoryList = new ArrayList<Transaction>();
 		AccountDataAccess daAccount = new AccountDataAccess();
@@ -101,6 +121,7 @@ public class TransactionDataAccess {
 			ResultSet resultSet = statement.executeQuery(sql);
 			logger.info("SQL-Statement ausgeführt: " + sql);
 			while (resultSet.next()) {
+				// Erstellt ein Transactionsobjekt anhand des Datensatzes
 				Transaction transaction = new Transaction();
 				transaction.setId(resultSet.getInt(1));
 				transaction.setSender(daAccount.getAccountByNumber(resultSet.getString(2), false));
@@ -108,12 +129,14 @@ public class TransactionDataAccess {
 				transaction.setAmount(resultSet.getBigDecimal(4));
 				transaction.setReference(resultSet.getString(5));
 				transaction.setTransactionDate(resultSet.getTimestamp(6));
+				// Transaktionsobjekt in die Liste hinzufügen
 				transactionHistoryList.add(transaction);
 			}
 			resultSet.close();
 			statement.close();
 			connection.close();
 		} else {
+			// Transaktionshistorie für ein bestimmtes Konto zusammenstellen
 			Account baseAccount = daAccount.getAccountByNumber(accountNumber, false);
 			Connection connection = dbAdministration.getConnection();
 			Statement statement = connection.createStatement();
@@ -122,8 +145,10 @@ public class TransactionDataAccess {
 			ResultSet resultSet = statement.executeQuery(sql);
 			logger.info("SQL-Statement ausgeführt: " + sql);
 			while (resultSet.next()) {
+				// Transaktionsobjekt anhand des Datensatzes erstellen
 				Transaction transaction = new Transaction();
 				transaction.setId(resultSet.getInt(1));
+				// Prüfung, ob das entsprechende Konto Sender oder Empfänger ist
 				if (resultSet.getString(2).equals(accountNumber)) {
 					transaction.setSender(baseAccount);
 				} else {
@@ -137,6 +162,7 @@ public class TransactionDataAccess {
 				transaction.setAmount(resultSet.getBigDecimal(4));
 				transaction.setReference(resultSet.getString(5));
 				transaction.setTransactionDate(resultSet.getTimestamp(6));
+				// Transaktionsobjekt in die Liste hinzufügen
 				transactionHistoryList.add(transaction);
 			}
 			resultSet.close();
@@ -146,6 +172,15 @@ public class TransactionDataAccess {
 		return transactionHistoryList;
 	}
 
+	/**
+	 * Provides the current balance of a specific account.
+	 *
+	 * @param accountNumber
+	 *            specifies the account.
+	 * @return the current balance.
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public BigDecimal getAccountBalance(String accountNumber) throws SQLException {
 		BigDecimal balance = BigDecimal.ZERO;
 		Connection connection = dbAdministration.getConnection();
@@ -154,13 +189,15 @@ public class TransactionDataAccess {
 		ResultSet resultSet = statement.executeQuery(sql);
 		logger.info("SQL-Statement ausgeführt: " + sql);
 		while (resultSet.next()) {
+			// Jede Transaktion, die von dem Konto ausging, wird vom Kontostand
+			// subtrahiert.
 			balance = balance.subtract(resultSet.getBigDecimal(1));
 		}
-
 		sql = "SELECT amount FROM transactionTable WHERE receivernumber = '" + accountNumber + "'";
 		resultSet = statement.executeQuery(sql);
 		logger.info("SQL-Statement ausgeführt: " + sql);
 		while (resultSet.next()) {
+			// Jede Transaktion an dieses Konto wird zum Kontostand addiert.
 			balance = balance.add(resultSet.getBigDecimal(1));
 		}
 		resultSet.close();
@@ -169,8 +206,12 @@ public class TransactionDataAccess {
 		return balance;
 	}
 
-	// Ausgabe des Tabelleninhalts von transactiontable. Nur zu Testzwecken.
-	// Wird nicht vom Client aufgerufen.
+	/**
+	 * Writes every entry of the transactiontable on the console.
+	 *
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	private void showContentTransactionTable() throws SQLException {
 		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();

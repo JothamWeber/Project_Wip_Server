@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -47,9 +48,10 @@ public class RestResource {
 			logger = Logger.getRootLogger();
 			logger.setAdditivity(false);
 			SimpleLayout layout = new SimpleLayout();
-			FileAppender fileAppender;
-			fileAppender = new FileAppender(layout, "logs/ServerLogFile.log", false);
+			FileAppender fileAppender = new FileAppender(layout, "logs/ServerLogFile.log", false);
 			logger.addAppender(fileAppender);
+			ConsoleAppender consoleAppender = new ConsoleAppender(layout);
+			logger.addAppender(consoleAppender);
 			logger.setLevel(Level.ALL);
 		} catch (IOException e) {
 			e.printStackTrace();

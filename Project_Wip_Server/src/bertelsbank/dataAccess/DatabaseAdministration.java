@@ -17,24 +17,41 @@ public class DatabaseAdministration {
 	// ALLGEMEINE DATENBANK-METHODEN
 	// =============================
 
+	/**
+	 * Constructor which initializes the Class-Logger.
+	 *
+	 * @author Jotham Weber
+	 */
 	public DatabaseAdministration(){
 		logger = Logger.getLogger(getClass());
 	}
 
-	// Connection erstellen
+	/**
+	 * Establishes the connection to the jdbc database.
+	 *
+	 * @return the connection or null if there was an error.
+	 * @author Jotham Weber
+	 */
 	public Connection getConnection() {
 		try {
+			logger.info("Verbindung zur Datenbank wird aufgebaut.");
 			Class.forName("org.apache.derby.jdbc.ClientDriver");
 			Properties properties = new Properties();
 			properties.put("user", "user");
 			Connection connection = DriverManager.getConnection("jdbc:derby:database;create=true", properties);
 			return connection;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			return null;
 		}
 	}
 
+	/**
+	 * Resets the database tables to a standard scenario.
+	 *
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public void resetDatabaseTables() throws SQLException{
 		AccountDataAccess daAccount = new AccountDataAccess();
 		TransactionDataAccess daTransaction = new TransactionDataAccess();
@@ -50,7 +67,14 @@ public class DatabaseAdministration {
 		daAccount.addAccount("Jotham", new BigDecimal(10000));
 	}
 
-	// Rückgabe der Anzahl der Datensätze in der Datenbanktabelle
+	/**
+	 * Provides the number of entries in a database table.
+	 *
+	 * @param tableName specifies the table.
+	 * @return the number of entries.
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public int getEntryCount(String tableName) throws SQLException {
 		int entryCount = 0;
 		Connection connection = getConnection();
@@ -67,7 +91,13 @@ public class DatabaseAdministration {
 		return entryCount;
 	}
 
-	// Löscht eine Tabelle der Datenbank
+	/**
+	 * Deletes a database table.
+	 *
+	 * @param tableName specifies the table.
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public void deleteTable(String tableName) throws SQLException {
 		Connection connection = getConnection();
 		Statement statement = connection.createStatement();
@@ -77,7 +107,13 @@ public class DatabaseAdministration {
 		connection.close();
 	}
 
-	// Entfernt alle Einträge einer Datenbanktabelle
+	/**
+	 * Clears a database table by deleting every entry.
+	 *
+	 * @param tableName specifies the table.
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public void clearTable(String tableName) throws SQLException {
 		Connection connection = getConnection();
 		Statement statement = connection.createStatement();
@@ -87,6 +123,13 @@ public class DatabaseAdministration {
 		connection.close();
 	}
 
+	/**
+	 * Checks if a string is an integer value.
+	 *
+	 * @param s string value to be checked.
+	 * @return true, if the string value is an integer and false if it is not.
+	 * @author Jotham Weber
+	 */
 	public static boolean isInteger(String s) {
 		try {
 			Integer.parseInt(s);
