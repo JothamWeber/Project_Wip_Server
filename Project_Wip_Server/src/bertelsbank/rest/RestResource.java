@@ -145,8 +145,8 @@ public class RestResource {
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 		// Haben "senderNumber" und "receiverNumber" das richtige Format?
-		if (senderNumber.length() != 4 || !dbAdministration.isInteger(senderNumber) || receiverNumber.length() != 4
-				|| !dbAdministration.isInteger(receiverNumber)) {
+		if (senderNumber.length() != 4 || !DatabaseAdministration.isInteger(senderNumber) || receiverNumber.length() != 4
+				|| !DatabaseAdministration.isInteger(receiverNumber)) {
 			errorMessage = "Die Kontonummer muss aus 4 Zahlen bestehen.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
