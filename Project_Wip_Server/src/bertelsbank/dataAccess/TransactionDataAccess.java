@@ -171,7 +171,7 @@ public class TransactionDataAccess {
 
 	// Ausgabe des Tabelleninhalts von transactiontable. Nur zu Testzwecken.
 	// Wird nicht vom Client aufgerufen.
-	private void showContentsTransactionTable() throws SQLException {
+	private void showContentTransactionTable() throws SQLException {
 		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
 		String sql = "SELECT * FROM transactionTable";

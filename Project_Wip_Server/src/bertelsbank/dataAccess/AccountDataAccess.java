@@ -1,47 +1,44 @@
 package bertelsbank.dataAccess;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-
-import javax.ws.rs.GET;
-
-import org.apache.derby.client.am.DateTime;
-import org.apache.derby.client.am.Decimal;
-import org.apache.derby.iapi.services.io.NewByteArrayInputStream;
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.server.session.JDBCSessionIdManager.DatabaseAdaptor;
-
 import bertelsbank.rest.Account;
-import bertelsbank.rest.Transaction;
-import javafx.beans.value.WeakChangeListener;
 
 public class AccountDataAccess {
 	TransactionDataAccess daTransaction = new TransactionDataAccess();
 	DatabaseAdministration dbAdministration = new DatabaseAdministration();
-
 	Connection connection = dbAdministration.getConnection();
-	public List<String> reservatedNumbers = new ArrayList<String>();
+	public List<String> reservedNumbers = new ArrayList<String>(); // enthält
+																	// alle
+																	// reservierten
+																	// Kontonummern
 	boolean bankAccountExists = true;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 	Logger logger;
 
+	/**
+	 * Constructor which initializes the Class-Logger.
+	 *
+	 * @author Jotham Weber
+	 */
 	public AccountDataAccess() {
 		logger = Logger.getLogger(getClass());
 	}
 
-	// Kontentabelle erstellen
+	/**
+	 * Creates the account table on the database if it does not exist.
+	 *
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public void createAccountTable() throws SQLException {
 		Connection connection = dbAdministration.getConnection();
 		// Prüfung, ob Tabelle bereits besteht
@@ -57,19 +54,31 @@ public class AccountDataAccess {
 		if (shouldCreateTable) {
 			Statement statement = connection.createStatement();
 			String sql = "CREATE table account (id int not null primary key, owner varchar(64) not null, number varchar(4) not null)";
+			// Tabelle wird erstellt
 			statement.execute(sql);
 			statement.close();
 			logger.info("SQL-Statement ausgeführt: " + sql);
 			logger.info("Tabelle \"Account\" wurde erstellt.");
 			bankAccountExists = false;
+			// Das Bank-Konto wird angelegt
 			addAccount("BANK", BigDecimal.ZERO);
 			bankAccountExists = true;
 		}
-
 		connection.close();
 	}
 
-	// Konto der Tabelle hinzufÃ¼gen
+	/**
+	 * Adds an account with an owner and a start balance to the database table
+	 * "Account". The start balance will be provided from the bank account.
+	 *
+	 * @param owner
+	 *            the person owning the account.
+	 * @param startBalance
+	 *            the amount of money which will be transferred to the account
+	 *            immediately after creation.
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public void addAccount(String owner, BigDecimal startBalance) throws SQLException {
 
 		String accountNumber = getFreeNumber();
@@ -81,37 +90,55 @@ public class AccountDataAccess {
 				preparedStatement.setInt(1, id);
 				preparedStatement.setString(2, owner);
 				preparedStatement.setString(3, accountNumber);
+				// Datensatz in die Datenbanktabelle schreiben
 				preparedStatement.execute();
 				logger.info("SQL-Statement ausgeführt: " + "INSERT INTO account VALUES (" + id + ", " + owner + ", "
 						+ accountNumber + ")");
 				logger.info("Neues Konto angelegt. Besitzer: " + owner + ", Kontonr.: " + accountNumber
 						+ ", Startkapital: " + startBalance);
 				if (startBalance.compareTo(BigDecimal.ZERO) == 1) {
+					// Wenn das angeforderte Startguthaben > 0 ist, wird es dem
+					// Konto überwiesen
 					daTransaction.addTransaction("0000", accountNumber, startBalance, "STARTGUTHABEN");
 				}
-				reservatedNumbers.remove(accountNumber);
+				// Die reservierte Nummer gehört jetzt zu einem Konto, daher
+				// kann die Reservierung aufgehoben werden
+				reservedNumbers.remove(accountNumber);
 			} catch (SQLException e) {
 				logger.error(e);
-				e.printStackTrace();
 			}
 		}
 	}
 
-	// Rückgabe eines Kontos
+	/**
+	 * Returns an account object belonging to the given number.
+	 *
+	 * @param number
+	 *            specifies the account.
+	 * @param attachTransactions
+	 *            if this is true, the transaction history for this account is
+	 *            attached to the account object.
+	 * @return the account object
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public Account getAccountByNumber(String number, boolean attachTransactions) throws SQLException {
 		Account account = new Account();
 		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
+		// Datensatz von der Datenbank erhalten
 		String sql = "SELECT * FROM account WHERE  number = '" + number + "'";
 		ResultSet resultSet = statement.executeQuery(sql);
 		logger.info("SQL-Statement ausgeführt: " + sql);
 		if (resultSet.next()) {
+			// Aus dem Datensatz ein Kontoobjekt erstellen
 			int id = resultSet.getInt(1);
 			String owner = resultSet.getString(2);
 			account.setId(id);
 			account.setOwner(owner);
 			account.setNumber(number);
 			if (attachTransactions) {
+				// Transaktionen an das Kontoobjekt hängen
 				account.setTransactions(daTransaction.getTransactionHistory(number));
 			}
 		}
@@ -121,42 +148,56 @@ public class AccountDataAccess {
 		return account;
 	}
 
-	// Rückgabe einer Liste aller Konten
-	public List<Account> getAccounts() {
+	/**
+	 * Every account existing on the account database table is put into a list.
+	 * The list is returned.
+	 *
+	 * @return list containing account objects.
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
+	public List<Account> getAccounts() throws SQLException {
 		List<Account> accounts = new ArrayList<>();
-		try {
-			Connection connection = dbAdministration.getConnection();
-			Statement statement = connection.createStatement();
-			String sql = "SELECT * FROM account";
-			ResultSet resultSet = statement.executeQuery(sql);
-			logger.info("SQL-Statement ausgeführt: " + sql);
-			while (resultSet.next()) {
-				int id = resultSet.getInt(1);
-				String owner = resultSet.getString(2);
-				String number = resultSet.getString(3);
-				Account account = new Account();
-				account.setId(id);
-				account.setOwner(owner);
-				account.setNumber(number);
-				account.setTransactions(daTransaction.getTransactionHistory(number));
-				accounts.add(account);
-			}
-			resultSet.close();
-			statement.close();
-			connection.close();
-			return accounts;
-		} catch (SQLException e) {
-			logger.error(e);
-			e.printStackTrace();
-			return null;
+		Connection connection = dbAdministration.getConnection();
+		Statement statement = connection.createStatement();
+		// Alle Datensätze der Account-Tabelle abrufen
+		String sql = "SELECT * FROM account";
+		ResultSet resultSet = statement.executeQuery(sql);
+		logger.info("SQL-Statement ausgeführt: " + sql);
+		while (resultSet.next()) {
+			// Datensätze in Kontoobjekte umwandeln
+			int id = resultSet.getInt(1);
+			String owner = resultSet.getString(2);
+			String number = resultSet.getString(3);
+			Account account = new Account();
+			account.setId(id);
+			account.setOwner(owner);
+			account.setNumber(number);
+			account.setTransactions(daTransaction.getTransactionHistory(number));
+			accounts.add(account);
 		}
+		resultSet.close();
+		statement.close();
+		connection.close();
+		return accounts;
 	}
 
-	// Aktualisiert den Namen des Owners
+	/**
+	 * Replaces the current owner name of an account in the database by a new
+	 * name.
+	 *
+	 * @param number
+	 *            specifies the account.
+	 * @param owner
+	 *            the new owner name.
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public void updateOwner(String number, String owner) throws SQLException {
 		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
 		String sql = "UPDATE account SET owner = '" + owner + "' WHERE number = '" + number + "'";
+		// Der Datensatz wird auf der Datenbank aktualisiert
 		statement.executeUpdate(sql);
 		logger.info("SQL-Statement ausgeführt :" + sql);
 		logger.info("Der Besitzer des Kontos " + number + " wurde durch \"" + owner + "\" ersetzt.");
@@ -164,13 +205,25 @@ public class AccountDataAccess {
 		connection.close();
 	}
 
-	// Ermittelt die nächste freie Kontonummer
-	public String getFreeNumber() throws SQLException {
+	/**
+	 * The next free number for an account is determined, reserved and returned.
+	 *
+	 * @return if the bank account does not exist yet, the number returned is
+	 *         0000. Otherwise it is a number between 1000 and 9999, which does
+	 *         not belong to an existing account. If there is no more free
+	 *         number, an empty string will be returned.
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
+	public synchronized String getFreeNumber() throws SQLException {
 		String freeNumber = "";
 		if (bankAccountExists) {
+			// Angefangen bei 1000 werden die Nummern auf Verfügbarkeit geprüft
 			for (int i = 1000; i <= 9999; i++) {
 				String iString = String.valueOf(i);
-				if (!numberExists(iString) && !reservatedNumbers.contains(iString)) {
+				// Prüfung, ob die Nummer schon einem Konto zugeordnet oder
+				// reserviert ist
+				if (!numberExists(iString) && !reservedNumbers.contains(iString)) {
 					freeNumber = iString;
 					break;
 				}
@@ -178,15 +231,26 @@ public class AccountDataAccess {
 		} else {
 			freeNumber = "0000";
 		}
-		reservatedNumbers.add(freeNumber);
+		// Reservierung der Nummer
+		reservedNumbers.add(freeNumber);
 		return freeNumber;
 	}
 
-	// Prüft, ob Kontonummer existiert
+	/**
+	 * Checks if a number is the account number of an existing account.
+	 *
+	 * @param number
+	 * @return true, if there is an account with this number and false, if there
+	 *         is no account belonging to this number.
+	 * @throws SQLException
+	 * @author Jotham Weber
+	 */
 	public boolean numberExists(String number) throws SQLException {
 		int entryCount = 0;
 		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
+		// Auf der Datenbank wird abgefragt, wie viele Datensätze diese
+		// Kontonummer haben. Der Wert kann 0 oder 1 sein.
 		String sql = "SELECT count(*) FROM account WHERE number = '" + number + "'";
 		ResultSet resultSet = statement.executeQuery(sql);
 		logger.info("SQL-Statement ausgeführt: " + sql);
@@ -203,9 +267,13 @@ public class AccountDataAccess {
 		}
 	}
 
-	// Ausgabe des Tabelleninhalts von account. Nur zu Testzwecken. Wird nicht
-	// vom Client aufgerufen.
-	private void showContentsAccountTable() throws SQLException {
+
+	/**
+	 * Writes every entry of the account table on the console.
+	 *
+	 * @throws SQLException
+	 */
+	private void showContentAccountTable() throws SQLException {
 		Connection connection = dbAdministration.getConnection();
 		Statement statement = connection.createStatement();
 		String sql = "SELECT * FROM account";

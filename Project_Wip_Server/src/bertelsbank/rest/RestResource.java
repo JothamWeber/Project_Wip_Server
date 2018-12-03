@@ -17,11 +17,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 import org.apache.log4j.SimpleLayout;
 
 import com.sun.jersey.spi.resource.Singleton;
@@ -71,8 +69,8 @@ public class RestResource {
 	 *
 	 * @param number
 	 *            the account number of the account which should be returned
-	 * @return the response to the http-get. In best case it will be the desired
-	 *         account object or a http status with error information.
+	 * @return the response to the HTTP-get. In best case it will be the desired
+	 *         account object or a HTTP status with error information.
 	 * @author Jotham Weber
 	 */
 	@GET
@@ -124,7 +122,7 @@ public class RestResource {
 	 *            receiver account.
 	 * @param reference
 	 *            a short text which explains the reason of the transaction.
-	 * @return a http response which shows if the transaction was done or not.
+	 * @return a HTTP response which shows if the transaction was done or not.
 	 *         If the transaction was not possible, an error message explains
 	 *         the cause.
 	 */
@@ -138,14 +136,12 @@ public class RestResource {
 		String errorMessage = "";
 		logger.info("Anforderung einer Transaktionsdurchführung. (" + senderNumber + " an " + receiverNumber + " | "
 				+ amount + " | " + reference + ")");
-
 		// Sind alle Werte vorhanden?
 		if (senderNumber == null || receiverNumber == null || amount == null || reference == null) {
 			errorMessage = "Nicht alle Felder sind gefüllt.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-
 		// Haben "senderNumber" und "receiverNumber" das richtige Format?
 		if (senderNumber.length() != 4 || !dbAdministration.isInteger(senderNumber) || receiverNumber.length() != 4
 				|| !dbAdministration.isInteger(receiverNumber)) {
@@ -153,28 +149,24 @@ public class RestResource {
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-
 		// Unterscheiden sich "senderNumber" und "receiverNumber"?
 		if (senderNumber.equals(receiverNumber)) {
 			errorMessage = "Das Senderkonto darf nicht das Empfängerkonto sein.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-
 		// Ist "amount" größer als 0?
 		if (!(amount.compareTo(BigDecimal.ZERO) == 1)) {
 			errorMessage = "Der Betrag muss größer als 0 sein.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-
 		// Hat "amount" mehr als 2 Nachkommastellen?
 		if (amount.scale() > 2) {
 			errorMessage = "Der Betrag darf maximal 2 Nachkommastellen haben.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-
 		// Besteht "reference" aus den erlaubten Zeichen?
 		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(reference);
@@ -190,14 +182,12 @@ public class RestResource {
 				logger.error(errorMessage);
 				return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
 			}
-
 			// Existiert das Empfängerkonto?
 			if (!daAccount.numberExists(receiverNumber)) {
 				errorMessage = "Das Empfängerkonto existiert nicht.";
 				logger.error(errorMessage);
 				return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
 			}
-
 			// Hat das Empfängerkonto ausreichend Guthaben?
 			if (daTransation.getAccountBalance(senderNumber).compareTo(amount) == -1 && !senderNumber.equals("0000")) {
 				errorMessage = "Ihr Kontoguthaben reicht für diese Transaktion nicht aus.";
@@ -207,7 +197,6 @@ public class RestResource {
 			// Transaktion in Datenbank schreiben
 			daTransation.addTransaction(senderNumber, receiverNumber, amount, reference);
 			return Response.status(Response.Status.NO_CONTENT).build();
-
 		} catch (Exception e) {
 			logger.error(e);
 			errorMessage = serverErrorMessage;
@@ -225,9 +214,9 @@ public class RestResource {
 	 * @param owner
 	 *            the name of the person the account will belong to.
 	 * @param startBalance
-	 *            the amount of money which will be on the account after
-	 *            creation.
-	 * @return a http response will declare if the creation of the account was
+	 *            the amount of money which will be transferred to the account
+	 *            immediately after creation.
+	 * @return a HTTP response will declare if the creation of the account was
 	 *         successful or not.
 	 */
 	@POST
@@ -244,21 +233,18 @@ public class RestResource {
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-
 		// Ist "owner" = bank?
 		if (owner.toLowerCase().equals("bank")) {
 			errorMessage = "Das Konto \"Bank\" ist reserviert.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-
 		// Ist "startBalance" > 0?
 		if (startBalance.compareTo(BigDecimal.ZERO) != 1) {
 			errorMessage = "Das Startguthaben muss größer als 0 sein.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-
 		// Hat "startBalance" mehr als 2 Nachkommastellen?
 		if (startBalance.scale() > 2) {
 			errorMessage = "Der Betrag darf maximal 2 Nachkommastellen haben.";
@@ -278,9 +264,11 @@ public class RestResource {
 	}
 
 	/**
-	 * Provides an array containing every single account which belongs to the Bertelsbank.
+	 * Provides a collection of all accounts which belongs to the Bertelsbank.
 	 *
-	 * @return
+	 * @return array containing all account objects with the respective
+	 *         transactions.
+	 * @author Jotham Weber
 	 */
 	@GET
 	@Path("/allAccounts")
@@ -291,7 +279,9 @@ public class RestResource {
 		String errorMessage = "";
 
 		try {
+			// Laden aller Accountobjecte
 			List<Account> accounts = daAccount.getAccounts();
+			// Umwandlung in Array, um als Json senden zu können
 			Account[] accountArray = accounts.toArray(new Account[0]);
 			return Response.ok(accountArray).build();
 		} catch (Exception e) {
@@ -305,9 +295,11 @@ public class RestResource {
 		}
 	}
 
-	// Liefert alle Transaktionen
 	/**
-	 * @return
+	 * Provides all transactions executed within the Bertelsbank.
+	 *
+	 * @return array containing all Transaction objects.
+	 * @author Jotham Weber
 	 */
 	@GET
 	@Path("/allTransactions")
@@ -318,7 +310,9 @@ public class RestResource {
 		String errorMessage = "";
 
 		try {
+			// Laden aller Transaktionsobjekte
 			List<Transaction> transactions = daTransation.getTransactionHistory("all");
+			// Umwandlung in Array, um als Json senden zu können
 			Transaction[] transactionArray = transactions.toArray(new Transaction[0]);
 			return Response.ok(transactionArray).build();
 		} catch (Exception e) {
@@ -332,7 +326,18 @@ public class RestResource {
 		}
 	}
 
-	// Ownernamen aktualisieren
+	/**
+	 * Receives form-URL-encoded parameters to update the owner name of a
+	 * specific account.
+	 *
+	 * @param number
+	 *            specifies the account which is to be updated.
+	 * @param owner
+	 *            provides the new owner name which will replace the former
+	 *            owner name.
+	 * @return HTTP response which returns the status of the task.
+	 * @author Jotham Weber
+	 */
 	@POST
 	@Path("/updateOwner")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
@@ -348,7 +353,6 @@ public class RestResource {
 				logger.error(errorMessage);
 				return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
 			}
-
 			// Änderung durchführen
 			daAccount.updateOwner(number, owner); // Logging findet in
 													// updateOwner statt
@@ -360,15 +364,17 @@ public class RestResource {
 		}
 	}
 
-	// Wird aufgerufen, wenn ein neues Konto angelegt werden soll und liefert
-	// eine freie Kontonummer
 	/**
-	 * @return
+	 * When a new account is to be created this method provides a free number
+	 * which can be used as the account number.
+	 *
+	 * @return HTTP response containing the free number as a string (plain text)
+	 *         or the HTTP error message.
+	 * @author Jotham Weber
 	 */
 	@GET
 	@Path("/freeNumber")
 	@Produces({ MediaType.TEXT_PLAIN })
-	// Aufruf mit Parameter
 	public synchronized Response getFreeNumber() {
 
 		String errorMessage = "";
@@ -378,6 +384,8 @@ public class RestResource {
 		try {
 			freeNumber = daAccount.getFreeNumber();
 			if (freeNumber.equals("")) {
+				// In diesem Fall sind alle Nummern von 1000 bis 9999 bereits
+				// vergeben.
 				errorMessage = "Es gibt keine freien Nummern mehr.";
 				return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
 			} else {
@@ -394,31 +402,38 @@ public class RestResource {
 		}
 	}
 
-	// Wird aufgerufen, wenn im Dialog "Konto erstellen" der Abbrechen-Button
-	// gedrückt wird
 	/**
+	 * The method "getFreeNumber" provides a free number to create a new
+	 * account. If the creation is canceled and the new account will not be
+	 * created, the number will again be made usable for the next new account.
+	 *
 	 * @param number
-	 * @return
-	 * @throws SQLException
+	 *            contains the number which is to be declared as free again.
+	 * @return HTTP response with HTTP statuscode 200.
+	 * @author Jotham Weber
 	 */
 	@POST
-	@Path("/dereservateNumber")
+	@Path("/recallNumberReservation")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
-	public Response dereservateNumber(@FormParam("number") String number) {
+	public Response recallNumberReservation(@FormParam("number") String number) {
 
 		logger.info("Anforderung der Freigabe der reservierten Nummer " + number + ".");
-
-		daAccount.reservatedNumbers.remove(number);
+		// Die entsprechende Nummer wird aus einer Liste aller reservierten
+		// Nummern entfernt.
+		daAccount.reservedNumbers.remove(number);
 		logger.info("Die zuvor angeforderte Kontonummer " + number
 				+ " wurde wieder freigegeben, da das Anlegen des Kontos abgebrochen wurde.");
 		return Response.ok().build();
 	}
 
-	// Gibt den Kontostand eines Kontos zurück. Nur für Testzwecke, wird von
-	// den Clients nicht aufgerufen. Daher auch kein Logging.
 	/**
+	 * Provides the balance for a specific account.
+	 *
 	 * @param number
-	 * @return
+	 *            identifies the account.
+	 * @return HTTP return containing the calculated account balance or an error
+	 *         message.
+	 * @author Jotham Weber
 	 */
 	@GET
 	@Path("/accountBalance/{number}")
@@ -427,8 +442,8 @@ public class RestResource {
 
 		logger.info("Anforderung des Guthabens des Kontos " + number + ".");
 		String errorMessage = "";
-
 		try {
+			// Das aktuelle Guthaben wird abgefragt und übermittelt
 			return Response.ok(daTransation.getAccountBalance(number).toString()).build();
 		} catch (SQLException e) {
 			logger.error(e);
@@ -441,11 +456,13 @@ public class RestResource {
 		}
 	}
 
-	// Setzt die Datenbanktabellen auf ein Standardszenario mit Bankkonto und 4
-	// Kundenkonten zurück. Ebenfalls nur zu Test- und Administrationszwecken.
-	// Kein Aufruf durch Clients.
 	/**
-	 * @return
+	 * Resets the database tables to a standard scenario with a bank account and
+	 * 4 customer accounts. Each one of the customer accounts will start with a
+	 * balance of 10,000.
+	 *
+	 * @return HTTP response.
+	 * @author Jotham Weber
 	 */
 	@POST
 	@Path("/resetDatabaseTables")
@@ -460,7 +477,6 @@ public class RestResource {
 			logger.error(e);
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(serverErrorMessage).build();
 		}
-
 	}
 
 }
