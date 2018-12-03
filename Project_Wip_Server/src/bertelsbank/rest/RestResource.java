@@ -151,6 +151,12 @@ public class RestResource {
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
+		// Beginnen "senderNumber" und "receiverNumber" mit einer 1?
+		if (receiverNumber.startsWith("0")) {
+			errorMessage = "Die Kontonummer des Empfängers muss mit einer 1 beginnen.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
+		}
 		// Unterscheiden sich "senderNumber" und "receiverNumber"?
 		if (senderNumber.equals(receiverNumber)) {
 			errorMessage = "Das Senderkonto darf nicht das Empfängerkonto sein.";

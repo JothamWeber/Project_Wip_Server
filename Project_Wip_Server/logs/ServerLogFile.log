@@ -1,1 +1,3 @@
 INFO - Server gestartet.
+INFO - Anforderung einer Transaktionsdurchführung. (1001 an 0000 | 1207.89 | T)
+ERROR - Die Kontonummer des Empfängers muss mit einer 1 beginnen.
