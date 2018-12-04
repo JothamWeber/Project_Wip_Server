@@ -122,8 +122,9 @@ public class RestResource {
 	public synchronized Response executeTransaction(@FormParam("senderNumber") String senderNumber,
 			@FormParam("receiverNumber") String receiverNumber, @FormParam("amount") String amount,
 			@FormParam("reference") String reference) {
-
+		
 		String errorMessage = "";
+		amount = amount.replace(',', '.');
 		logger.info("Anforderung einer Transaktionsdurchführung. (" + senderNumber + " an " + receiverNumber + " | "
 				+ amount + " | " + reference + ")");
 		// Sind alle Werte vorhanden?
@@ -244,6 +245,7 @@ public class RestResource {
 
 		String errorMessage = "";
 		logger.info("Anforderung des Anlegens eines neuen Kontos.");
+		startBalance = startBalance.replace(',', '.');
 
 		// Sind alle Werte vorhanden?
 		if (owner.equals("") || startBalance.equals("")) {
