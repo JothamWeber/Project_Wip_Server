@@ -39,23 +39,11 @@ public class RestResource {
 	String serverErrorMessage = "Interner Serverfehler. Bitte versuchen Sie es erneut.";
 
 	/**
-	 * The constructor which initializes the Root-Logger and the Class-Logger.
+	 * The constructor which initializes the Class-Logger.
 	 *
 	 * @author Jotham Weber
 	 */
 	public RestResource() {
-		try {
-			logger = Logger.getRootLogger();
-			logger.setAdditivity(false);
-			SimpleLayout layout = new SimpleLayout();
-			FileAppender fileAppender = new FileAppender(layout, "logs/ServerLogFile.log", false);
-			ConsoleAppender consoleAppender = new ConsoleAppender(layout);
-			logger.addAppender(fileAppender);
-			logger.addAppender(consoleAppender);
-			logger.setLevel(Level.ALL);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		logger = Logger.getLogger(getClass());
 		logger.info("Server gestartet.");
 	}

@@ -1,5 +1,10 @@
 package bertelsbank.main;
 
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.SimpleLayout;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -12,6 +17,15 @@ public class JettyServer {
 
 	public static void main(String[] args) throws Exception {
 		Server server = new Server(9998);
+
+		// Log4j
+		Logger logger = Logger.getRootLogger();
+		SimpleLayout layout = new SimpleLayout();
+		ConsoleAppender consoleAppender = new ConsoleAppender(layout);
+		FileAppender fileAppender = new FileAppender(layout, "logs/ServerLogFile.log", false);
+		logger.addAppender(consoleAppender);
+		logger.addAppender(fileAppender);
+		logger.setLevel(Level.ALL);
 
 		// JERSEY
 		ResourceConfig resourceConfig = new PackagesResourceConfig("bertelsbank.rest");

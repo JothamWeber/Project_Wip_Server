@@ -1,66 +1,64 @@
+INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Server gestartet.
-INFO - Anforderung einer Transaktionsdurchführung. (1001 an 0000 | 1207.89 | T)
-ERROR - Die Kontonummer des Empfängers muss mit einer 1 beginnen.
-INFO - Anforderung einer Transaktionsdurchführung. (1000 an 1000 | 1207.89 | T)
-ERROR - Das Senderkonto darf nicht das Empfängerkonto sein.
-INFO - Anforderung einer Transaktionsdurchführung. (0000 an 1000 | 1000000000 | T)
-ERROR - Der Betrag darf nicht größer als 999.999.999,99 sein.
-INFO - Anforderung einer Transaktionsdurchführung. (0000 an 1000 | 100000000 | T)
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT amount FROM transactionTable WHERE sendernumber = '0000'
-INFO - SQL-Statement ausgeführt: SELECT amount FROM transactionTable WHERE receivernumber = '0000'
+INFO - Anforderung einer Zurücksetzung aller Datenbanktabellen.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 111, 0000, 1000, 100000000, T, 2018-12-04 15:54:22.815
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1000, Betrag: 100000000, Referenz: T
-INFO - Anforderung einer Transaktionsdurchführung. (0000 an 1000 | 1000000000 | T)
-ERROR - Der Betrag darf nicht größer als 999.999.999,99 sein.
-INFO - Anforderung einer Transaktionsdurchführung. (0000 an 1000 | 1000000000 | Tasdfasdfasdfasdfasdfasdfasdfasdfasdfasdjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjffjjjfjfjffjjfjfjfjfj)
-ERROR - Der Betrag darf nicht größer als 999.999.999,99 sein.
-INFO - Anforderung einer Transaktionsdurchführung. (0000 an 1000 | 10 | Tasdfasdfasdfasdfasdfasdfasdfasdfasdfasdjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjfjffjjjfjfjffjjfjfjfjfj)
-ERROR - Der Verwendungszweck darf max. 64 Zeichen beinhalten.
-INFO - Anforderung einer Transaktionsdurchführung. (0000 an 1000 | 10 | Tasdfasdfasdfasdfasdfasdfasdfasdfasdfasdjfjfjfjfjfjfjfjfjfj)
+INFO - SQL-Statement ausgeführt: DROP table transactiontable
 INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '0000'
+INFO - SQL-Statement ausgeführt: DROP table account
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: CREATE table account (id int not null primary key, owner varchar(64) not null, number varchar(4) not null)
+INFO - Tabelle "Account" wurde erstellt.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
+INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (1, BANK, 0000)
+INFO - Neues Konto angelegt. Besitzer: BANK, Kontonr.: 0000, Startkapital: 0
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-statement ausgeführt: CREATE table transactionTable (id int not null primary key, senderNumber varchar(4) not null, receiverNumber varchar(4) not null, amount decimal(9,2) not null, reference varchar(64) not null, date timestamp not null)
+INFO - Tabelle "TransactionTable" wurde erstellt.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
 INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT amount FROM transactionTable WHERE sendernumber = '0000'
-INFO - SQL-Statement ausgeführt: SELECT amount FROM transactionTable WHERE receivernumber = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
+INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (2, Nadin, 1000)
+INFO - Neues Konto angelegt. Besitzer: Nadin, Kontonr.: 1000, Startkapital: 10000
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 112, 0000, 1000, 10, Tasdfasdfasdfasdfasdfasdfasdfasdfasdfasdjfjfjfjfjfjfjfjfjfj, 2018-12-04 15:55:36.037
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1000, Betrag: 10, Referenz: Tasdfasdfasdfasdfasdfasdfasdfasdfasdfasdjfjfjfjfjfjfjfjfjfj
-INFO - Anforderung einer Transaktionsdurchführung. (0000 an 1000 | 10 | Tasdfasdfasdfasdfasdfasdfasdfasdfasdfasdjfjfjfjfjfjfjfjfjfjaaaaaaaa)
-ERROR - Der Verwendungszweck darf max. 64 Zeichen beinhalten.
-INFO - Anforderung einer Transaktionsdurchführung. (0000 an 1000 | 10 | Tasdfasdfasdfasdfasdfasdfasdfasdfasdfasdjfjfjfjfjfjfjfjfjfjaaaaaaa)
-ERROR - Der Verwendungszweck darf max. 64 Zeichen beinhalten.
-INFO - Anforderung einer Transaktionsdurchführung. (0000 an 1000 | 10 | Tasdfasdfasdfasdfasdfasdfasdfasdfasdfasdjfjfjfjfjfjfjfjfjfjaaaaaa)
-ERROR - Der Verwendungszweck darf max. 64 Zeichen beinhalten.
-INFO - Anforderung einer Transaktionsdurchführung. (0000 an 1000 | 10 | Tasdfasdfasdfasdfasdfasdfasdfasdfaaaaaaaaaasaaaaaaaaaaaaaaaaaaaaa)
-ERROR - Der Verwendungszweck darf max. 64 Zeichen beinhalten.
-INFO - Anforderung einer Transaktionsdurchführung. (0000 an 1000 | 10 | Tasdfasdfasdfasdfasdfasdfasdfasdfaaaaaaaaaasaaaaaaaaaaaaaaaaaaaa)
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '0000'
+INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 1, 0000, 1000, 10000, STARTGUTHABEN, 2018-12-04 16:39:30.071
+INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1000, Betrag: 10000, Referenz: STARTGUTHABEN
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
 INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT amount FROM transactionTable WHERE sendernumber = '0000'
-INFO - SQL-Statement ausgeführt: SELECT amount FROM transactionTable WHERE receivernumber = '0000'
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
+INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (3, Alina, 1001)
+INFO - Neues Konto angelegt. Besitzer: Alina, Kontonr.: 1001, Startkapital: 10000
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 113, 0000, 1000, 10, Tasdfasdfasdfasdfasdfasdfasdfasdfaaaaaaaaaasaaaaaaaaaaaaaaaaaaaa, 2018-12-04 15:57:17.794
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1000, Betrag: 10, Referenz: Tasdfasdfasdfasdfasdfasdfasdfasdfaaaaaaaaaasaaaaaaaaaaaaaaaaaaaa
-INFO - Anforderung des Anlegens eines neuen Kontos.
-ERROR - Der Besitzername darf max. 64Zeichen beinhalten.
-INFO - Anforderung des Anlegens eines neuen Kontos.
+INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 2, 0000, 1001, 10000, STARTGUTHABEN, 2018-12-04 16:39:30.1
+INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1001, Betrag: 10000, Referenz: STARTGUTHABEN
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1002'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
+INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (4, Sebastian, 1002)
+INFO - Neues Konto angelegt. Besitzer: Sebastian, Kontonr.: 1002, Startkapital: 10000
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
+INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 3, 0000, 1002, 10000, STARTGUTHABEN, 2018-12-04 16:39:30.116
+INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1002, Betrag: 10000, Referenz: STARTGUTHABEN
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
 INFO - Verbindung zur Datenbank wird aufgebaut.
@@ -70,14 +68,13 @@ INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '10
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1003'
 INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1004'
-INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
-INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (6, Tasdfasdfasdfasdfasdfasdfasdfasdfaaaaaaaaaasaaaaaaaaaaaaaaaaaaaa, 1004)
-INFO - Neues Konto angelegt. Besitzer: Tasdfasdfasdfasdfasdfasdfasdfasdfaaaaaaaaaasaaaaaaaaaaaaaaaaaaaa, Kontonr.: 1004, Startkapital: 10000
+INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (5, Jotham, 1003)
+INFO - Neues Konto angelegt. Besitzer: Jotham, Kontonr.: 1003, Startkapital: 10000
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 114, 0000, 1004, 10000, STARTGUTHABEN, 2018-12-04 15:59:12.152
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1004, Betrag: 10000, Referenz: STARTGUTHABEN
+INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 4, 0000, 1003, 10000, STARTGUTHABEN, 2018-12-04 16:39:30.152
+INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1003, Betrag: 10000, Referenz: STARTGUTHABEN
+INFO - Die Datenbanktabellen wurden zurückgesetzt.
