@@ -58,3 +58,26 @@ INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
 INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 113, 0000, 1000, 10, Tasdfasdfasdfasdfasdfasdfasdfasdfaaaaaaaaaasaaaaaaaaaaaaaaaaaaaa, 2018-12-04 15:57:17.794
 INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1000, Betrag: 10, Referenz: Tasdfasdfasdfasdfasdfasdfasdfasdfaaaaaaaaaasaaaaaaaaaaaaaaaaaaaa
+INFO - Anforderung des Anlegens eines neuen Kontos.
+ERROR - Der Besitzername darf max. 64Zeichen beinhalten.
+INFO - Anforderung des Anlegens eines neuen Kontos.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1002'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1003'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1004'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
+INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (6, Tasdfasdfasdfasdfasdfasdfasdfasdfaaaaaaaaaasaaaaaaaaaaaaaaaaaaaa, 1004)
+INFO - Neues Konto angelegt. Besitzer: Tasdfasdfasdfasdfasdfasdfasdfasdfaaaaaaaaaasaaaaaaaaaaaaaaaaaaaa, Kontonr.: 1004, Startkapital: 10000
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
+INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 114, 0000, 1004, 10000, STARTGUTHABEN, 2018-12-04 15:59:12.152
+INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1004, Betrag: 10000, Referenz: STARTGUTHABEN
