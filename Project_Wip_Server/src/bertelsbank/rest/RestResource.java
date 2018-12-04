@@ -240,14 +240,7 @@ public class RestResource {
 	@POST
 	@Path("/addAccount")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response addAccount(@FormParam("owner") String owner, @FormParam("startBalance") String startBalance) { // zahl
-																													// reference
-																													// darf
-																													// nicht
-																													// leer
-																													// sein
-																													// owner
-																													// txt
+	public Response addAccount(@FormParam("owner") String owner, @FormParam("startBalance") String startBalance) {
 
 		String errorMessage = "";
 		logger.info("Anforderung des Anlegens eines neuen Kontos.");
