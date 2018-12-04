@@ -49,8 +49,8 @@ public class RestResource {
 			logger.setAdditivity(false);
 			SimpleLayout layout = new SimpleLayout();
 			FileAppender fileAppender = new FileAppender(layout, "logs/ServerLogFile.log", false);
-			logger.addAppender(fileAppender);
 			ConsoleAppender consoleAppender = new ConsoleAppender(layout);
+			logger.addAppender(fileAppender);
 			logger.addAppender(consoleAppender);
 			logger.setLevel(Level.ALL);
 		} catch (IOException e) {
