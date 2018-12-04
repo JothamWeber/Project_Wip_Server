@@ -84,7 +84,7 @@ public class RestResource {
 		logger.info("Anforderung eines Kontoobjektes mit der Nummer: " + number);
 
 		// Besteht die Kontonummer aus 4 Zahlen?
-		if (number.length() != 4 || !dbAdministration.isInteger(number)) {
+		if (number.length() != 4 || !DatabaseAdministration.isInteger(number)) {
 			errorMessage = "Die Kontonummer muss aus 4 Zahlen bestehen.";
 			logger.error(errorMessage + " (" + number + ")");
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
@@ -169,6 +169,12 @@ public class RestResource {
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
+		// Ist "amount" kleiner als 999.999.999,99?
+		if(amount.compareTo(new BigDecimal(999999999.99)) == 1){
+			errorMessage = "Der Betrag darf nicht größer als 999.999.999,99 sein.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
+		}
 		// Hat "amount" mehr als 2 Nachkommastellen?
 		if (amount.scale() > 2) {
 			errorMessage = "Der Betrag darf maximal 2 Nachkommastellen haben.";
@@ -180,6 +186,12 @@ public class RestResource {
 		Matcher m = p.matcher(reference);
 		if (m.find()) {
 			errorMessage = "Die Referenz darf nur folgende Zeichen beinhalten: A-Z, a-z, 0-9, Leerzeichen.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
+		}
+		// Überschreitet "reference" die erlaubte Länge?
+		if(reference.length() > DatabaseAdministration.referenceLength){
+			errorMessage = "Der Verwendungszweck darf max. " + DatabaseAdministration.referenceLength + " Zeichen beinhalten.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
@@ -247,6 +259,13 @@ public class RestResource {
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
+		// Entspricht "owner" der Zeichenbegrenzung?
+		if(owner.length() > DatabaseAdministration.ownerLength){
+			errorMessage = "Der Besitzername darf max. " + DatabaseAdministration.ownerLength + "Zeichen beinhalten.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
+		}
+
 		// Ist "startBalance" > 0?
 		if (startBalance.compareTo(BigDecimal.ZERO) != 1) {
 			errorMessage = "Das Startguthaben muss größer als 0 sein.";

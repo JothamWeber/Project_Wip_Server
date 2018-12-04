@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import bertelsbank.rest.Account;
+import bertelsbank.rest.RestResource;
 import bertelsbank.rest.Transaction;
 
 public class TransactionDataAccess {
@@ -50,7 +51,7 @@ public class TransactionDataAccess {
 		if (shouldCreateTable) {
 			Statement statement = connection.createStatement();
 			String sql = "CREATE table transactionTable (id int not null primary key, senderNumber varchar(4) not null, "
-					+ "receiverNumber varchar(4) not null, amount decimal(20,2) not null, reference varchar(64) not null, date timestamp not null)";
+					+ "receiverNumber varchar(4) not null, amount decimal(9,2) not null, reference varchar(" + DatabaseAdministration.referenceLength + ") not null, date timestamp not null)";
 			// Tabelle wird erstellt
 			statement.execute(sql);
 			logger.info("SQL-statement ausgeführt: " + sql);

@@ -12,6 +12,8 @@ import org.apache.log4j.Logger;
 
 public class DatabaseAdministration {
 	Logger logger;
+	public static int referenceLength = 64;
+	public static int ownerLength = 64;
 
 	// =============================
 	// ALLGEMEINE DATENBANK-METHODEN

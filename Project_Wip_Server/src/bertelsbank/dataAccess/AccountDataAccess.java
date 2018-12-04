@@ -54,7 +54,7 @@ public class AccountDataAccess {
 
 		if (shouldCreateTable) {
 			Statement statement = connection.createStatement();
-			String sql = "CREATE table account (id int not null primary key, owner varchar(64) not null, number varchar(4) not null)";
+			String sql = "CREATE table account (id int not null primary key, owner varchar(" + DatabaseAdministration.ownerLength + ") not null, number varchar(4) not null)";
 			// Tabelle wird erstellt
 			statement.execute(sql);
 			statement.close();
