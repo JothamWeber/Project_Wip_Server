@@ -148,9 +148,13 @@ public class DatabaseAdministration {
 		return true;
 	}
 
-	/** Checks if a string is an numeric value.
-	 * @param s string value to be checked.
-	 * @return true, if the string value is an numeric value and false, if it is not.
+	/**
+	 * Checks if a string is an numeric value.
+	 *
+	 * @param s
+	 *            string value to be checked.
+	 * @return true, if the string value is an numeric value and false, if it is
+	 *         not.
 	 */
 	public static boolean isNumeric(String s) {
 		Scanner scanner = new Scanner(s);
