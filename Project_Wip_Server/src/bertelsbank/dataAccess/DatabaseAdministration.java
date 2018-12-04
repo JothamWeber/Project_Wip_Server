@@ -157,6 +157,7 @@ public class DatabaseAdministration {
 	 *         not.
 	 */
 	public static boolean isNumeric(String s) {
+		s = s.replace('.', ',');
 		Scanner scanner = new Scanner(s);
 		if (scanner.hasNextInt())
 			return true;

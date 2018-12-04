@@ -140,8 +140,8 @@ public class RestResource {
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 		// Beginnen "senderNumber" und "receiverNumber" mit einer 1?
-		if (receiverNumber.startsWith("0")) {
-			errorMessage = "Die Kontonummer des Empfängers muss mit einer 1 beginnen.";
+		if (senderNumber.startsWith("0") || receiverNumber.startsWith("0")) {
+			errorMessage = "Die Kontonummern müssen mit einer 1 beginnen.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
