@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
@@ -24,7 +25,7 @@ public class DatabaseAdministration {
 	 *
 	 * @author Jotham Weber
 	 */
-	public DatabaseAdministration(){
+	public DatabaseAdministration() {
 		logger = Logger.getLogger(getClass());
 	}
 
@@ -54,7 +55,7 @@ public class DatabaseAdministration {
 	 * @throws SQLException
 	 * @author Jotham Weber
 	 */
-	public void resetDatabaseTables() throws SQLException{
+	public void resetDatabaseTables() throws SQLException {
 		AccountDataAccess daAccount = new AccountDataAccess();
 		TransactionDataAccess daTransaction = new TransactionDataAccess();
 
@@ -72,7 +73,8 @@ public class DatabaseAdministration {
 	/**
 	 * Provides the number of entries in a database table.
 	 *
-	 * @param tableName specifies the table.
+	 * @param tableName
+	 *            specifies the table.
 	 * @return the number of entries.
 	 * @throws SQLException
 	 * @author Jotham Weber
@@ -96,7 +98,8 @@ public class DatabaseAdministration {
 	/**
 	 * Deletes a database table.
 	 *
-	 * @param tableName specifies the table.
+	 * @param tableName
+	 *            specifies the table.
 	 * @throws SQLException
 	 * @author Jotham Weber
 	 */
@@ -112,7 +115,8 @@ public class DatabaseAdministration {
 	/**
 	 * Clears a database table by deleting every entry.
 	 *
-	 * @param tableName specifies the table.
+	 * @param tableName
+	 *            specifies the table.
 	 * @throws SQLException
 	 * @author Jotham Weber
 	 */
@@ -128,7 +132,8 @@ public class DatabaseAdministration {
 	/**
 	 * Checks if a string is an integer value.
 	 *
-	 * @param s string value to be checked.
+	 * @param s
+	 *            string value to be checked.
 	 * @return true, if the string value is an integer and false if it is not.
 	 * @author Jotham Weber
 	 */
@@ -141,6 +146,16 @@ public class DatabaseAdministration {
 			return false;
 		}
 		return true;
+	}
+
+	public static boolean isNumeric(String s) {
+		Scanner scanner = new Scanner(s);
+		if (scanner.hasNextInt())
+			return true;
+		else if (scanner.hasNextDouble())
+			return true;
+		else
+			return false;
 	}
 
 }

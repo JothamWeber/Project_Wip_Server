@@ -120,21 +120,21 @@ public class RestResource {
 	@Path("/transaction")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public synchronized Response executeTransaction(@FormParam("senderNumber") String senderNumber,
-			@FormParam("receiverNumber") String receiverNumber, @FormParam("amount") BigDecimal amount,
+			@FormParam("receiverNumber") String receiverNumber, @FormParam("amount") String amount,
 			@FormParam("reference") String reference) {
 
 		String errorMessage = "";
 		logger.info("Anforderung einer Transaktionsdurchführung. (" + senderNumber + " an " + receiverNumber + " | "
 				+ amount + " | " + reference + ")");
 		// Sind alle Werte vorhanden?
-		if (senderNumber == null || receiverNumber == null || amount == null || reference == null) {
+		if (senderNumber == null || receiverNumber == null || amount == null || reference.equals("")) {
 			errorMessage = "Nicht alle Felder sind gefüllt.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 		// Haben "senderNumber" und "receiverNumber" das richtige Format?
-		if (senderNumber.length() != 4 || !DatabaseAdministration.isInteger(senderNumber) || receiverNumber.length() != 4
-				|| !DatabaseAdministration.isInteger(receiverNumber)) {
+		if (senderNumber.length() != 4 || !DatabaseAdministration.isInteger(senderNumber)
+				|| receiverNumber.length() != 4 || !DatabaseAdministration.isInteger(receiverNumber)) {
 			errorMessage = "Die Kontonummer muss aus 4 Zahlen bestehen.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
@@ -151,20 +151,29 @@ public class RestResource {
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
+		// Ist "amount" ein numerischer Wert?
+		BigDecimal amountBigDecimal;
+		if(DatabaseAdministration.isNumeric(amount)){
+			amountBigDecimal = new BigDecimal(amount);
+		} else {
+			errorMessage = "Der Betrag hat das falsche Format.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
+		}
 		// Ist "amount" größer als 0?
-		if (!(amount.compareTo(BigDecimal.ZERO) == 1)) {
+		if (!(amountBigDecimal.compareTo(BigDecimal.ZERO) == 1)) {
 			errorMessage = "Der Betrag muss größer als 0 sein.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 		// Ist "amount" kleiner als 999.999.999,99?
-		if(amount.compareTo(new BigDecimal(999999999.99)) == 1){
+		if (amountBigDecimal.compareTo(new BigDecimal(999999999.99)) == 1) {
 			errorMessage = "Der Betrag darf nicht größer als 999.999.999,99 sein.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 		// Hat "amount" mehr als 2 Nachkommastellen?
-		if (amount.scale() > 2) {
+		if (amountBigDecimal.scale() > 2) {
 			errorMessage = "Der Betrag darf maximal 2 Nachkommastellen haben.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
@@ -178,8 +187,9 @@ public class RestResource {
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 		// Überschreitet "reference" die erlaubte Länge?
-		if(reference.length() > DatabaseAdministration.referenceLength){
-			errorMessage = "Der Verwendungszweck darf max. " + DatabaseAdministration.referenceLength + " Zeichen beinhalten.";
+		if (reference.length() > DatabaseAdministration.referenceLength) {
+			errorMessage = "Der Verwendungszweck darf max. " + DatabaseAdministration.referenceLength
+					+ " Zeichen beinhalten.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
@@ -197,13 +207,13 @@ public class RestResource {
 				return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
 			}
 			// Hat das Empfängerkonto ausreichend Guthaben?
-			if (daTransation.getAccountBalance(senderNumber).compareTo(amount) == -1 && !senderNumber.equals("0000")) {
+			if (daTransation.getAccountBalance(senderNumber).compareTo(amountBigDecimal) == -1 && !senderNumber.equals("0000")) {
 				errorMessage = "Ihr Kontoguthaben reicht für diese Transaktion nicht aus.";
 				logger.error(errorMessage);
 				return Response.status(Response.Status.PRECONDITION_FAILED).entity(errorMessage).build();
 			}
 			// Transaktion in Datenbank schreiben
-			daTransation.addTransaction(senderNumber, receiverNumber, amount, reference);
+			daTransation.addTransaction(senderNumber, receiverNumber, amountBigDecimal, reference);
 			return Response.status(Response.Status.NO_CONTENT).build();
 		} catch (Exception e) {
 			logger.error(e);
@@ -230,14 +240,29 @@ public class RestResource {
 	@POST
 	@Path("/addAccount")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response addAccount(@FormParam("owner") String owner, @FormParam("startBalance") BigDecimal startBalance) {
+	public Response addAccount(@FormParam("owner") String owner, @FormParam("startBalance") String startBalance) { // zahl
+																													// reference
+																													// darf
+																													// nicht
+																													// leer
+																													// sein
+																													// owner
+																													// txt
 
 		String errorMessage = "";
 		logger.info("Anforderung des Anlegens eines neuen Kontos.");
 
 		// Sind alle Werte vorhanden?
-		if (owner.equals("") || startBalance == null) {
+		if (owner.equals("") || startBalance.equals("")) {
 			errorMessage = "Nicht alle Felder sind gefüllt.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
+		}
+		// Besteht "reference" aus den erlaubten Zeichen?
+		Pattern p = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(owner);
+		if (m.find()) {
+			errorMessage = "Der Besitzer darf nur folgende Zeichen beinhalten: A-Z, a-z, Leerzeichen.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
@@ -248,28 +273,36 @@ public class RestResource {
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 		// Entspricht "owner" der Zeichenbegrenzung?
-		if(owner.length() > DatabaseAdministration.ownerLength){
+		if (owner.length() > DatabaseAdministration.ownerLength) {
 			errorMessage = "Der Besitzername darf max. " + DatabaseAdministration.ownerLength + "Zeichen beinhalten.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-
+		// Ist "startBalance" ein numerischer Wert?
+		BigDecimal startBalanceBigDecimal;
+		if (DatabaseAdministration.isNumeric(startBalance)) {
+			startBalanceBigDecimal = new BigDecimal(startBalance);
+		} else {
+			errorMessage = "Der Betrag hat das falsche Format.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
+		}
 		// Ist "startBalance" > 0?
-		if (startBalance.compareTo(BigDecimal.ZERO) != 1) {
+		if (startBalanceBigDecimal.compareTo(BigDecimal.ZERO) != 1) {
 			errorMessage = "Das Startguthaben muss größer als 0 sein.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 		// Hat "startBalance" mehr als 2 Nachkommastellen?
-		if (startBalance.scale() > 2) {
+		if (startBalanceBigDecimal.scale() > 2) {
 			errorMessage = "Der Betrag darf maximal 2 Nachkommastellen haben.";
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 		try {
 			// Konto erstellen
-			daAccount.addAccount(owner, startBalance); // Logging findet in
-														// addAccount statt
+			daAccount.addAccount(owner, startBalanceBigDecimal); // Logging in
+																	// addAccount
 			return Response.ok().build();
 		} catch (SQLException e) {
 			logger.error(e);

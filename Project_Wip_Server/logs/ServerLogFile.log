@@ -27,7 +27,7 @@ INFO - Neues Konto angelegt. Besitzer: Nadin, Kontonr.: 1000, Startkapital: 1000
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 1, 0000, 1000, 10000, STARTGUTHABEN, 2018-12-04 16:39:30.071
+INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 1, 0000, 1000, 10000, STARTGUTHABEN, 2018-12-04 18:32:07.572
 INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1000, Betrag: 10000, Referenz: STARTGUTHABEN
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
@@ -41,7 +41,7 @@ INFO - Neues Konto angelegt. Besitzer: Alina, Kontonr.: 1001, Startkapital: 1000
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 2, 0000, 1001, 10000, STARTGUTHABEN, 2018-12-04 16:39:30.1
+INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 2, 0000, 1001, 10000, STARTGUTHABEN, 2018-12-04 18:32:07.601
 INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1001, Betrag: 10000, Referenz: STARTGUTHABEN
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
@@ -57,7 +57,7 @@ INFO - Neues Konto angelegt. Besitzer: Sebastian, Kontonr.: 1002, Startkapital: 
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 3, 0000, 1002, 10000, STARTGUTHABEN, 2018-12-04 16:39:30.116
+INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 3, 0000, 1002, 10000, STARTGUTHABEN, 2018-12-04 18:32:07.621
 INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1002, Betrag: 10000, Referenz: STARTGUTHABEN
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
@@ -75,6 +75,6 @@ INFO - Neues Konto angelegt. Besitzer: Jotham, Kontonr.: 1003, Startkapital: 100
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 4, 0000, 1003, 10000, STARTGUTHABEN, 2018-12-04 16:39:30.152
+INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 4, 0000, 1003, 10000, STARTGUTHABEN, 2018-12-04 18:32:07.663
 INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1003, Betrag: 10000, Referenz: STARTGUTHABEN
 INFO - Die Datenbanktabellen wurden zurückgesetzt.
