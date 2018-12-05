@@ -1,12 +1,14 @@
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Server gestartet.
-INFO - Anforderung einer Aktualisierung des Besitzernamens von Konto null.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = 'null'
-ERROR - Das Konto existiert nicht.
 INFO - Anforderung einer Aktualisierung des Besitzernamens von Konto 1000.
+ERROR - Das Feld Kontoinhaber darf nicht leer sein.
+INFO - Anforderung einer Aktualisierung des Besitzernamens von Konto 1000.
+ERROR - Der Kontoinhaber darf nur folgende Zeichen beinhalten: A-Z, a-z, Leerzeichen.
+INFO - Anforderung einer Aktualisierung des Besitzernamens von Konto .
 INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = ''
+ERROR - Das Konto existiert nicht.
+INFO - Anforderung einer Aktualisierung des Besitzernamens von Konto 100.
 INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: UPDATE account SET owner = '' WHERE number = '1000'
-INFO - Der Besitzer des Kontos 1000 wurde durch "" ersetzt.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '100'
+ERROR - Das Konto existiert nicht.

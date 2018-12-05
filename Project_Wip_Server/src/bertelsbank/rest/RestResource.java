@@ -385,7 +385,7 @@ public class RestResource {
 	@POST
 	@Path("/updateOwner")
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
-	public Response dereservateNumber(@FormParam("number") String number, @FormParam("owner") String owner) {
+	public Response updateOwner(@FormParam("number") String number, @FormParam("owner") String owner) {
 
 		logger.info("Anforderung einer Aktualisierung des Besitzernamens von Konto " + number + ".");
 		String errorMessage = "";
