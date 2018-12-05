@@ -1,80 +1,12 @@
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Server gestartet.
-INFO - Anforderung einer Zurücksetzung aller Datenbanktabellen.
+INFO - Anforderung einer Aktualisierung des Besitzernamens von Konto null.
 INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: DROP table transactiontable
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: DROP table account
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: CREATE table account (id int not null primary key, owner varchar(64) not null, number varchar(4) not null)
-INFO - Tabelle "Account" wurde erstellt.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
-INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (1, BANK, 0000)
-INFO - Neues Konto angelegt. Besitzer: BANK, Kontonr.: 0000, Startkapital: 0
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-statement ausgeführt: CREATE table transactionTable (id int not null primary key, senderNumber varchar(4) not null, receiverNumber varchar(4) not null, amount decimal(9,2) not null, reference varchar(64) not null, date timestamp not null)
-INFO - Tabelle "TransactionTable" wurde erstellt.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = 'null'
+ERROR - Das Konto existiert nicht.
+INFO - Anforderung einer Aktualisierung des Besitzernamens von Konto 1000.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
 INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
-INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (2, Nadin, 1000)
-INFO - Neues Konto angelegt. Besitzer: Nadin, Kontonr.: 1000, Startkapital: 10000
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 1, 0000, 1000, 10000, STARTGUTHABEN, 2018-12-04 22:20:38.827
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1000, Betrag: 10000, Referenz: STARTGUTHABEN
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
-INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (3, Alina, 1001)
-INFO - Neues Konto angelegt. Besitzer: Alina, Kontonr.: 1001, Startkapital: 10000
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 2, 0000, 1001, 10000, STARTGUTHABEN, 2018-12-04 22:20:38.859
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1001, Betrag: 10000, Referenz: STARTGUTHABEN
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1002'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
-INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (4, Sebastian, 1002)
-INFO - Neues Konto angelegt. Besitzer: Sebastian, Kontonr.: 1002, Startkapital: 10000
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 3, 0000, 1002, 10000, STARTGUTHABEN, 2018-12-04 22:20:38.874
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1002, Betrag: 10000, Referenz: STARTGUTHABEN
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1002'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1003'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
-INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (5, Jotham, 1003)
-INFO - Neues Konto angelegt. Besitzer: Jotham, Kontonr.: 1003, Startkapital: 10000
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 4, 0000, 1003, 10000, STARTGUTHABEN, 2018-12-04 22:20:38.89
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1003, Betrag: 10000, Referenz: STARTGUTHABEN
-INFO - Die Datenbanktabellen wurden zurückgesetzt.
+INFO - SQL-Statement ausgeführt: UPDATE account SET owner = '' WHERE number = '1000'
+INFO - Der Besitzer des Kontos 1000 wurde durch "" ersetzt.

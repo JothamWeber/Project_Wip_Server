@@ -122,7 +122,7 @@ public class RestResource {
 	public synchronized Response executeTransaction(@FormParam("senderNumber") String senderNumber,
 			@FormParam("receiverNumber") String receiverNumber, @FormParam("amount") String amount,
 			@FormParam("reference") String reference) {
-		
+
 		String errorMessage = "";
 		amount = amount.replace(',', '.');
 		logger.info("Anforderung einer Transaktionsdurchführung. (" + senderNumber + " an " + receiverNumber + " | "
@@ -154,7 +154,7 @@ public class RestResource {
 		}
 		// Ist "amount" ein numerischer Wert?
 		BigDecimal amountBigDecimal;
-		if(DatabaseAdministration.isNumeric(amount)){
+		if (DatabaseAdministration.isNumeric(amount)) {
 			amountBigDecimal = new BigDecimal(amount);
 		} else {
 			errorMessage = "Der Betrag hat das falsche Format.";
@@ -208,7 +208,8 @@ public class RestResource {
 				return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
 			}
 			// Hat das Empfängerkonto ausreichend Guthaben?
-			if (daTransation.getAccountBalance(senderNumber).compareTo(amountBigDecimal) == -1 && !senderNumber.equals("0000")) {
+			if (daTransation.getAccountBalance(senderNumber).compareTo(amountBigDecimal) == -1
+					&& !senderNumber.equals("0000")) {
 				errorMessage = "Ihr Kontoguthaben reicht für diese Transaktion nicht aus.";
 				logger.error(errorMessage);
 				return Response.status(Response.Status.PRECONDITION_FAILED).entity(errorMessage).build();
@@ -253,7 +254,7 @@ public class RestResource {
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-		// Besteht "reference" aus den erlaubten Zeichen?
+		// Besteht "owner" aus den erlaubten Zeichen?
 		Pattern p = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(owner);
 		if (m.find()) {
@@ -390,6 +391,32 @@ public class RestResource {
 		String errorMessage = "";
 
 		try {
+			// Ist "owner" leer?
+			if (owner.equals("")) {
+				errorMessage = "Das Feld Kontoinhaber darf nicht leer sein.";
+				logger.error(errorMessage);
+				return Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build();
+			}
+			// Besteht "owner" aus den erlaubten Zeichen?
+			Pattern p = Pattern.compile("[^a-z ]", Pattern.CASE_INSENSITIVE);
+			Matcher m = p.matcher(owner);
+			if (m.find()) {
+				errorMessage = "Der Kontoinhaber darf nur folgende Zeichen beinhalten: A-Z, a-z, Leerzeichen.";
+				logger.error(errorMessage);
+				return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
+			}
+			// Ist "owner" = bank?
+			if (owner.toLowerCase().equals("bank")) {
+				errorMessage = "Das Konto \"Bank\" ist reserviert.";
+				logger.error(errorMessage);
+				return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
+			}
+			// Entspricht "owner" der Zeichenbegrenzung?
+			if (owner.length() > DatabaseAdministration.ownerLength) {
+				errorMessage = "Der Besitzername darf max. " + DatabaseAdministration.ownerLength + "Zeichen beinhalten.";
+				logger.error(errorMessage);
+				return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
+			}
 			// Existiert das Konto?
 			if (!daAccount.numberExists(number)) {
 				errorMessage = "Das Konto existiert nicht.";
