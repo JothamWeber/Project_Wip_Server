@@ -405,12 +405,6 @@ public class RestResource {
 				logger.error(errorMessage);
 				return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 			}
-			// Ist "owner" = bank?
-			if (owner.toLowerCase().equals("bank")) {
-				errorMessage = "Das Konto \"Bank\" ist reserviert.";
-				logger.error(errorMessage);
-				return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
-			}
 			// Entspricht "owner" der Zeichenbegrenzung?
 			if (owner.length() > DatabaseAdministration.ownerLength) {
 				errorMessage = "Der Besitzername darf max. " + DatabaseAdministration.ownerLength + "Zeichen beinhalten.";

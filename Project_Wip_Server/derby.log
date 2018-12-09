@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Wed Dec 05 22:53:55 CET 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0167-805c-f4f5-000005948080 
+Sun Dec 09 18:39:30 CET 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0167-940d-7a3e-0000059c99a8 
 on database directory C:\Users\Jotham\git\Project_Wip_Server\Project_Wip_Server\database  with class loader sun.misc.Launcher$AppClassLoader@4554617c 
 Loaded from file:/C:/Users/Jotham/git/Project_Wip_Server/Project_Wip_Server/lib/derby.jar
 java.vendor=Oracle Corporation
