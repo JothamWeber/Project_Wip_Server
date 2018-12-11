@@ -179,7 +179,7 @@ public class RestResource {
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-		// Hat "amount" 1 Nachkommastelle?
+		// Hat "amount" 1 Nachkommastelle? a
 		if (amountBigDecimal.scale() == 1) {
 			errorMessage = "Eine Nachkommastelle im Betrag ist nicht zulässig.";
 			logger.error(errorMessage);
