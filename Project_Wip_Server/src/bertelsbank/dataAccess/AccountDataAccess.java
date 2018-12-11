@@ -62,7 +62,7 @@ public class AccountDataAccess {
 			logger.info("Tabelle \"Account\" wurde erstellt.");
 			bankAccountExists = false;
 			// Das Bank-Konto wird angelegt
-			addAccount("BANK", BigDecimal.ZERO);
+			addAccount("0000", "BANK", BigDecimal.ZERO);
 			bankAccountExists = true;
 		}
 		connection.close();
@@ -80,9 +80,9 @@ public class AccountDataAccess {
 	 * @throws SQLException
 	 * @author Jotham Weber
 	 */
-	public void addAccount(String owner, BigDecimal startBalance) throws SQLException {
+	public void addAccount(String accountNumber, String owner, BigDecimal startBalance) throws SQLException {
 
-		String accountNumber = getFreeNumber();
+		//String accountNumber = getFreeNumber();
 		if (!accountNumber.equals("")) {
 			try (Connection connection = dbAdministration.getConnection();
 					PreparedStatement preparedStatement = connection

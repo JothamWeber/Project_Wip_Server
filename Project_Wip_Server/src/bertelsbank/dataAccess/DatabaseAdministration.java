@@ -64,10 +64,10 @@ public class DatabaseAdministration {
 		daAccount.createAccountTable();
 		daTransaction.createTransactionTable();
 
-		daAccount.addAccount("Nadin", new BigDecimal(10000));
-		daAccount.addAccount("Alina", new BigDecimal(10000));
-		daAccount.addAccount("Sebastian", new BigDecimal(10000));
-		daAccount.addAccount("Jotham", new BigDecimal(10000));
+		daAccount.addAccount("1000", "Nadin", new BigDecimal(10000));
+		daAccount.addAccount("1001", "Alina", new BigDecimal(10000));
+		daAccount.addAccount("1002", "Sebastian", new BigDecimal(10000));
+		daAccount.addAccount("1003", "Jotham", new BigDecimal(10000));
 	}
 
 	/**

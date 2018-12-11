@@ -248,7 +248,7 @@ public class RestResource {
 	@POST
 	@Path("/addAccount")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response addAccount(@FormParam("owner") String owner, @FormParam("startBalance") String startBalance) {
+	public Response addAccount(@FormParam("accountNumber") String accountNumber, @FormParam("owner") String owner, @FormParam("startBalance") String startBalance) {
 
 		String errorMessage = "";
 		logger.info("Anforderung des Anlegens eines neuen Kontos.");
@@ -301,7 +301,7 @@ public class RestResource {
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
-		// Hat "amount" 1 Nachkommastelle?
+		// Hat "startBalance" 1 Nachkommastelle?
 		if (startBalanceBigDecimal.scale() == 1) {
 			errorMessage = "Eine Nachkommastelle im Betrag ist nicht zulässig.";
 			logger.error(errorMessage);
@@ -309,7 +309,7 @@ public class RestResource {
 		}
 		try {
 			// Konto erstellen
-			daAccount.addAccount(owner, startBalanceBigDecimal); // Logging in
+			daAccount.addAccount(accountNumber, owner, startBalanceBigDecimal); // Logging in
 																	// addAccount
 			return Response.ok().build();
 		} catch (SQLException e) {
