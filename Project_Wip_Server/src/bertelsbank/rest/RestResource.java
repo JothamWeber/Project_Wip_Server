@@ -179,6 +179,12 @@ public class RestResource {
 			logger.error(errorMessage);
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
+		// Hat "amount" 1 Nachkommastelle?
+		if (amountBigDecimal.scale() == 1) {
+			errorMessage = "Eine Nachkommastelle im Betrag ist nicht zulässig.";
+			logger.error(errorMessage);
+			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
+		}
 		// Besteht "reference" aus den erlaubten Zeichen?
 		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(reference);
@@ -407,7 +413,8 @@ public class RestResource {
 			}
 			// Entspricht "owner" der Zeichenbegrenzung?
 			if (owner.length() > DatabaseAdministration.ownerLength) {
-				errorMessage = "Der Besitzername darf max. " + DatabaseAdministration.ownerLength + "Zeichen beinhalten.";
+				errorMessage = "Der Besitzername darf max. " + DatabaseAdministration.ownerLength
+						+ "Zeichen beinhalten.";
 				logger.error(errorMessage);
 				return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 			}
