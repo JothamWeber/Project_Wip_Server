@@ -155,6 +155,7 @@ public class DatabaseAdministration {
 	 *            string value to be checked.
 	 * @return true, if the string value is an numeric value and false, if it is
 	 *         not.
+	 * @author Jotham Weber
 	 */
 	public static boolean isNumeric(String s) {
 		s = s.replace('.', ',');

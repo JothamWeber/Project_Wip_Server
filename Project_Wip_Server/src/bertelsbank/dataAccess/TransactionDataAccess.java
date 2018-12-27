@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import bertelsbank.rest.Account;
-import bertelsbank.rest.RestResource;
 import bertelsbank.rest.Transaction;
 
 public class TransactionDataAccess {

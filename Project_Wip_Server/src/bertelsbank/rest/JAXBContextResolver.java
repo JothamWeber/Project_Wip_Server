@@ -7,7 +7,8 @@ import javax.xml.bind.JAXBContext;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.api.json.JSONJAXBContext;
 
-//Wird benÃ¶tigt, wenn Listen von Objekten als JSON zurÃ¼ckgegeben werden sollen
+// Wird benötigt, wenn Listen von Objekten als JSON zurückgegeben werden sollen
+
 @Provider
 public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 
