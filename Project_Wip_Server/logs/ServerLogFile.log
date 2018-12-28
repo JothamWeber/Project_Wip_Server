@@ -9,179 +9,9 @@ INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '0000' or receivernumber = '0000' ORDER BY date desc
 INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1015'
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1016'
 INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1018'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1014'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1012'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1009'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1004'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1008'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1013'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1011'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1010'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1006'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1007'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1005'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1003'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1002'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1000' or receivernumber = '1000' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1001' or receivernumber = '1001' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1005'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1002'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1002'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1002' or receivernumber = '1002' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1003'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1003' or receivernumber = '1003' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1005'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1005' or receivernumber = '1005' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1007'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1007' or receivernumber = '1007' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1006'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1006' or receivernumber = '1006' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1010'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1010' or receivernumber = '1010' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1011'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1011' or receivernumber = '1011' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1013'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1013' or receivernumber = '1013' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1008'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1008' or receivernumber = '1008' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1004'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1004' or receivernumber = '1004' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1009'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1009' or receivernumber = '1009' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1012'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1012' or receivernumber = '1012' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1014'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1014' or receivernumber = '1014' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1018'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1018' or receivernumber = '1018' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1015'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1015' or receivernumber = '1015' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Eine Auflistung aller Konten wurde übermittelt.
-INFO - Anforderung einer Auflistung aller Konten.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '0000' or receivernumber = '0000' ORDER BY date desc
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1017'
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1015'
 INFO - Verbindung zur Datenbank wird aufgebaut.
@@ -347,43 +177,21 @@ INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1015' or receivernumber = '1015' ORDER BY date desc
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1017'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1017' or receivernumber = '1017' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1016'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1016' or receivernumber = '1016' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
 INFO - Eine Auflistung aller Konten wurde übermittelt.
-INFO - Anforderung einer freien Kontonummer.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1002'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1003'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1004'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1005'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1006'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1007'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1008'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1009'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1010'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1011'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1012'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1013'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1014'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1015'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1016'
-INFO - Eine freie Kontonummer wurde übermittelt. (1016)
 INFO - Anforderung einer freien Kontonummer.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
@@ -421,20 +229,24 @@ INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1016'
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1017'
-INFO - Eine freie Kontonummer wurde übermittelt. (1017)
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1018'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1019'
+INFO - Eine freie Kontonummer wurde übermittelt. (1019)
 INFO - Anforderung des Anlegens eines neuen Kontos.
-ERROR - Der Besitzer darf nur folgende Zeichen beinhalten: A-Z, a-z, Leerzeichen.
-INFO - Anforderung des Anlegens eines neuen Kontos.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1019'
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
-INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (19, konto zwei, 1017)
-INFO - Neues Konto angelegt. Besitzer: konto zwei, Kontonr.: 1017, Startkapital: 2
+INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (21, test, 1019)
+INFO - Neues Konto angelegt. Besitzer: test, Kontonr.: 1019, Startkapital: 123
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 21, 0000, 1017, 2, STARTGUTHABEN, 2018-12-27 12:33:56.458
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1017, Betrag: 2, Referenz: STARTGUTHABEN
+INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 23, 0000, 1019, 123, STARTGUTHABEN, 2018-12-28 12:16:20.737
+INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1019, Betrag: 123, Referenz: STARTGUTHABEN
 INFO - Anforderung einer Auflistung aller Konten.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM account
@@ -444,199 +256,7 @@ INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '0000' or receivernumber = '0000' ORDER BY date desc
 INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1017'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1015'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1018'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1014'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1012'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1009'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1004'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1008'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1013'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1011'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1010'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1006'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1007'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1005'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1003'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1002'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1000' or receivernumber = '1000' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1001' or receivernumber = '1001' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1005'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1002'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1002'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1002' or receivernumber = '1002' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1003'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1003' or receivernumber = '1003' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1005'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1005' or receivernumber = '1005' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1007'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1007' or receivernumber = '1007' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1006'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1006' or receivernumber = '1006' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1010'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1010' or receivernumber = '1010' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1011'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1011' or receivernumber = '1011' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1013'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1013' or receivernumber = '1013' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1008'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1008' or receivernumber = '1008' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1004'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1004' or receivernumber = '1004' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1009'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1009' or receivernumber = '1009' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1012'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1012' or receivernumber = '1012' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1014'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1014' or receivernumber = '1014' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1018'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1018' or receivernumber = '1018' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1015'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1015' or receivernumber = '1015' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1017'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1017' or receivernumber = '1017' ORDER BY date desc
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Eine Auflistung aller Konten wurde übermittelt.
-INFO - Anforderung des Anlegens eines neuen Kontos.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
-INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (20, konto eins, 1016)
-INFO - Neues Konto angelegt. Besitzer: konto eins, Kontonr.: 1016, Startkapital: 1
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
-INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 22, 0000, 1016, 1, STARTGUTHABEN, 2018-12-27 12:33:59.471
-INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1016, Betrag: 1, Referenz: STARTGUTHABEN
-INFO - Anforderung einer Auflistung aller Konten.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
-INFO - Verbindung zur Datenbank wird aufgebaut.
-INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '0000' or receivernumber = '0000' ORDER BY date desc
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1019'
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1016'
 INFO - Verbindung zur Datenbank wird aufgebaut.
@@ -820,7 +440,60 @@ INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1016' or receivernumber = '1016' ORDER BY date desc
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1019'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1019' or receivernumber = '1019' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
 INFO - Eine Auflistung aller Konten wurde übermittelt.
+INFO - Anforderung einer freien Kontonummer.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1002'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1003'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1004'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1005'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1006'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1007'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1008'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1009'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1010'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1011'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1012'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1013'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1014'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1015'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1016'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1017'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1018'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1019'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1020'
+INFO - Eine freie Kontonummer wurde übermittelt. (1020)
+INFO - Anforderung der Freigabe der reservierten Nummer 1020.
+INFO - Die zuvor angeforderte Kontonummer 1020 wurde wieder freigegeben, da das Anlegen des Kontos abgebrochen wurde.
 INFO - Anforderung einer Auflistung aller Konten.
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM account
@@ -829,6 +502,8 @@ INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '0000' or receivernumber = '0000' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1019'
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1016'
 INFO - Verbindung zur Datenbank wird aufgebaut.
@@ -1010,6 +685,562 @@ INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1016'
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1016' or receivernumber = '1016' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1019'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1019' or receivernumber = '1019' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Eine Auflistung aller Konten wurde übermittelt.
+INFO - Anforderung einer freien Kontonummer.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1002'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1003'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1004'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1005'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1006'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1007'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1008'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1009'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1010'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1011'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1012'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1013'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1014'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1015'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1016'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1017'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1018'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1019'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1020'
+INFO - Eine freie Kontonummer wurde übermittelt. (1020)
+INFO - Anforderung des Anlegens eines neuen Kontos.
+ERROR - Eine Nachkommastelle im Betrag ist nicht zulässig.
+INFO - Anforderung des Anlegens eines neuen Kontos.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1020'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
+INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (22, hallo, 1020)
+INFO - Neues Konto angelegt. Besitzer: hallo, Kontonr.: 1020, Startkapital: 123
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
+INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 24, 0000, 1020, 123, STARTGUTHABEN, 2018-12-28 12:16:44.068
+INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1020, Betrag: 123, Referenz: STARTGUTHABEN
+INFO - Anforderung einer Auflistung aller Konten.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '0000' or receivernumber = '0000' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1020'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1019'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1016'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1017'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1015'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1018'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1014'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1012'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1009'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1004'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1008'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1013'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1011'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1010'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1006'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1007'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1005'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1003'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1002'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1000' or receivernumber = '1000' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1001' or receivernumber = '1001' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1005'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1002'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1002'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1002' or receivernumber = '1002' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1003'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1003' or receivernumber = '1003' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1005'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1005' or receivernumber = '1005' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1007'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1007' or receivernumber = '1007' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1006'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1006' or receivernumber = '1006' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1010'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1010' or receivernumber = '1010' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1011'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1011' or receivernumber = '1011' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1013'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1013' or receivernumber = '1013' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1008'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1008' or receivernumber = '1008' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1004'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1004' or receivernumber = '1004' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1009'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1009' or receivernumber = '1009' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1012'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1012' or receivernumber = '1012' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1014'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1014' or receivernumber = '1014' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1018'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1018' or receivernumber = '1018' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1015'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1015' or receivernumber = '1015' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1017'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1017' or receivernumber = '1017' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1016'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1016' or receivernumber = '1016' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1019'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1019' or receivernumber = '1019' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1020'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1020' or receivernumber = '1020' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Eine Auflistung aller Konten wurde übermittelt.
+INFO - Anforderung einer freien Kontonummer.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1002'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1003'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1004'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1005'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1006'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1007'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1008'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1009'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1010'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1011'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1012'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1013'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1014'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1015'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1016'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1017'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1018'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1019'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1020'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1021'
+INFO - Eine freie Kontonummer wurde übermittelt. (1021)
+INFO - Anforderung des Anlegens eines neuen Kontos.
+ERROR - Der Betrag darf maximal 2 Nachkommastellen haben.
+INFO - Anforderung des Anlegens eines neuen Kontos.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account WHERE number = '1021'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM account
+INFO - SQL-Statement ausgeführt: INSERT INTO account VALUES (23, mmmm, 1021)
+INFO - Neues Konto angelegt. Besitzer: mmmm, Kontonr.: 1021, Startkapital: 123.45
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT count(*) FROM transactionTable
+INFO - SQL-Statement ausgeführt: INSERT INTO transactionTable VALUES 25, 0000, 1021, 123.45, STARTGUTHABEN, 2018-12-28 12:17:03.973
+INFO - Transaktion ausgeführt. Sendernr.: 0000, Empfängernr.: 1021, Betrag: 123.45, Referenz: STARTGUTHABEN
+INFO - Anforderung einer Auflistung aller Konten.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '0000' or receivernumber = '0000' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1021'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1020'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1019'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1016'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1017'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1015'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1018'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1014'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1012'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1009'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1004'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1008'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1013'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1011'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1010'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1006'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1007'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1005'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1003'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1002'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1000' or receivernumber = '1000' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1001' or receivernumber = '1001' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1005'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1002'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1002'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1002' or receivernumber = '1002' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1003'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1003' or receivernumber = '1003' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1005'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1005' or receivernumber = '1005' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1001'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1007'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1007' or receivernumber = '1007' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1006'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1006' or receivernumber = '1006' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1010'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1010' or receivernumber = '1010' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1011'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1011' or receivernumber = '1011' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1013'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1013' or receivernumber = '1013' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1008'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1008' or receivernumber = '1008' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1004'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1004' or receivernumber = '1004' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1009'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1009' or receivernumber = '1009' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1012'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1012' or receivernumber = '1012' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1014'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1014' or receivernumber = '1014' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1018'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1018' or receivernumber = '1018' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1015'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1015' or receivernumber = '1015' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1017'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1017' or receivernumber = '1017' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1016'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1016' or receivernumber = '1016' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1019'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1019' or receivernumber = '1019' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1020'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1020' or receivernumber = '1020' ORDER BY date desc
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '1021'
+INFO - Verbindung zur Datenbank wird aufgebaut.
+INFO - SQL-Statement ausgeführt: SELECT * FROM transactionTable WHERE sendernumber = '1021' or receivernumber = '1021' ORDER BY date desc
 INFO - Verbindung zur Datenbank wird aufgebaut.
 INFO - SQL-Statement ausgeführt: SELECT * FROM account WHERE  number = '0000'
 INFO - Eine Auflistung aller Konten wurde übermittelt.

@@ -53,6 +53,8 @@ public class DatabaseAdministration {
 	 * Resets the database tables to a standard scenario.
 	 *
 	 * @throws SQLException
+	 *             if the database access fails or the sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public void resetDatabaseTables() throws SQLException {
@@ -76,7 +78,8 @@ public class DatabaseAdministration {
 	 * @param tableName
 	 *            specifies the table.
 	 * @return the number of entries.
-	 * @throws SQLException
+	 * @throws SQLException if the database access fails or the sql statement
+	 *         cannot be executed.
 	 * @author Jotham Weber
 	 */
 	public int getEntryCount(String tableName) throws SQLException {
@@ -101,6 +104,8 @@ public class DatabaseAdministration {
 	 * @param tableName
 	 *            specifies the table.
 	 * @throws SQLException
+	 *             if the database access fails or the sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public void deleteTable(String tableName) throws SQLException {
@@ -118,6 +123,8 @@ public class DatabaseAdministration {
 	 * @param tableName
 	 *            specifies the table.
 	 * @throws SQLException
+	 *             if the database access fails or the sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public void clearTable(String tableName) throws SQLException {

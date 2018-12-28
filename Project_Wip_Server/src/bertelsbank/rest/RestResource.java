@@ -231,6 +231,8 @@ public class RestResource {
 	/**
 	 * Checks if a new account can be created and triggers the execution.
 	 *
+	 * @param accountNumber
+	 *            the number of the account which should be created.
 	 * @param owner
 	 *            the name of the person the account will belong to.
 	 * @param startBalance
@@ -242,7 +244,8 @@ public class RestResource {
 	@POST
 	@Path("/addAccount")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response addAccount(@FormParam("accountNumber") String accountNumber, @FormParam("owner") String owner, @FormParam("startBalance") String startBalance) {
+	public Response addAccount(@FormParam("accountNumber") String accountNumber, @FormParam("owner") String owner,
+			@FormParam("startBalance") String startBalance) {
 
 		String errorMessage = "";
 		logger.info("Anforderung des Anlegens eines neuen Kontos.");
@@ -302,9 +305,20 @@ public class RestResource {
 			return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).build();
 		}
 		try {
+			// Ist die Kontonummer korrekt und verfügbar?
+			// - Diese Bedingung sollte
+			// eigentlich immer erfüllt sein, da Kontonummer vom Server
+			// bereitgestellt wird. Abfrage ist nur da, um etwaigen, zu diesem
+			// Zeitpunkt noch nicht identifizierbaren Fehlern vorzubeugen.
+			if (accountNumber.length() != 4 || !DatabaseAdministration.isInteger(accountNumber)
+					|| daAccount.numberExists(accountNumber)) {
+				errorMessage = "Es ist ein Fehler aufgetreten, bitte versuchen Sie es später noch einmal.";
+				logger.error(errorMessage + " (" + accountNumber + ")");
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorMessage).build();
+			}
+
 			// Konto erstellen
-			daAccount.addAccount(accountNumber, owner, startBalanceBigDecimal); // Logging in
-																	// addAccount
+			daAccount.addAccount(accountNumber, owner, startBalanceBigDecimal);
 			return Response.ok().build();
 		} catch (SQLException e) {
 			logger.error(e);
@@ -436,7 +450,7 @@ public class RestResource {
 	}
 
 	/**
-	 * When a new account is to be created this method provides a free number
+	 * When a new account is to be created, this method provides a free number
 	 * which can be used as the account number.
 	 *
 	 * @return HTTP response containing the free number as a string (plain text)

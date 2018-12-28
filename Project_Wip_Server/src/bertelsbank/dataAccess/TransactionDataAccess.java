@@ -33,10 +33,11 @@ public class TransactionDataAccess {
 	 * Creates the Transactiontable on the database if it does not exist.
 	 *
 	 * @throws SQLException
+	 *             if the database access fails or the sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public void createTransactionTable() throws SQLException {
-
 		Connection connection = dbAdministration.getConnection();
 		// Prüfung, ob Tabelle bereits besteht
 		ResultSet resultSet = connection.getMetaData().getTables("%", "%", "%", new String[] { "TABLE" });
@@ -50,7 +51,8 @@ public class TransactionDataAccess {
 		if (shouldCreateTable) {
 			Statement statement = connection.createStatement();
 			String sql = "CREATE table transactionTable (id int not null primary key, senderNumber varchar(4) not null, "
-					+ "receiverNumber varchar(4) not null, amount decimal(9,2) not null, reference varchar(" + DatabaseAdministration.referenceLength + ") not null, date timestamp not null)";
+					+ "receiverNumber varchar(4) not null, amount decimal(9,2) not null, reference varchar("
+					+ DatabaseAdministration.referenceLength + ") not null, date timestamp not null)";
 			// Tabelle wird erstellt
 			statement.execute(sql);
 			logger.info("SQL-statement ausgeführt: " + sql);
@@ -72,6 +74,8 @@ public class TransactionDataAccess {
 	 * @param reference
 	 *            text which will be displayed in relation to the transaction
 	 * @throws SQLException
+	 *             if the database access fails or the sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public void addTransaction(String senderNumber, String receiverNumber, BigDecimal amount, String reference)
@@ -106,6 +110,8 @@ public class TransactionDataAccess {
 	 * @return a list with all transactions where the account is either sender
 	 *         or receiver.
 	 * @throws SQLException
+	 *             if the database access fails or a sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public List<Transaction> getTransactionHistory(String accountNumber) throws SQLException {
@@ -179,6 +185,8 @@ public class TransactionDataAccess {
 	 *            specifies the account.
 	 * @return the current balance.
 	 * @throws SQLException
+	 *             if the database access fails or a sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public BigDecimal getAccountBalance(String accountNumber) throws SQLException {

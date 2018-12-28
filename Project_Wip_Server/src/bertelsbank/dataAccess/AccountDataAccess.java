@@ -34,10 +34,12 @@ public class AccountDataAccess {
 	}
 
 	/**
-	 * Creates the account table on the database if it does not exist.
-	 * The bank account will be added after creation of the table.
+	 * Creates the account table on the database if it does not exist. The bank
+	 * account will be added after creation of the table.
 	 *
 	 * @throws SQLException
+	 *             if the database access fails or the sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public void createAccountTable() throws SQLException {
@@ -54,7 +56,8 @@ public class AccountDataAccess {
 
 		if (shouldCreateTable) {
 			Statement statement = connection.createStatement();
-			String sql = "CREATE table account (id int not null primary key, owner varchar(" + DatabaseAdministration.ownerLength + ") not null, number varchar(4) not null)";
+			String sql = "CREATE table account (id int not null primary key, owner varchar("
+					+ DatabaseAdministration.ownerLength + ") not null, number varchar(4) not null)";
 			// Tabelle wird erstellt
 			statement.execute(sql);
 			statement.close();
@@ -72,42 +75,43 @@ public class AccountDataAccess {
 	 * Adds an account with an owner and a start balance to the database table
 	 * "Account". The start balance will be provided from the bank account.
 	 *
+	 * @param accountNumber
+	 *            specifies the account.
 	 * @param owner
 	 *            the person owning the account.
 	 * @param startBalance
 	 *            the amount of money which will be transferred to the account
 	 *            immediately after creation.
 	 * @throws SQLException
+	 *             if the database access fails or the sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public void addAccount(String accountNumber, String owner, BigDecimal startBalance) throws SQLException {
 
-		//String accountNumber = getFreeNumber();
-		if (!accountNumber.equals("")) {
-			try (Connection connection = dbAdministration.getConnection();
-					PreparedStatement preparedStatement = connection
-							.prepareStatement("INSERT INTO account VALUES (?,?,?)")) {
-				int id = dbAdministration.getEntryCount("account") + 1;
-				preparedStatement.setInt(1, id);
-				preparedStatement.setString(2, owner);
-				preparedStatement.setString(3, accountNumber);
-				// Datensatz in die Datenbanktabelle schreiben
-				preparedStatement.execute();
-				logger.info("SQL-Statement ausgeführt: " + "INSERT INTO account VALUES (" + id + ", " + owner + ", "
-						+ accountNumber + ")");
-				logger.info("Neues Konto angelegt. Besitzer: " + owner + ", Kontonr.: " + accountNumber
-						+ ", Startkapital: " + startBalance);
-				if (startBalance.compareTo(BigDecimal.ZERO) == 1) {
-					// Wenn das angeforderte Startguthaben > 0 ist, wird es dem
-					// Konto überwiesen
-					daTransaction.addTransaction("0000", accountNumber, startBalance, "STARTGUTHABEN");
-				}
-				// Die reservierte Nummer gehört jetzt zu einem Konto, daher
-				// kann die Reservierung aufgehoben werden
-				reservedNumbers.remove(accountNumber);
-			} catch (SQLException e) {
-				logger.error(e);
+		try (Connection connection = dbAdministration.getConnection();
+				PreparedStatement preparedStatement = connection
+						.prepareStatement("INSERT INTO account VALUES (?,?,?)")) {
+			int id = dbAdministration.getEntryCount("account") + 1;
+			preparedStatement.setInt(1, id);
+			preparedStatement.setString(2, owner);
+			preparedStatement.setString(3, accountNumber);
+			// Datensatz in die Datenbanktabelle schreiben
+			preparedStatement.execute();
+			logger.info("SQL-Statement ausgeführt: " + "INSERT INTO account VALUES (" + id + ", " + owner + ", "
+					+ accountNumber + ")");
+			logger.info("Neues Konto angelegt. Besitzer: " + owner + ", Kontonr.: " + accountNumber + ", Startkapital: "
+					+ startBalance);
+			if (startBalance.compareTo(BigDecimal.ZERO) == 1) {
+				// Wenn das angeforderte Startguthaben > 0 ist, wird es dem
+				// Konto überwiesen
+				daTransaction.addTransaction("0000", accountNumber, startBalance, "STARTGUTHABEN");
 			}
+			// Die reservierte Nummer gehört jetzt zu einem Konto, daher
+			// kann die Reservierung aufgehoben werden
+			reservedNumbers.remove(accountNumber);
+		} catch (SQLException e) {
+			logger.error(e);
 		}
 	}
 
@@ -121,6 +125,8 @@ public class AccountDataAccess {
 	 *            attached to the account object.
 	 * @return the account object
 	 * @throws SQLException
+	 *             if the database access fails or the sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public Account getAccountByNumber(String number, boolean attachTransactions) throws SQLException {
@@ -155,6 +161,8 @@ public class AccountDataAccess {
 	 *
 	 * @return list containing account objects.
 	 * @throws SQLException
+	 *             if the database access fails or the sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public List<Account> getAccounts() throws SQLException {
@@ -192,6 +200,8 @@ public class AccountDataAccess {
 	 * @param owner
 	 *            the new owner name.
 	 * @throws SQLException
+	 *             if the database access fails or the sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public void updateOwner(String number, String owner) throws SQLException {
@@ -214,9 +224,11 @@ public class AccountDataAccess {
 	 *         not belong to an existing account. If there is no more free
 	 *         number, an empty string will be returned.
 	 * @throws SQLException
+	 *             if the database access fails or the sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
-	public synchronized String getFreeNumber() throws SQLException {
+	public String getFreeNumber() throws SQLException {
 		String freeNumber = "";
 		if (bankAccountExists) {
 			// Angefangen bei 1000 werden die Nummern auf Verfügbarkeit geprüft
@@ -241,9 +253,13 @@ public class AccountDataAccess {
 	 * Checks if a number is the account number of an existing account.
 	 *
 	 * @param number
+	 *            account number belonging to the account which is to be
+	 *            checked.
 	 * @return true, if there is an account with this number and false, if there
 	 *         is no account belonging to this number.
 	 * @throws SQLException
+	 *             if the database access fails or the sql statement cannot be
+	 *             executed.
 	 * @author Jotham Weber
 	 */
 	public boolean numberExists(String number) throws SQLException {
@@ -267,7 +283,6 @@ public class AccountDataAccess {
 			return true;
 		}
 	}
-
 
 	/**
 	 * Writes every entry of the account table on the console.
